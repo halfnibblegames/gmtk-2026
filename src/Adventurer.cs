@@ -4,7 +4,10 @@ using HalfNibbleGame.Data;
 namespace HalfNibbleGame;
 
 public partial class Adventurer : ReplayableGridObject {
+  [Export] private Orchestrator orchestrator = null!;
+
   public override void _Ready() {
+    orchestrator.FocusObject(this);
     TeleportTo(new Vector2I(6, 6));
   }
 

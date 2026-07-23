@@ -4,22 +4,17 @@ using HalfNibbleGame.Data;
 namespace HalfNibbleGame;
 
 public partial class Level : Node2D {
-  private bool isActivated;
-
   [Export] private Orchestrator orchestrator = null!;
 
   // Lazily initialized
   private TileMapLayer tileMapLayer = null!;
 
+  public int WidthInPixels => tileMapLayer.GetUsedRect().Size.X * tileMapLayer.TileSet.TileSize.X;
+  public int HeightInPixels => tileMapLayer.GetUsedRect().Size.Y * tileMapLayer.TileSet.TileSize.Y;
+
   public override void _Ready() {
     tileMapLayer = GetNode<TileMapLayer>("MapLayer");
-  }
-
-  public override void _Process(double delta) {
-    if (!isActivated) {
-      orchestrator.ActivateLevel(this);
-      isActivated = true;
-    }
+    orchestrator.ActivateLevel(this);
   }
 
   public Tile GetTile(Vector2I coords) {

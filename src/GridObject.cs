@@ -3,6 +3,10 @@ using Godot;
 namespace HalfNibbleGame;
 
 public abstract partial class GridObject : Node2D {
+
+  [Signal]
+  public delegate void MovedEventHandler(Vector2I newCoords);
+
   [Export] public Orchestrator Orchestrator = null!;
 
   [Export] public Level? Level;
@@ -19,6 +23,7 @@ public abstract partial class GridObject : Node2D {
 
   protected void TeleportTo(Vector2I coords) {
     Coords = coords;
+    EmitSignalMoved(Coords);
   }
 
   protected bool TryMove(Vector2I diff) {
