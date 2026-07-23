@@ -1,30 +1,34 @@
 using Godot;
+using HalfNibbleGame.Data;
 
 namespace HalfNibbleGame;
 
 public partial class Adventurer : GridObject {
-  // Temporary debug code <==
-  private static readonly Vector2I[] steps = [
-    new(1, 0), new(0, 1), new(-1, 0), new(0, -1)
-  ];
-  private double nextMoveIn = 1;
-  private int nextMoveStep;
-  // ==>
-
   public override void _Ready() {
     TeleportTo(new Vector2I(6, 6));
   }
 
-  public override void _Process(double delta) {
-    // Temporary debug code <==
-    nextMoveIn -= delta;
-    if (nextMoveIn <= 0) {
-      TeleportTo(Coords + steps[nextMoveStep]);
-      nextMoveIn = 1;
-      nextMoveStep = (nextMoveStep + 1) % steps.Length;
+  public override void _Input(InputEvent @event) {
+    if (@event.IsActionReleased(InputActions.Left)) {
+      move(Vector2I.Left);
     }
-    // ==>
+    if (@event.IsActionReleased(InputActions.Right)) {
+      move(Vector2I.Right);
+    }
+    if (@event.IsActionReleased(InputActions.Up)) {
+      move(Vector2I.Up);
+    }
+    if (@event.IsActionReleased(InputActions.Down)) {
+      move(Vector2I.Down);
+    }
+  }
 
-    base._Process(delta);
+  private void move(Vector2I diff) {
+    if (diff.LengthSquared() != 1) {
+      GD.PushWarning($"Attempting to move {this} by more than one step: {diff}");
+    }
+
+    // TODO: make this a nicer move
+    TeleportTo(Coords + diff);
   }
 }
