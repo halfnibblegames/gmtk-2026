@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bcl3vatoebel6"]
+
+[ext_resource type="Script" uid="uid://lqsgwsxag3d4" path="res://src/Adventurer.cs" id="1_2r4l0"]
+[ext_resource type="Texture2D" uid="uid://dxx6g2h3h0jac" path="res://assets/tilemap.png" id="1_thumi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gft63"]
+atlas = ExtResource("1_thumi")
+region = Rect2(51, 119, 16, 16)
+
+[node name="Adventurer" type="Node2D" unique_id=1259344524]
+script = ExtResource("1_2r4l0")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1637101878]
+texture = SubResource("AtlasTexture_gft63")

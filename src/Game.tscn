@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://cqrb5682t73m2"]
 
-[ext_resource type="Texture2D" uid="uid://xe0xdqucvs83" path="res://assets/fullscreen_placeholder.png" id="1_gb23r"]
-[ext_resource type="PackedScene" uid="uid://dnu2oyugc5pvh" path="res://src/Controls/ControlPrompt.tscn" id="2_i36l2"]
+[ext_resource type="PackedScene" uid="uid://drd6ulao516cd" path="res://src/Level.tscn" id="1_2c5w0"]
+[ext_resource type="Script" uid="uid://cc0n1wyjmxc20" path="res://src/Orchestrator.cs" id="1_kqvf5"]
+[ext_resource type="PackedScene" uid="uid://bcl3vatoebel6" path="res://src/Adventurer.tscn" id="3_lqjwq"]
 
 [node name="Game" type="Node2D" unique_id=1550737297]
 
@@ -9,14 +10,12 @@
 position = Vector2(320, 180)
 gizmo_extents = 4.0
 
-[node name="FullscreenPlaceholder" type="Sprite2D" parent="." unique_id=892941590]
-position = Vector2(160, 90)
-scale = Vector2(1.66667, 1.66667)
-texture = ExtResource("1_gb23r")
+[node name="Orchestrator" type="Node" parent="." unique_id=2000540506]
+script = ExtResource("1_kqvf5")
 
-[node name="ControllerPrompt" parent="." unique_id=360750977 instance=ExtResource("2_i36l2")]
-offset_left = 6.0
-offset_top = 7.0
-offset_right = 22.0
-offset_bottom = 23.0
-ShownInput = 1
+[node name="Level" parent="." unique_id=77528087 node_paths=PackedStringArray("orchestrator") instance=ExtResource("1_2c5w0")]
+orchestrator = NodePath("../Orchestrator")
+
+[node name="Adventurer" parent="." unique_id=1259344524 node_paths=PackedStringArray("Orchestrator") instance=ExtResource("3_lqjwq")]
+position = Vector2(136, 88)
+Orchestrator = NodePath("../Orchestrator")
