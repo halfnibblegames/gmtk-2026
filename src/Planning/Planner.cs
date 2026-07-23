@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using HalfNibbleGame.Data;
 
 namespace HalfNibbleGame.Planning;
 
@@ -13,17 +14,85 @@ public partial class Planner : Panel {
     get;
     set {
       field = value;
-      updateSlotButtons();
+      onSlotsCountChanged();
     }
   } = 2;
 
-  private List<SlotButton> slots => GetNode<Container>("Slots").GetChildren().OfType<SlotButton>().ToList();
+  private readonly Plan plan = new();
+  private List<SlotButton> slotButtons => GetNode<Container>("Slots").GetChildren().OfType<SlotButton>().ToList();
 
   public override void _Ready() {
-    updateSlotButtons();
+    onSlotsCountChanged();
+    onPlanChanged();
   }
 
-  private void updateSlotButtons() {
+  public override void _Input(InputEvent @event) {
+    // Queue actions based on input.
+    foreach (var action in Enum.GetValues<PlayerAction>()) {
+      var actionRecord = PlayerActions.FromEnum(action);
+      var shortcut = PlayerActions.FromEnum(action)?.Shortcut;
+      if (shortcut is null) continue;
+      if (@event.IsActionReleased(shortcut)) {
+        FillNextSlot(actionRecord!);
+      }
+    }
+
+    // Clear last input
+    if (@event.IsActionReleased(InputActions.Back)) {
+      clearLastSlot();
+    }
+  }
+
+  public void FillNextSlot(IPlayerAction action) {
+    var firstEmptySlot = plan.Actions.IndexOf(null);
+    if (firstEmptySlot == -1) return;
+    plan.Actions[firstEmptySlot] = action;
+    onPlanChanged();
+  }
+
+  private void clearLastSlot() {
+    var lastFilledSlot = slotButtons.FindLastIndex(s => s.PlayerAction is not null);
+    if (lastFilledSlot == -1) return;
+    plan.Actions[lastFilledSlot] = null;
+    onPlanChanged();
+  }
+
+  private class Plan {
+    public List<IPlayerAction?> Actions { get; } = [];
+
+    public bool Validate() {
+      return Actions.All(a => a is not null);
+    }
+  }
+
+  // Update state to match
+  private void onSlotsCountChanged() {
+    updatePlanActionCount();
+    updateSlotButtonCount();
+  }
+
+  private void onPlanChanged() {
+    var buttons = slotButtons;
+    if (plan.Actions.Count != buttons.Count) {
+      throw new Exception("Slot buttons and plan action count don't match");
+    }
+    for (var i = 0; i < plan.Actions.Count; i++) {
+      if (buttons[i].PlayerAction != plan.Actions[i]) {
+        buttons[i].PlayerAction = plan.Actions[i];
+      }
+    }
+  }
+
+  private void updatePlanActionCount() {
+    while (plan.Actions.Count < slotsCount) {
+      plan.Actions.Add(null);
+    }
+    while (plan.Actions.Count > slotsCount) {
+      plan.Actions.RemoveAt(plan.Actions.Count - 1);
+    }
+  }
+
+  private void updateSlotButtonCount() {
     var slotsContainer = GetNodeOrNull<Container>("Slots");
     if (slotsContainer is null) return;
     var buttonCount = slotsContainer.GetChildCount();
@@ -38,23 +107,7 @@ public partial class Planner : Panel {
       var newButton = slotButtonScene.Instantiate<SlotButton>();
       newButton.Name = $"Slot{buttonCount}";
       slotsContainer.AddChild(newButton);
-      newButton.AssignedAction = PlayerAction.None;
       newButton.Owner = GetTree().EditedSceneRoot;
     }
-  }
-
-  public override void _Input(InputEvent @event) {
-    foreach (var action in Enum.GetValues<PlayerAction>()) {
-      var shortcut = PlayerActions.FromEnum(action)?.Shortcut;
-      if (shortcut is null) continue;
-      if (@event.IsActionReleased(shortcut)) {
-        FillNextSlot(action);
-      }
-    }
-  }
-
-  public void FillNextSlot(PlayerAction action) {
-    var firstEmptySlot = slots.FirstOrDefault(s => s.AssignedAction == PlayerAction.None);
-    firstEmptySlot?.AssignedAction = action;
   }
 }
