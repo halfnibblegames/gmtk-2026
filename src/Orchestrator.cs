@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using HalfNibbleGame.Grid;
 
@@ -9,8 +10,16 @@ public partial class Orchestrator : Node {
   public Level? CurrentLevel { get; private set; }
   public MovingGridObject? FocusedObject { get; private set; }
 
-  public void ActivateLevel(Level level) {
+  private bool levelActivated = true;
+
+  public void SetLevel(Level level) {
+    if (CurrentLevel is not null) {
+      // TODO: in the future we want to do proper cleanup, but right now important cleanup is missing
+      throw new Exception();
+    }
+
     CurrentLevel = level;
+    levelActivated = false;
 
     camera.LimitLeft = 0;
     camera.LimitRight = level.WidthInPixels;
@@ -18,7 +27,25 @@ public partial class Orchestrator : Node {
     camera.LimitBottom = level.HeightInPixels;
   }
 
-  public void FocusObject(Grid.MovingGridObject obj) {
+  public override void _Process(double delta) {
+    var isFirstAdventurer = true;
+    if (!levelActivated && CurrentLevel is not null) {
+      foreach (var spawn in CurrentLevel.AllSpawns) {
+        var adventurer = spawn.TryInstantiateAdventurer();
+        if (adventurer is not null) {
+          adventurer.Orchestrator = this;
+          AddSibling(adventurer);
+          if (isFirstAdventurer) {
+            FocusObject(adventurer);
+            isFirstAdventurer = false;
+          }
+        }
+      }
+      levelActivated = true;
+    }
+  }
+
+  public void FocusObject(MovingGridObject obj) {
     if (FocusedObject is not null) {
       FocusedObject.Moved -= onFocusedObjectMoved;
     }

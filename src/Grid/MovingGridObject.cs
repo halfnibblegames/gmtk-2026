@@ -4,7 +4,7 @@ namespace HalfNibbleGame.Grid;
 
 public abstract partial class MovingGridObject : GridObject {
 
-  [Export] protected Orchestrator Orchestrator = null!;
+  [Export] public Orchestrator Orchestrator = null!;
 
   [Signal]
   public delegate void MovedEventHandler(Vector2I newCoords);
@@ -16,7 +16,7 @@ public abstract partial class MovingGridObject : GridObject {
     }
   }
 
-  protected void TeleportTo(Vector2I coords) {
+  public void TeleportTo(Vector2I coords) {
     Coords = coords;
     SnapToTile();
     EmitSignalMoved(Coords);

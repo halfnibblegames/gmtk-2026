@@ -4,11 +4,6 @@ using HalfNibbleGame.Data;
 namespace HalfNibbleGame.Grid;
 
 public partial class Adventurer : ReplayableGridObject {
-  public override void _Ready() {
-    Orchestrator.FocusObject(this);
-    TeleportTo(new Vector2I(6, 6));
-  }
-
   public override void _Input(InputEvent @event) {
     if (@event.IsActionReleased(InputActions.Left)) {
       TryMove(Vector2I.Left);
