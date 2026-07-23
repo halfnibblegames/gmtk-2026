@@ -15,6 +15,14 @@ public class ActionStack {
     actionStack.Push(action);
   }
 
+  public void QueueActions(IEnumerable<IReplayableAction> action) {
+    // Anything from the rounds after the current round is overwritten.
+    if (actionStack.Count >= currentRound) {
+      actionStack.RemoveRange(currentRound, actionStack.Count - currentRound);
+    }
+    actionStack.AddRange(action);
+  }
+
   public void Advance() {
     while (actionStack.Count < currentRound - 1) {
       actionStack.Push(MakeActionForRound(actionStack.Count - 1));

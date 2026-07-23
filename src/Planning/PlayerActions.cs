@@ -1,6 +1,8 @@
 using System;
 using Godot;
 using HalfNibbleGame.Data;
+using HalfNibbleGame.Grid;
+using HalfNibbleGame.Replay;
 
 namespace HalfNibbleGame.Planning;
 
@@ -20,12 +22,8 @@ public static class PlayerActions {
     public StringName? Shortcut => shortcut;
     public PlayerAction AsEnum() => asEnum;
 
-    public void Do() {
-      throw new System.NotImplementedException();
-    }
-
-    public void Undo() {
-      throw new System.NotImplementedException();
+    public IReplayableAction ToReplayableAction(MovingGridObject target) {
+      return Actions.Move(target, diff);
     }
   }
 }

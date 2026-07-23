@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using Godot;
 using HalfNibbleGame.Data;
-using HalfNibbleGame.Extensions;
 using HalfNibbleGame.Replay;
 
 namespace HalfNibbleGame.Grid;
 
 public abstract partial class ReplayableGridObject : MovingGridObject, IReplayable {
-  private readonly ActionStack moveStack = new();
+  private readonly ActionStack actionStack = new();
 
   public override void _Ready() {
     base._Ready();
@@ -18,15 +17,21 @@ public abstract partial class ReplayableGridObject : MovingGridObject, IReplayab
     if (!CanMove(diff)) {
       return false;
     }
-    moveStack.QueueAction(Actions.Move(this, diff));
+    actionStack.QueueAction(Actions.Move(this, diff));
     return true;
   }
 
   public void Advance() {
-    moveStack.Advance();
+    actionStack.Advance();
   }
 
   public void Rollback() {
-    moveStack.Rollback();
+    actionStack.Rollback();
   }
+
+  // <== Hack
+  public void QueueActions(IEnumerable<IReplayableAction> action) {
+    actionStack.QueueActions(action);
+  }
+  // ==>
 }

@@ -5,7 +5,7 @@
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gft63"]
 atlas = ExtResource("1_thumi")
-region = Rect2(51, 119, 16, 16)
+region = Rect2(34, 85, 16, 16)
 
 [node name="Adventurer" type="Node2D" unique_id=1259344524]
 script = ExtResource("1_2r4l0")
