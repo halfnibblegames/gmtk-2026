@@ -3,7 +3,7 @@ using HalfNibbleGame.Data;
 
 namespace HalfNibbleGame;
 
-public partial class Adventurer : GridObject {
+public partial class Adventurer : ReplayableGridObject {
   public override void _Ready() {
     TeleportTo(new Vector2I(6, 6));
   }
@@ -20,6 +20,9 @@ public partial class Adventurer : GridObject {
     }
     if (@event.IsActionReleased(InputActions.Down)) {
       TryMove(Vector2I.Down);
+    }
+    if (@event.IsActionReleased(InputActions.Back)) {
+      TryRevertLastMove();
     }
   }
 }

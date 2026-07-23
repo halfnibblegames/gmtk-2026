@@ -37,8 +37,12 @@ public abstract partial class GridObject : Node2D {
       return false;
     }
 
-    // TODO: make move different than teleport
-    TeleportTo(targetPos);
+    Move(diff);
     return true;
+  }
+
+  protected virtual void Move(Vector2I diff) {
+    // TODO: make move different than teleport
+    TeleportTo(Coords + diff);
   }
 }
