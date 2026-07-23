@@ -2,6 +2,7 @@ using System;
 using Godot;
 using HalfNibbleGame.Data;
 using HalfNibbleGame.Grid;
+using HalfNibbleGame.Replay;
 
 namespace HalfNibbleGame.Planning;
 
@@ -22,20 +23,27 @@ public static class PlannedActions {
     public StringName? Shortcut => shortcut;
     public PlayerAction AsEnum() => asEnum;
 
-    public abstract void Do(MovingGridObject target);
+    public abstract void Do(RoundContext context, SimulatedGridObject target);
   }
 
   private class MoveAction(PlayerAction asEnum, Vector2I diff, string name, StringName? shortcut)
     : ActionBase(asEnum, name, shortcut) {
-    public override void Do(MovingGridObject target) {
-      target.TryMove(diff);
+    public override void Do(RoundContext context, SimulatedGridObject target) {
+      var result = target.TryMove(diff);
+      if (result.Outcome == MovingGridObject.MoveOutcome.Collided) {
+        context.RegisterOutcome(() => target.Stun(1));
+      }
     }
   }
 
   private class ForwardAction(PlayerAction asEnum, int amount, string name, StringName? shortcut)
     : ActionBase(asEnum, name, shortcut) {
-    public override void Do(MovingGridObject target) {
-      target.TryMove(target.Forward * amount);
+    public override void Do(RoundContext context, SimulatedGridObject target) {
+      var result = target.TryMove(target.Forward * amount);
+      if (result.Outcome == MovingGridObject.MoveOutcome.Collided) {
+        // Stun for 1 turn + 1 turn for every tile moved
+        context.RegisterOutcome(() => target.Stun(1 + Math.Max(Math.Abs(result.ActuallyMoved.X), Math.Abs(result.ActuallyMoved.Y))));
+      }
     }
   }
 }

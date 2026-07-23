@@ -5,6 +5,7 @@ using HalfNibbleGame.Planning;
 namespace HalfNibbleGame.Grid;
 
 public partial class Adventurer : SimulatedGridObject {
+
   // <== Hack
   public override void _Ready() {
     Global.Services.Get<Planner>().SetAdventurer(this);

@@ -24,6 +24,11 @@ public abstract partial class MovingGridObject : GridObject {
       throw new Exception($"Attempting to move {this} without a level");
     }
 
+    if (IsMovementPrevented()) {
+      GD.Print("Not moving, movement was prevented");
+      return new MoveResult(MoveOutcome.Prevented, Vector2I.Zero);
+    }
+
     validateValidMoveDiff(diff);
     // We move one step at a time
     var dir = toDirection(diff);
@@ -42,6 +47,8 @@ public abstract partial class MovingGridObject : GridObject {
     Move(accumulatedMovement);
     return new MoveResult(MoveOutcome.Moved, accumulatedMovement);
   }
+
+  protected virtual bool IsMovementPrevented() => false;
 
   private static void validateValidMoveDiff(Vector2I diff) {
     // Pure horizontal or vertical moves are fine
@@ -75,6 +82,7 @@ public abstract partial class MovingGridObject : GridObject {
 
   public enum MoveOutcome {
     Moved,
+    Prevented,
     Collided,
     FellDown
   }

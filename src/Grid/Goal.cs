@@ -14,8 +14,8 @@ public partial class Goal : StaticGridObject, ISimulated {
     Reset();
   }
 
-  public void Advance(RoundInfo info) {
-    turnsLeft = turnCount - info.RoundNumber - 1;
+  public void Advance(RoundContext context) {
+    turnsLeft = turnCount - context.RoundNumber - 1;
   }
 
   public void Reset() {

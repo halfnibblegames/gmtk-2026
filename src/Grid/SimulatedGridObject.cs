@@ -9,6 +9,9 @@ namespace HalfNibbleGame.Grid;
 
 public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated {
 
+  // TODO: should probably be more complex
+  private int stunnedTurns;
+
   private Vector2I storedCoords;
   private readonly PlanExecutor planExecutor;
 
@@ -21,18 +24,31 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
     AddToGroup(Groups.Simulated);
   }
 
-  public void Advance(RoundInfo info) {
-    planExecutor.Advance(info);
+  public void Advance(RoundContext context) {
+    planExecutor.Advance(context);
+    if (stunnedTurns > 0) {
+      stunnedTurns--;
+    }
   }
 
   public void Reset() {
     planExecutor.Reset();
     Forward = Vector2I.Zero;
+    stunnedTurns = 0;
     TeleportTo(storedCoords);
   }
 
   public void Snapshot() {
     storedCoords = Coords;
+  }
+
+  public void Stun(int turnCount) {
+    GD.Print($"Oof! stunned for {turnCount} turns");
+    stunnedTurns = turnCount;
+  }
+
+  protected override bool IsMovementPrevented() {
+    return stunnedTurns > 0;
   }
 
   // <== Hack
@@ -49,8 +65,8 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
       actions = plan;
     }
 
-    public void Advance(RoundInfo info) {
-      if (info.RoundNumber != currentRound) {
+    public void Advance(RoundContext context) {
+      if (context.RoundNumber != currentRound) {
         throw new Exception("Round numbers aren't matching");
       }
 
@@ -59,7 +75,7 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
         return;
       }
 
-      actions[currentRound++].Do(target);
+      actions[currentRound++].Do(context, target);
     }
 
     public void Reset() {
