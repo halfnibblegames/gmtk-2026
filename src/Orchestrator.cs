@@ -1,4 +1,5 @@
 using Godot;
+using HalfNibbleGame.Grid;
 
 namespace HalfNibbleGame;
 
@@ -6,7 +7,7 @@ public partial class Orchestrator : Node {
   [Export] private Camera2D camera = null!;
 
   public Level? CurrentLevel { get; private set; }
-  public GridObject? FocusedObject { get; private set; }
+  public MovingGridObject? FocusedObject { get; private set; }
 
   public void ActivateLevel(Level level) {
     CurrentLevel = level;
@@ -17,7 +18,7 @@ public partial class Orchestrator : Node {
     camera.LimitBottom = level.HeightInPixels;
   }
 
-  public void FocusObject(GridObject obj) {
+  public void FocusObject(Grid.MovingGridObject obj) {
     if (FocusedObject is not null) {
       FocusedObject.Moved -= onFocusedObjectMoved;
     }

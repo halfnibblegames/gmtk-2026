@@ -1,28 +1,24 @@
 using Godot;
 
-namespace HalfNibbleGame;
+namespace HalfNibbleGame.Grid;
 
-public abstract partial class GridObject : Node2D {
+public abstract partial class MovingGridObject : GridObject {
+
+  [Export] protected Orchestrator Orchestrator = null!;
 
   [Signal]
   public delegate void MovedEventHandler(Vector2I newCoords);
 
-  [Export] public Orchestrator Orchestrator = null!;
-
-  [Export] public Level? Level;
-  [Export] public Vector2I Coords { get; private set; }
-
   public override void _Process(double delta) {
-    Level = Orchestrator.CurrentLevel;
-
-    if (Level is null) return;
-
-    var tile = Level.GetTile(Coords);
-    Position = tile.Position;
+    if (Level != Orchestrator.CurrentLevel) {
+      Level = Orchestrator.CurrentLevel;
+      SnapToTile();
+    }
   }
 
   protected void TeleportTo(Vector2I coords) {
     Coords = coords;
+    SnapToTile();
     EmitSignalMoved(Coords);
   }
 

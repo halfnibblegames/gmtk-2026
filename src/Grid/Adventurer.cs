@@ -1,13 +1,11 @@
 using Godot;
 using HalfNibbleGame.Data;
 
-namespace HalfNibbleGame;
+namespace HalfNibbleGame.Grid;
 
 public partial class Adventurer : ReplayableGridObject {
-  [Export] private Orchestrator orchestrator = null!;
-
   public override void _Ready() {
-    orchestrator.FocusObject(this);
+    Orchestrator.FocusObject(this);
     TeleportTo(new Vector2I(6, 6));
   }
 

@@ -20,4 +20,8 @@ public partial class Level : Node2D {
   public Tile GetTile(Vector2I coords) {
     return Tile.FromTileData(coords, tileMapLayer.MapToLocal(coords), tileMapLayer.GetCellTileData(coords));
   }
+
+  public Tile TileFromPosition(Vector2 position) {
+    return GetTile(tileMapLayer.LocalToMap(position));
+  }
 }

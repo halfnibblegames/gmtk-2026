@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://drd6ulao516cd" path="res://src/Level.tscn" id="1_2c5w0"]
 [ext_resource type="Script" uid="uid://cc0n1wyjmxc20" path="res://src/Orchestrator.cs" id="1_kqvf5"]
-[ext_resource type="PackedScene" uid="uid://bcl3vatoebel6" path="res://src/Adventurer.tscn" id="3_lqjwq"]
+[ext_resource type="PackedScene" uid="uid://bcl3vatoebel6" path="res://src/Grid/Adventurer.tscn" id="3_lqjwq"]
 
 [node name="Game" type="Node2D" unique_id=1550737297]
 
@@ -17,9 +17,8 @@ camera = NodePath("../Camera")
 [node name="Level" parent="." unique_id=77528087 node_paths=PackedStringArray("orchestrator") instance=ExtResource("1_2c5w0")]
 orchestrator = NodePath("../Orchestrator")
 
-[node name="Adventurer" parent="." unique_id=1259344524 node_paths=PackedStringArray("orchestrator", "Orchestrator") instance=ExtResource("3_lqjwq")]
+[node name="Adventurer" parent="." unique_id=1259344524 node_paths=PackedStringArray("Orchestrator") instance=ExtResource("3_lqjwq")]
 position = Vector2(136, 88)
-orchestrator = NodePath("../Orchestrator")
 Orchestrator = NodePath("../Orchestrator")
 
 [node name="Camera" type="Camera2D" parent="." unique_id=1257331831]

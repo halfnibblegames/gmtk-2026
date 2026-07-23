@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using Godot;
 using HalfNibbleGame.Extensions;
 
-namespace HalfNibbleGame;
+namespace HalfNibbleGame.Grid;
 
-public abstract partial class ReplayableGridObject : GridObject {
+public abstract partial class ReplayableGridObject : MovingGridObject {
   private readonly List<Vector2I> moveStack = [];
 
   protected override void Move(Vector2I diff) {

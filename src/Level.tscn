@@ -2,6 +2,7 @@
 
 [ext_resource type="TileSet" uid="uid://bkpxxbiy6ywwm" path="res://assets/tilemap.tres" id="1_jd4tk"]
 [ext_resource type="Script" uid="uid://ceeo3sjor5wuv" path="res://src/Level.cs" id="1_k1whu"]
+[ext_resource type="PackedScene" uid="uid://vp2xjv4c74nm" path="res://src/Grid/Spawn.tscn" id="3_ty7k0"]
 
 [node name="Level" type="Node2D" unique_id=77528087]
 script = ExtResource("1_k1whu")
@@ -11,3 +12,6 @@ tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAEAABAAAAIAAAAAAAI
 tile_set = ExtResource("1_jd4tk")
 collision_enabled = false
 navigation_enabled = false
+
+[node name="Spawn" parent="." unique_id=1793866855 instance=ExtResource("3_ty7k0")]
+position = Vector2(72, 136)

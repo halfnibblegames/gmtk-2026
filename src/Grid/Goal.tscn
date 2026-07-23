@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dd5e2kofi1t0r"]
+
+[ext_resource type="Script" uid="uid://ds7bhmy7c0dlv" path="res://src/Grid/Goal.cs" id="1_eh7du"]
+[ext_resource type="Texture2D" uid="uid://dxx6g2h3h0jac" path="res://assets/tilemap.png" id="1_fy238"]
+[ext_resource type="Script" uid="uid://c2pce663bjmor" path="res://src/Tools/EditorOnlySprite2D.cs" id="2_eh7du"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gft63"]
+atlas = ExtResource("1_fy238")
+region = Rect2(17, 85, 16, 16)
+
+[node name="Goal" type="Node2D" unique_id=1562186289]
+script = ExtResource("1_eh7du")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1336311776]
+texture = SubResource("AtlasTexture_gft63")
+script = ExtResource("2_eh7du")
