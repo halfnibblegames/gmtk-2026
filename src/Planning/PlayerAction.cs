@@ -7,4 +7,5 @@ public enum PlayerAction {
   MoveRight,
   MoveUp,
   MoveDown,
+  Dash
 }

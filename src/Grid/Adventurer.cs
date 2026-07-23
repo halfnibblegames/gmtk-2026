@@ -1,11 +1,10 @@
 using Godot;
 using HalfNibbleGame.Autoload;
 using HalfNibbleGame.Planning;
-using HalfNibbleGame.Replay;
 
 namespace HalfNibbleGame.Grid;
 
-public partial class Adventurer : ReplayableGridObject {
+public partial class Adventurer : SimulatedGridObject {
   // <== Hack
   public override void _Ready() {
     Global.Services.Get<Planner>().SetAdventurer(this);
@@ -13,13 +12,4 @@ public partial class Adventurer : ReplayableGridObject {
     base._Ready();
   }
   // ==>
-
-  private bool tryMove(Vector2I diff) {
-    if (!TryQueueMove(diff)) {
-      return false;
-    }
-
-    Global.Services.Get<Timeline>().Advance();
-    return true;
-  }
 }

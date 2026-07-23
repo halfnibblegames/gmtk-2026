@@ -1,13 +1,16 @@
+using System;
 using Godot;
 
 namespace HalfNibbleGame.Grid;
 
 public abstract partial class MovingGridObject : GridObject {
 
-  [Export] public Orchestrator Orchestrator = null!;
-
   [Signal]
   public delegate void MovedEventHandler(Vector2I newCoords);
+
+  [Export] public Orchestrator Orchestrator = null!;
+
+  public Vector2I Forward { get; protected set; }
 
   public override void _Process(double delta) {
     if (Level != Orchestrator.CurrentLevel) {
@@ -17,8 +20,9 @@ public abstract partial class MovingGridObject : GridObject {
   }
 
   public void Move(Vector2I diff) {
-    // TODO: make move different than teleport
+    // TODO: make move look different than teleport
     TeleportTo(Coords + diff);
+    Forward = new Vector2I(Math.Sign(diff.X), Math.Sign(diff.Y));
   }
 
   public void TeleportTo(Vector2I coords) {

@@ -8,12 +8,12 @@ public partial class ActionButton : TextureButton {
   private PlayerAction assignedAction {
     get => playerAction?.AsEnum() ?? PlayerAction.None;
     set {
-      playerAction = PlayerActions.FromEnum(value);
+      playerAction = PlannedActions.FromEnum(value);
       updateVisuals();
     }
   }
 
-  private IPlayerAction? playerAction;
+  private IPlannedAction? playerAction;
 
   public override void _Ready() {
     updateVisuals();

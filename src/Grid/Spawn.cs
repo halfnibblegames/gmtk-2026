@@ -13,6 +13,7 @@ public partial class Spawn : StaticGridObject {
 
     var adventurer = adventurerScene.Instantiate<Adventurer>();
     adventurer.TeleportTo(Coords);
+    adventurer.Snapshot();
     return adventurer;
   }
 }

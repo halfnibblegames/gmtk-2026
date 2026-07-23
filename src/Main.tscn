@@ -120,3 +120,7 @@ assignedAction = 3
 [node name="Action4" parent="PlanningPanel/Actions" unique_id=1545636605 instance=ExtResource("5_vjwby")]
 layout_mode = 2
 assignedAction = 4
+
+[node name="Action5" parent="PlanningPanel/Actions" unique_id=1849499020 instance=ExtResource("5_vjwby")]
+layout_mode = 2
+assignedAction = 5

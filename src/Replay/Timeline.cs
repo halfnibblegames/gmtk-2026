@@ -7,23 +7,18 @@ namespace HalfNibbleGame.Replay;
 
 public class Timeline(SceneTree tree) {
 
-  private int currentRound;
+  private int roundNumber;
 
   public void Advance() {
-    replayableObjects().ForEach(obj => obj.Advance());
-    currentRound++;
+    var roundInfo = new RoundInfo(roundNumber++);
+    simulatedObjects().ForEach(obj => obj.Advance(roundInfo));
   }
 
-  public void Rollback() {
-    if (currentRound == 0) {
-      return;
-    }
-
-    replayableObjects().ForEach(obj => obj.Rollback());
-    currentRound--;
+  public void Reset() {
+    simulatedObjects().ForEach(obj => obj.Reset());
   }
 
-  private List<IReplayable> replayableObjects() {
-    return tree.GetNodesInGroup(Groups.Replayable).OfType<IReplayable>().ToList();
+  private List<ISimulated> simulatedObjects() {
+    return tree.GetNodesInGroup(Groups.Simulated).OfType<ISimulated>().ToList();
   }
 }

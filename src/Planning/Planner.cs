@@ -45,7 +45,7 @@ public partial class Planner : Panel {
       GD.PushError("Adventurer is null");
     }
     else {
-      adventurer!.QueueActions(plan.Actions.Select(action => action!.ToReplayableAction(adventurer)));
+      adventurer!.QueueActions(plan.Actions!);
       Global.Services.Get<TimelinePlayer>().Play(plan.Actions.Count);
     }
   }
@@ -54,8 +54,8 @@ public partial class Planner : Panel {
   public override void _Input(InputEvent @event) {
     // Queue actions based on input.
     foreach (var action in Enum.GetValues<PlayerAction>()) {
-      var actionRecord = PlayerActions.FromEnum(action);
-      var shortcut = PlayerActions.FromEnum(action)?.Shortcut;
+      var actionRecord = PlannedActions.FromEnum(action);
+      var shortcut = PlannedActions.FromEnum(action)?.Shortcut;
       if (shortcut is null) continue;
       if (@event.IsActionReleased(shortcut)) {
         FillNextSlot(actionRecord!);
@@ -73,7 +73,7 @@ public partial class Planner : Panel {
     }
   }
 
-  public void FillNextSlot(IPlayerAction action) {
+  public void FillNextSlot(IPlannedAction action) {
     var firstEmptySlot = plan.Actions.IndexOf(null);
     if (firstEmptySlot == -1) return;
     plan.Actions[firstEmptySlot] = action;
@@ -88,7 +88,7 @@ public partial class Planner : Panel {
   }
 
   private class Plan {
-    public List<IPlayerAction?> Actions { get; } = [];
+    public List<IPlannedAction?> Actions { get; } = [];
 
     public bool Validate() {
       return Actions.All(a => a is not null);

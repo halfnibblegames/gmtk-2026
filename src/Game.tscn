@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://cc0n1wyjmxc20" path="res://src/Orchestrator.cs" id="1_kqvf5"]
 [ext_resource type="Script" uid="uid://dj3o6o1i4frge" path="res://src/Replay/TimelinePlayer.cs" id="2_lqjwq"]
 
-[node name="Game" type="Node2D" unique_id=1550737297]
+[node name="Game" type="Node2D" unique_id=1550737297 groups=["simulated"]]
 y_sort_enabled = true
 
 [node name="Extent" type="Marker2D" parent="." unique_id=1116238729]

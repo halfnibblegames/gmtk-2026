@@ -7,7 +7,7 @@ public partial class SlotButton : TextureButton {
   [Export] private Texture2D emptyTexture = null!;
   [Export] private Texture2D fullTexture = null!;
 
-  public IPlayerAction? PlayerAction {
+  public IPlannedAction? PlayerAction {
     get;
     set {
       field = value;

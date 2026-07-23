@@ -4,19 +4,21 @@ using HalfNibbleGame.Replay;
 
 namespace HalfNibbleGame.Grid;
 
-public partial class Goal : StaticGridObject, IReplayable {
-  [Export] private int turnsLeft;
+public partial class Goal : StaticGridObject, ISimulated {
+  [Export] private int turnCount;
+  private int turnsLeft;
 
   public override void _Ready() {
     base._Ready();
-    AddToGroup(Groups.Replayable);
+    AddToGroup(Groups.Simulated);
+    Reset();
   }
 
-  public void Advance() {
-    turnsLeft--;
+  public void Advance(RoundInfo info) {
+    turnsLeft = turnCount - info.RoundNumber - 1;
   }
 
-  public void Rollback() {
-    turnsLeft++;
+  public void Reset() {
+    turnsLeft = turnCount;
   }
 }
