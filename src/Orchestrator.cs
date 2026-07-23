@@ -1,6 +1,8 @@
 using System;
 using Godot;
+using HalfNibbleGame.Autoload;
 using HalfNibbleGame.Grid;
+using HalfNibbleGame.Replay;
 
 namespace HalfNibbleGame;
 
@@ -27,22 +29,33 @@ public partial class Orchestrator : Node {
     camera.LimitBottom = level.HeightInPixels;
   }
 
+  public override void _Ready() {
+    var timeline = new Timeline(GetTree());
+    Global.Services.ProvideInScene(timeline);
+  }
+
   public override void _Process(double delta) {
-    var isFirstAdventurer = true;
     if (!levelActivated && CurrentLevel is not null) {
-      foreach (var spawn in CurrentLevel.AllSpawns) {
-        var adventurer = spawn.TryInstantiateAdventurer();
-        if (adventurer is not null) {
-          adventurer.Orchestrator = this;
-          AddSibling(adventurer);
-          if (isFirstAdventurer) {
-            FocusObject(adventurer);
-            isFirstAdventurer = false;
-          }
-        }
-      }
-      levelActivated = true;
+      activateLevel();
     }
+  }
+
+  private void activateLevel() {
+    unfocusObject();
+
+    foreach (var spawn in CurrentLevel!.AllSpawns) {
+      var adventurer = spawn.TryInstantiateAdventurer();
+      if (adventurer is null) continue;
+
+      adventurer.Orchestrator = this;
+      AddSibling(adventurer);
+
+      if (FocusedObject is null) {
+        FocusObject(adventurer);
+      }
+    }
+
+    levelActivated = true;
   }
 
   public void FocusObject(MovingGridObject obj) {
@@ -53,6 +66,14 @@ public partial class Orchestrator : Node {
     FocusedObject = obj;
     FocusedObject.Moved += onFocusedObjectMoved;
     onFocusedObjectMoved(FocusedObject.Coords);
+  }
+
+  private void unfocusObject() {
+    if (FocusedObject is not null) {
+      FocusedObject.Moved -= onFocusedObjectMoved;
+    }
+
+    FocusedObject = null;
   }
 
   private void onFocusedObjectMoved(Vector2I newCoords) {

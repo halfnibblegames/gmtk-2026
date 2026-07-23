@@ -16,13 +16,18 @@ public abstract partial class MovingGridObject : GridObject {
     }
   }
 
+  public void Move(Vector2I diff) {
+    // TODO: make move different than teleport
+    TeleportTo(Coords + diff);
+  }
+
   public void TeleportTo(Vector2I coords) {
     Coords = coords;
     SnapToTile();
     EmitSignalMoved(Coords);
   }
 
-  protected bool TryMove(Vector2I diff) {
+  protected bool CanMove(Vector2I diff) {
     if (Level is null) {
       GD.PushError($"Attempting to move {this} without a level");
       return false;
@@ -38,12 +43,6 @@ public abstract partial class MovingGridObject : GridObject {
       return false;
     }
 
-    Move(diff);
     return true;
-  }
-
-  protected virtual void Move(Vector2I diff) {
-    // TODO: make move different than teleport
-    TeleportTo(Coords + diff);
   }
 }
