@@ -1,14 +1,120 @@
-[gd_scene format=3 uid="uid://bcl3vatoebel6"]
+[gd_scene format=4 uid="uid://bcl3vatoebel6"]
 
 [ext_resource type="Script" uid="uid://lqsgwsxag3d4" path="res://src/Grid/Adventurer.cs" id="1_2r4l0"]
-[ext_resource type="Texture2D" uid="uid://dxx6g2h3h0jac" path="res://assets/tilemap.png" id="1_thumi"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gft63"]
-atlas = ExtResource("1_thumi")
-region = Rect2(34, 85, 16, 16)
+[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_ioxv6"]
+_data = PackedByteArray("AAADAAUAAAABAAAAKgAAADkAAAAIAQAAUklGRgABAABXRUJQVlA4TPQAAAAvKQAOEDegEAAaJn+lPEphfzoEghBNdN0QG5BJ29S/pWnYOxsTMAbzH4B5BhNxh7lfAXIDuHGj8fkX0oDBCgzXQOi9F/3OOf3XsKFo7vmO6D8Dt40UZY/BB8/AHxovZploNjVcIJ1ZdQ+42Uuk6h3gk4uk2nQgLSJ9wJ29hLMIAg6NJCS8F0pbufRecj/Gu2uZPcc+cs9wndFwM/7V8WKWkWg2HUtk1T2Qzq2nek9INSVhEekDiY13FkFGIjOSkG7nGktb6fBsK10krWV29lpa6f8fL2aZaDYlZlbdM6neE9Vci0iP4/EZEgmZ6lQynU8dftsA")
+size_override = Vector2(42, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dh2qp"]
+atlas = SubResource("PortableCompressedTexture2D_ioxv6")
+region = Rect2(0, 0, 14, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yidk2"]
+atlas = SubResource("PortableCompressedTexture2D_ioxv6")
+region = Rect2(14, 0, 14, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eyldl"]
+atlas = SubResource("PortableCompressedTexture2D_ioxv6")
+region = Rect2(28, 0, 14, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3d3fc"]
+atlas = SubResource("PortableCompressedTexture2D_ioxv6")
+region = Rect2(0, 19, 14, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bk7j4"]
+atlas = SubResource("PortableCompressedTexture2D_ioxv6")
+region = Rect2(14, 19, 14, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_stwaf"]
+atlas = SubResource("PortableCompressedTexture2D_ioxv6")
+region = Rect2(28, 19, 14, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h47tu"]
+atlas = SubResource("PortableCompressedTexture2D_ioxv6")
+region = Rect2(0, 38, 14, 19)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2wb0h"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dh2qp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yidk2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eyldl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3d3fc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dh2qp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yidk2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eyldl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3d3fc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dh2qp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yidk2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eyldl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bk7j4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_stwaf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h47tu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eyldl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3d3fc")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 7.0
+}]
 
 [node name="Adventurer" type="Node2D" unique_id=1259344524]
 script = ExtResource("1_2r4l0")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1637101878]
-texture = SubResource("AtlasTexture_gft63")
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1208374403]
+texture_filter = 1
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_2wb0h")
+metadata/_aseprite_wizard_interface_config_ = {
+"animation_section": false,
+"layer_section": true,
+"output_section": false,
+"pending_changes": {},
+"slice_section": false
+}
+metadata/_aseprite_wizard_config_ = {
+"embed_tex": true,
+"layers": ["Rogue"],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"scale": "1.0",
+"should_round_fps": true,
+"slice": "",
+"source": "res://assets/adventurers.aseprite",
+"source_uid": 5444602691565163215
+}
+metadata/_aseprite_wizard_source_file_hash_ = "d07d35098c277baf14c33dcd9ee9bbe7"

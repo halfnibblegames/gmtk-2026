@@ -9,6 +9,7 @@ public partial class Adventurer : ReplayableGridObject {
   // <== Hack
   public override void _Ready() {
     Global.Services.Get<Planner>().SetAdventurer(this);
+    GetNode<AnimatedSprite2D>("Sprite").Play();
     base._Ready();
   }
   // ==>
