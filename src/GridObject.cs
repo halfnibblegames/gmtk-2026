@@ -20,4 +20,25 @@ public abstract partial class GridObject : Node2D {
   protected void TeleportTo(Vector2I coords) {
     Coords = coords;
   }
+
+  protected bool TryMove(Vector2I diff) {
+    if (Level is null) {
+      GD.PushError($"Attempting to move {this} without a level");
+      return false;
+    }
+
+    if (diff.LengthSquared() != 1) {
+      GD.PushWarning($"Attempting to move {this} by more than one step: {diff}");
+    }
+
+    var targetPos = Coords + diff;
+    var targetTile = Level.GetTile(targetPos);
+    if (targetTile.Collides) {
+      return false;
+    }
+
+    // TODO: make move different than teleport
+    TeleportTo(targetPos);
+    return true;
+  }
 }

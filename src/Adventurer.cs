@@ -10,25 +10,16 @@ public partial class Adventurer : GridObject {
 
   public override void _Input(InputEvent @event) {
     if (@event.IsActionReleased(InputActions.Left)) {
-      move(Vector2I.Left);
+      TryMove(Vector2I.Left);
     }
     if (@event.IsActionReleased(InputActions.Right)) {
-      move(Vector2I.Right);
+      TryMove(Vector2I.Right);
     }
     if (@event.IsActionReleased(InputActions.Up)) {
-      move(Vector2I.Up);
+      TryMove(Vector2I.Up);
     }
     if (@event.IsActionReleased(InputActions.Down)) {
-      move(Vector2I.Down);
+      TryMove(Vector2I.Down);
     }
-  }
-
-  private void move(Vector2I diff) {
-    if (diff.LengthSquared() != 1) {
-      GD.PushWarning($"Attempting to move {this} by more than one step: {diff}");
-    }
-
-    // TODO: make this a nicer move
-    TeleportTo(Coords + diff);
   }
 }
