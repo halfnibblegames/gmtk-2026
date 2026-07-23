@@ -22,4 +22,10 @@ public partial class ActionButton : TextureButton {
   private void updateVisuals() {
     GetNode<Label>("Label").Text = playerAction?.Name ?? "";
   }
+
+  public override void _Pressed() {
+    base._Pressed();
+    if (playerAction is null) return;
+    GetParent().GetParent<Planner>().FillNextSlot(playerAction);
+  }
 }

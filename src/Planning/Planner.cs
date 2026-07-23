@@ -23,6 +23,7 @@ public partial class Planner : Panel {
 
   private readonly Plan plan = new();
   private List<SlotButton> slotButtons => GetNode<Container>("Slots").GetChildren().OfType<SlotButton>().ToList();
+  private bool isInPlayback;
 
   public override void _Ready() {
     Global.Services.ProvideInScene(this);
@@ -47,11 +48,24 @@ public partial class Planner : Panel {
     else {
       adventurer!.QueueActions(plan.Actions!);
       Global.Services.Get<TimelinePlayer>().Play(plan.Actions.Count);
+      isInPlayback = true;
+      updateButtonsEnabled();
     }
   }
   // ==>
 
+  public override void _Process(double delta) {
+    if (!isInPlayback) return;
+
+    isInPlayback = Global.Services.Get<TimelinePlayer>().IsPlaying;
+    if (!isInPlayback) {
+      updateButtonsEnabled();
+    }
+  }
+
   public override void _Input(InputEvent @event) {
+    if (isInPlayback) return;
+
     // Queue actions based on input.
     foreach (var action in Enum.GetValues<PlayerAction>()) {
       var actionRecord = PlannedActions.FromEnum(action);
@@ -74,13 +88,30 @@ public partial class Planner : Panel {
   }
 
   public void FillNextSlot(IPlannedAction action) {
+    if (isInPlayback) {
+      GD.PushWarning("Received fill slot request during playback");
+      return;
+    }
     var firstEmptySlot = plan.Actions.IndexOf(null);
     if (firstEmptySlot == -1) return;
     plan.Actions[firstEmptySlot] = action;
     onPlanChanged();
   }
 
+  public void ClearSlot(int index) {
+    if (isInPlayback) {
+      GD.PushWarning("Received clear slot request during playback");
+      return;
+    }
+    plan.Actions[index] = null;
+    onPlanChanged();
+  }
+
   private void clearLastSlot() {
+    if (isInPlayback) {
+      GD.PushWarning("Received clear slot request during playback");
+      return;
+    }
     var lastFilledSlot = slotButtons.FindLastIndex(s => s.PlayerAction is not null);
     if (lastFilledSlot == -1) return;
     plan.Actions[lastFilledSlot] = null;
@@ -138,6 +169,15 @@ public partial class Planner : Panel {
       newButton.Name = $"Slot{buttonCount}";
       slotsContainer.AddChild(newButton);
       newButton.Owner = GetTree().EditedSceneRoot;
+    }
+  }
+
+  private void updateButtonsEnabled() {
+    foreach (var button in GetNode<Container>("Slots").GetChildren().OfType<SlotButton>()) {
+      button.Disabled = isInPlayback;
+    }
+    foreach (var button in GetNode<Container>("Actions").GetChildren().OfType<ActionButton>()) {
+      button.Disabled = isInPlayback;
     }
   }
 }

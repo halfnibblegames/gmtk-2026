@@ -23,4 +23,9 @@ public partial class SlotButton : TextureButton {
     TextureNormal = PlayerAction is null ? emptyTexture : fullTexture;
     GetNode<Label>("Label").Text = PlayerAction?.Name ?? "";
   }
+
+  public override void _Pressed() {
+    base._Pressed();
+    GetParent().GetParent<Planner>().ClearSlot(GetIndex());
+  }
 }
