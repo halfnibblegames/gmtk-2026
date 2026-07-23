@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://bfpj04a166dpv"]
+
+[ext_resource type="Texture2D" uid="uid://d18bvinphdswj" path="res://assets/ui/ui_tiles.png" id="1_eaddr"]
+[ext_resource type="Script" uid="uid://cgcgs2am3u6g4" path="res://src/Planning/ActionButton.cs" id="2_gbnna"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5qjmp"]
+atlas = ExtResource("1_eaddr")
+region = Rect2(66, 33, 32, 32)
+
+[node name="Action1" type="TextureButton" unique_id=1223791003]
+custom_minimum_size = Vector2(64, 64)
+size_flags_horizontal = 4
+texture_normal = SubResource("AtlasTexture_5qjmp")
+stretch_mode = 0
+script = ExtResource("2_gbnna")
+
+[node name="Label" type="Label" parent="." unique_id=1974479978]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1

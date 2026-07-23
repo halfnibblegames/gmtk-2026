@@ -2,10 +2,30 @@
 
 [ext_resource type="PackedScene" uid="uid://cqrb5682t73m2" path="res://src/Game.tscn" id="1_cmrm7"]
 [ext_resource type="PackedScene" uid="uid://ci1x8kyywb0ap" path="res://src/Controls/HVolumeSlider.tscn" id="2_ulbr1"]
+[ext_resource type="PackedScene" uid="uid://c2f1gq83ftprk" path="res://src/Planning/SlotButton.tscn" id="3_5qjmp"]
+[ext_resource type="Script" uid="uid://bwditjdpfy1ka" path="res://src/Planning/Planner.cs" id="3_8ec3e"]
+[ext_resource type="Script" uid="uid://bycy3xid28202" path="res://src/Planning/SlotButton.cs" id="5_8ec3e"]
+[ext_resource type="Texture2D" uid="uid://d18bvinphdswj" path="res://assets/ui/ui_tiles.png" id="5_38a0m"]
+[ext_resource type="PackedScene" uid="uid://bfpj04a166dpv" path="res://src/Planning/ActionButton.tscn" id="5_vjwby"]
 
-[node name="Main" type="Node2D" unique_id=1179298517]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vjwby"]
+atlas = ExtResource("5_38a0m")
+region = Rect2(99, 33, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ec3e"]
+atlas = ExtResource("5_38a0m")
+region = Rect2(66, 33, 32, 32)
+
+[node name="Main" type="Control" unique_id=732094339]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="PixelPerfectContainer" type="SubViewportContainer" parent="." unique_id=1062184323]
+layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
 mouse_target = true
@@ -24,6 +44,8 @@ render_target_update_mode = 4
 [node name="Game" parent="PixelPerfectContainer/PixelPerfectViewport" unique_id=1104527951 instance=ExtResource("1_cmrm7")]
 
 [node name="VolumeSlider" parent="." unique_id=1885213901 instance=ExtResource("2_ulbr1")]
+visible = false
+layout_mode = 0
 offset_left = 1212.0
 offset_top = 4.0
 offset_right = 1276.0
@@ -31,3 +53,108 @@ offset_bottom = 20.0
 size_flags_horizontal = 8
 size_flags_vertical = 0
 Volume = 1.0
+
+[node name="PlanningPanel" type="Panel" parent="." unique_id=1924032927]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -280.0
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("3_8ec3e")
+slotButtonScene = ExtResource("3_5qjmp")
+slotsCount = 6
+
+[node name="Slots" type="VBoxContainer" parent="PlanningPanel" unique_id=521835239]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 40.0
+offset_right = 120.0
+offset_bottom = 680.0
+alignment = 1
+
+[node name="Slot1" type="TextureButton" parent="PlanningPanel/Slots" unique_id=870601940 instance=ExtResource("3_5qjmp")]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+stretch_mode = 5
+script = ExtResource("5_8ec3e")
+emptyTexture = SubResource("AtlasTexture_vjwby")
+fullTexture = SubResource("AtlasTexture_8ec3e")
+
+[node name="Slot2" type="TextureButton" parent="PlanningPanel/Slots" unique_id=228691349 instance=ExtResource("3_5qjmp")]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+stretch_mode = 5
+script = ExtResource("5_8ec3e")
+emptyTexture = SubResource("AtlasTexture_vjwby")
+fullTexture = SubResource("AtlasTexture_8ec3e")
+
+[node name="Slot3" type="TextureButton" parent="PlanningPanel/Slots" unique_id=1143573523 instance=ExtResource("3_5qjmp")]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+stretch_mode = 5
+script = ExtResource("5_8ec3e")
+emptyTexture = SubResource("AtlasTexture_vjwby")
+fullTexture = SubResource("AtlasTexture_8ec3e")
+
+[node name="Slot4" type="TextureButton" parent="PlanningPanel/Slots" unique_id=2147368178 instance=ExtResource("3_5qjmp")]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+stretch_mode = 5
+script = ExtResource("5_8ec3e")
+emptyTexture = SubResource("AtlasTexture_vjwby")
+fullTexture = SubResource("AtlasTexture_8ec3e")
+
+[node name="Slot5" type="TextureButton" parent="PlanningPanel/Slots" unique_id=1729304940 instance=ExtResource("3_5qjmp")]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+stretch_mode = 5
+script = ExtResource("5_8ec3e")
+emptyTexture = SubResource("AtlasTexture_vjwby")
+fullTexture = SubResource("AtlasTexture_8ec3e")
+
+[node name="Slot6" type="TextureButton" parent="PlanningPanel/Slots" unique_id=1405006999 instance=ExtResource("3_5qjmp")]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+stretch_mode = 5
+script = ExtResource("5_8ec3e")
+emptyTexture = SubResource("AtlasTexture_vjwby")
+fullTexture = SubResource("AtlasTexture_8ec3e")
+
+[node name="Actions" type="VBoxContainer" parent="PlanningPanel" unique_id=226240548]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 40.0
+offset_right = 240.0
+offset_bottom = 680.0
+alignment = 1
+
+[node name="Action1" parent="PlanningPanel/Actions" unique_id=1223791003 instance=ExtResource("5_vjwby")]
+layout_mode = 2
+assignedAction = 1
+
+[node name="Action2" parent="PlanningPanel/Actions" unique_id=829782102 instance=ExtResource("5_vjwby")]
+layout_mode = 2
+assignedAction = 2
+
+[node name="Action3" parent="PlanningPanel/Actions" unique_id=1383511337 instance=ExtResource("5_vjwby")]
+layout_mode = 2
+assignedAction = 3
+
+[node name="Action4" parent="PlanningPanel/Actions" unique_id=1545636605 instance=ExtResource("5_vjwby")]
+layout_mode = 2
+assignedAction = 4
