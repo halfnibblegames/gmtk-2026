@@ -28,14 +28,14 @@ public static class PlannedActions {
   private class MoveAction(PlayerAction asEnum, Vector2I diff, string name, StringName? shortcut)
     : ActionBase(asEnum, name, shortcut) {
     public override void Do(MovingGridObject target) {
-      target.Move(diff);
+      target.TryMove(diff);
     }
   }
 
   private class ForwardAction(PlayerAction asEnum, int amount, string name, StringName? shortcut)
     : ActionBase(asEnum, name, shortcut) {
     public override void Do(MovingGridObject target) {
-      target.Move(target.Forward * amount);
+      target.TryMove(target.Forward * amount);
     }
   }
 }
