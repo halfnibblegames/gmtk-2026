@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cjtn2tmgkv1r4"
+path="res://.godot/imported/adventurers.aseprite-46f91faf8206cfb43ecee1b3d0337994.res"
+
+[deps]
+
+source_file="res://assets/adventurers.aseprite"
+dest_files=["res://.godot/imported/adventurers.aseprite-46f91faf8206cfb43ecee1b3d0337994.res"]
+
+[params]
+
