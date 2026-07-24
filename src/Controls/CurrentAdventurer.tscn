@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://k64knko6jgo6"]
 
-[ext_resource type="Texture2D" uid="uid://ba3v1oat4704l" path="res://assets/portrait_frame.png" id="1_4eul8"]
 [ext_resource type="Script" uid="uid://c276vh0hi3twa" path="res://src/Controls/CurrentAdventurer.cs" id="1_esem4"]
-[ext_resource type="Texture2D" uid="uid://b6klx70b4p52f" path="res://assets/portrait_rogue.png" id="2_nm1uw"]
-[ext_resource type="Texture2D" uid="uid://cn37f020cgho" path="res://assets/portrait_wizard.png" id="3_esem4"]
-[ext_resource type="Texture2D" uid="uid://cvphb1ojcecvw" path="res://assets/switch_button.png" id="4_33iid"]
-[ext_resource type="Texture2D" uid="uid://dmjbnwqaeu6wc" path="res://assets/switch_button_pressed.png" id="5_t63hp"]
+[ext_resource type="Texture2D" uid="uid://vrna5y2ys8ou" path="res://assets/ui/portrait_frame.png" id="2_esem4"]
+[ext_resource type="Texture2D" uid="uid://dh1snvtvwyqit" path="res://assets/ui/portrait_rogue.png" id="3_33iid"]
+[ext_resource type="Texture2D" uid="uid://bxfw3ebs5ykkj" path="res://assets/ui/portrait_wizard.png" id="4_t63hp"]
+[ext_resource type="Texture2D" uid="uid://bbyuyqou5ajqe" path="res://assets/ui/switch_button.png" id="5_4fguf"]
+[ext_resource type="Texture2D" uid="uid://b4egletuynkwm" path="res://assets/ui/switch_button_pressed.png" id="6_xtltn"]
 
 [node name="CurrentAdventurer" type="Control" unique_id=4856201 node_paths=PackedStringArray("SwitchButton")]
 layout_mode = 3
@@ -24,7 +24,7 @@ offset_left = 32.0
 offset_top = 32.0
 offset_right = 160.0
 offset_bottom = 160.0
-texture = ExtResource("1_4eul8")
+texture = ExtResource("2_esem4")
 
 [node name="Portrait" type="TextureRect" parent="Frame2" unique_id=779693507]
 layout_mode = 0
@@ -32,7 +32,7 @@ offset_left = -1.0
 offset_top = -1.0
 offset_right = 39.0
 offset_bottom = 39.0
-texture = ExtResource("2_nm1uw")
+texture = ExtResource("3_33iid")
 
 [node name="Overlay" type="ColorRect" parent="Frame2" unique_id=1397046221]
 layout_mode = 1
@@ -47,13 +47,13 @@ color = Color(0, 0, 0, 0.5019608)
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource("1_4eul8")
+texture = ExtResource("2_esem4")
 
 [node name="Portrait" type="TextureRect" parent="Frame1" unique_id=580655178]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource("3_esem4")
+texture = ExtResource("4_t63hp")
 
 [node name="Overlay" type="ColorRect" parent="Frame1" unique_id=438835615]
 visible = false
@@ -71,5 +71,5 @@ offset_left = 180.0
 offset_top = 60.0
 offset_right = 260.0
 offset_bottom = 124.0
-texture_normal = ExtResource("4_33iid")
-texture_pressed = ExtResource("5_t63hp")
+texture_normal = ExtResource("5_4fguf")
+texture_pressed = ExtResource("6_xtltn")

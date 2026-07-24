@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6klx70b4p52f"
-path="res://.godot/imported/portrait_rogue.png-2d958d986fe0c979a988fa74a3f8852f.ctex"
+uid="uid://dh1snvtvwyqit"
+path="res://.godot/imported/portrait_rogue.png-25430f3df0b823d1b36d775e9bd99a8c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/portrait_rogue.png"
-dest_files=["res://.godot/imported/portrait_rogue.png-2d958d986fe0c979a988fa74a3f8852f.ctex"]
+source_file="res://assets/ui/portrait_rogue.png"
+dest_files=["res://.godot/imported/portrait_rogue.png-25430f3df0b823d1b36d775e9bd99a8c.ctex"]
 
 [params]
 

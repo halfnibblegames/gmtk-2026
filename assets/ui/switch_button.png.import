@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ba3v1oat4704l"
-path="res://.godot/imported/portrait_frame.png-257d70b94143a7c224bcffd3a5b87869.ctex"
+uid="uid://bbyuyqou5ajqe"
+path="res://.godot/imported/switch_button.png-1cccea00ceb4cef5b6d052b0be91218c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/portrait_frame.png"
-dest_files=["res://.godot/imported/portrait_frame.png-257d70b94143a7c224bcffd3a5b87869.ctex"]
+source_file="res://assets/ui/switch_button.png"
+dest_files=["res://.godot/imported/switch_button.png-1cccea00ceb4cef5b6d052b0be91218c.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://csgei5c200c2e"
-path="res://.godot/imported/action_border.png-573105ef9ccdb355c052148808260693.ctex"
+uid="uid://b4egletuynkwm"
+path="res://.godot/imported/switch_button_pressed.png-a7f9af0b0d0783867ac6a1ac35ec3e5a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/action_border.png"
-dest_files=["res://.godot/imported/action_border.png-573105ef9ccdb355c052148808260693.ctex"]
+source_file="res://assets/ui/switch_button_pressed.png"
+dest_files=["res://.godot/imported/switch_button_pressed.png-a7f9af0b0d0783867ac6a1ac35ec3e5a.ctex"]
 
 [params]
 

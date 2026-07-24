@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cvphb1ojcecvw"
-path="res://.godot/imported/switch_button.png-acc38069fdc0b8bc053c23b3456ee9f1.ctex"
+uid="uid://v4y7rs2vtrjx"
+path="res://.godot/imported/d20.png-c2961a81f51728504aff78fbd9c43586.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/switch_button.png"
-dest_files=["res://.godot/imported/switch_button.png-acc38069fdc0b8bc053c23b3456ee9f1.ctex"]
+source_file="res://assets/ui/d20.png"
+dest_files=["res://.godot/imported/d20.png-c2961a81f51728504aff78fbd9c43586.ctex"]
 
 [params]
 
