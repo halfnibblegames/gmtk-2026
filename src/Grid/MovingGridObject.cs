@@ -100,6 +100,7 @@ public abstract partial class MovingGridObject : GridObject {
   }
 
   public void TeleportTo(Vector2I coords) {
+    moveAnimation?.CompleteInstantly();
     moveAnimation = null;
     Coords = coords;
     SnapToTile();

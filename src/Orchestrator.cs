@@ -21,6 +21,8 @@ public partial class Orchestrator : Node {
   private readonly List<Adventurer> adventurers = [];
   private int focusedAdventurerIndex = -1;
   private double playbackTimeRemaining;
+  private bool hasWon;
+  private IPlannedAction? actionAfterPlayback;
 
   private Adventurer? focusedAdventurer => focusedAdventurerIndex >= 0 ? adventurers[focusedAdventurerIndex] : null;
 
@@ -31,6 +33,7 @@ public partial class Orchestrator : Node {
 
     CurrentLevel = level;
     levelActivated = false;
+    hasWon = false;
     timeline = new Timeline(GetTree(), level.RoundCount);
 
     camera.LimitLeft = 0;
@@ -62,6 +65,11 @@ public partial class Orchestrator : Node {
       playbackTimeRemaining = Math.Max(0, playbackTimeRemaining - delta);
     }
 
+    if (playbackTimeRemaining <= 0 && actionAfterPlayback is not null) {
+      queueAdventurerAction(actionAfterPlayback);
+      actionAfterPlayback = null;
+    }
+
     if (playbackTimeRemaining <= 0 && checkWinCondition()) {
       GD.Print("You win!");
       startPlayback();
@@ -69,7 +77,7 @@ public partial class Orchestrator : Node {
   }
 
   public override void _Input(InputEvent @event) {
-    if (!levelActivated || focusedAdventurerIndex < 0 || playbackTimeRemaining > 0) return;
+    if (!levelActivated || focusedAdventurerIndex < 0 || hasWon) return;
 
     if (timeline!.CurrentRound < timeline.TotalRoundCount) {
       foreach (var action in focusedAdventurer!.AvailableActions) {
@@ -136,6 +144,13 @@ public partial class Orchestrator : Node {
   }
 
   private void queueAdventurerAction(IPlannedAction action) {
+    // If we are still playing back the previous animation, we may already hit the new animation early.
+    // We queue it up (overriding any previous actions) and immediately execute it after.
+    if (playbackTimeRemaining > 0) {
+      actionAfterPlayback = action;
+      return;
+    }
+
     focusedAdventurer?.SetActionForRound(timeline!.CurrentRound, action);
     timeline!.Advance();
     playbackTimeRemaining = Constants.TimeBetweenRounds;
@@ -172,13 +187,12 @@ public partial class Orchestrator : Node {
   }
 
   private void startPlayback() {
-    playbackTimeRemaining = 9999;
+    hasWon = true;
     unfocusAdventurer();
     Global.Services.Get<TimelinePlayer>().Play(timeline!, onPlaybackComplete);
   }
 
   private void onPlaybackComplete() {
-    playbackTimeRemaining = 0;
     Global.Services.Get<GameProgression>().LoadNextLevel();
   }
 }
