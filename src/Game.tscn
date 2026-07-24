@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://cc0n1wyjmxc20" path="res://src/Orchestrator.cs" id="1_kqvf5"]
 [ext_resource type="Script" uid="uid://dj3o6o1i4frge" path="res://src/Replay/TimelinePlayer.cs" id="2_lqjwq"]
 [ext_resource type="PackedScene" uid="uid://dqukxs8ymmnke" path="res://src/Levels/Level02.tscn" id="3_km1yn"]
+[ext_resource type="PackedScene" uid="uid://kpvcj41byjv6" path="res://src/Animations/AnimationRunner.tscn" id="6_eu8jo"]
 
 [node name="Game" type="Node2D" unique_id=1550737297]
 y_sort_enabled = true
@@ -21,5 +22,7 @@ camera = NodePath("../Camera")
 
 [node name="TimelinePlayer" type="Node" parent="Orchestrator" unique_id=547968124]
 script = ExtResource("2_lqjwq")
+
+[node name="AnimationRunner" parent="Orchestrator" unique_id=2024031315 instance=ExtResource("6_eu8jo")]
 
 [node name="Camera" type="Camera2D" parent="." unique_id=1257331831]
