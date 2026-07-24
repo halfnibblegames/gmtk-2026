@@ -4,10 +4,10 @@ using Godot;
 using HalfNibbleGame.Data;
 using HalfNibbleGame.Grid;
 
-namespace HalfNibbleGame;
+namespace HalfNibbleGame.Levels;
 
 public partial class Level : Node2D {
-  [Export] private Orchestrator orchestrator = null!;
+  [Export] public int RoundCount { get; private set; }
 
   private TileMapLayer? cachedTileMapLayer;
   private TileMapLayer tileMapLayer {
@@ -20,10 +20,6 @@ public partial class Level : Node2D {
   public int HeightInPixels => tileMapLayer.GetUsedRect().Size.Y * tileMapLayer.TileSet.TileSize.Y;
 
   public List<Portal> AllPortals => GetChildren().OfType<Portal>().ToList();
-
-  public override void _Ready() {
-    orchestrator.SetLevel(this);
-  }
 
   public Tile GetTile(Vector2I coords) {
     return Tile.FromTileData(coords, tileMapLayer.MapToLocal(coords), tileMapLayer.GetCellTileData(coords));

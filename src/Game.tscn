@@ -1,11 +1,14 @@
 [gd_scene format=3 uid="uid://cqrb5682t73m2"]
 
-[ext_resource type="PackedScene" uid="uid://drd6ulao516cd" path="res://src/Level.tscn" id="1_2c5w0"]
+[ext_resource type="PackedScene" uid="uid://drd6ulao516cd" path="res://src/Levels/Level01.tscn" id="1_2c5w0"]
+[ext_resource type="Script" uid="uid://c7858tn1g1gri" path="res://src/GameProgression.cs" id="1_7omc5"]
 [ext_resource type="Script" uid="uid://cc0n1wyjmxc20" path="res://src/Orchestrator.cs" id="1_kqvf5"]
 [ext_resource type="Script" uid="uid://dj3o6o1i4frge" path="res://src/Replay/TimelinePlayer.cs" id="2_lqjwq"]
 
 [node name="Game" type="Node2D" unique_id=1550737297]
 y_sort_enabled = true
+script = ExtResource("1_7omc5")
+levels = [ExtResource("1_2c5w0")]
 
 [node name="Extent" type="Marker2D" parent="." unique_id=1116238729]
 position = Vector2(320, 180)
@@ -17,8 +20,5 @@ camera = NodePath("../Camera")
 
 [node name="TimelinePlayer" type="Node" parent="Orchestrator" unique_id=547968124]
 script = ExtResource("2_lqjwq")
-
-[node name="Level" parent="." unique_id=77528087 node_paths=PackedStringArray("orchestrator") instance=ExtResource("1_2c5w0")]
-orchestrator = NodePath("../Orchestrator")
 
 [node name="Camera" type="Camera2D" parent="." unique_id=1257331831]

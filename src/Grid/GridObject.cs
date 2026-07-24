@@ -4,7 +4,7 @@ using Godot;
 namespace HalfNibbleGame.Grid;
 
 public abstract partial class GridObject : Node2D {
-  protected Level? Level;
+  protected Levels.Level? Level;
   public Vector2I Coords { get; protected set; }
 
   protected void SnapToTile() {

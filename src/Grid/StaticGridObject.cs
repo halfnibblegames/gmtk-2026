@@ -2,7 +2,7 @@ namespace HalfNibbleGame.Grid;
 
 public abstract partial class StaticGridObject : GridObject {
   public override void _Ready() {
-    Level = GetParent<Level>();
+    Level = GetParent<Levels.Level>();
     Coords = Level.TileFromPosition(Position).Coords;
   }
 }

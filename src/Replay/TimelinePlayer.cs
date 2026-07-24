@@ -1,6 +1,5 @@
 using System;
 using Godot;
-using HalfNibbleGame.Autoload;
 using static HalfNibbleGame.Data.Constants;
 
 namespace HalfNibbleGame.Replay;
@@ -13,14 +12,10 @@ public partial class TimelinePlayer : Node {
 
   public bool IsPlaying { get; private set; }
 
-  public override void _Ready() {
-    Global.Services.ProvideInScene(this);
-  }
-
   public void Play(int roundCount) {
     if (IsPlaying) throw new Exception("Cannot play more than once");
 
-    timeline = Global.Services.Get<Timeline>();
+    // TODO: get the timeline from somewhere
     timeline.Advance();
     timeUntilNextFrame = TimeBetweenRounds;
     roundsLeft = roundCount - 1;

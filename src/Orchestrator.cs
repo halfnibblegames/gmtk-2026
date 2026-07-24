@@ -12,9 +12,9 @@ namespace HalfNibbleGame;
 public partial class Orchestrator : Node {
   [Export] private Camera2D camera = null!;
 
-  public Level? CurrentLevel { get; private set; }
+  public Levels.Level? CurrentLevel { get; private set; }
 
-  private Timeline timeline = null!;
+  private Timeline? timeline;
 
   private bool levelActivated = true;
   private readonly List<Adventurer> adventurers = [];
@@ -23,14 +23,14 @@ public partial class Orchestrator : Node {
 
   private Adventurer? focusedAdventurer => focusedAdventurerIndex >= 0 ? adventurers[focusedAdventurerIndex] : null;
 
-  public void SetLevel(Level level) {
+  public void SetLevel(Levels.Level level) {
     if (CurrentLevel is not null) {
-      // TODO: in the future we want to do proper cleanup, but right now important cleanup is missing
-      throw new Exception();
+      cleanUpPreviousLevel();
     }
 
     CurrentLevel = level;
     levelActivated = false;
+    timeline = new Timeline(GetTree(), level.RoundCount);
 
     camera.LimitLeft = 0;
     camera.LimitRight = level.WidthInPixels;
@@ -38,10 +38,15 @@ public partial class Orchestrator : Node {
     camera.LimitBottom = level.HeightInPixels;
   }
 
+  private void cleanUpPreviousLevel() {
+    CurrentLevel = null;
+    unfocusAdventurer();
+    adventurers.Clear();
+    playbackTimeRemaining = 0;
+  }
+
   public override void _Ready() {
-    // TODO: don't hardcode the number of rounds
-    timeline = new Timeline(GetTree(), 10);
-    Global.Services.ProvideInScene(timeline);
+    Global.Services.ProvideInScene(this);
   }
 
   public override void _Process(double delta) {
@@ -57,7 +62,7 @@ public partial class Orchestrator : Node {
   public override void _Input(InputEvent @event) {
     if (!levelActivated || focusedAdventurerIndex < 0 || playbackTimeRemaining > 0) return;
 
-    if (timeline.CurrentRound < timeline.TotalRoundCount) {
+    if (timeline!.CurrentRound < timeline.TotalRoundCount) {
       foreach (var action in focusedAdventurer!.AvailableActions) {
         var shortcut = action.Shortcut;
         if (shortcut is null) continue;
@@ -122,13 +127,13 @@ public partial class Orchestrator : Node {
   }
 
   private void queueAdventurerAction(IPlannedAction action) {
-    focusedAdventurer?.SetActionForRound(timeline.CurrentRound, action);
-    timeline.Advance();
+    focusedAdventurer?.SetActionForRound(timeline!.CurrentRound, action);
+    timeline!.Advance();
     playbackTimeRemaining = Constants.TimeBetweenRounds;
   }
 
   private void clearLastAdventurerAction() {
-    if (timeline.CurrentRound <= 0) return;
+    if (timeline!.CurrentRound <= 0) return;
     focusedAdventurer?.ClearActionForRound(timeline.CurrentRound - 1);
     timeline.Rollback();
   }
