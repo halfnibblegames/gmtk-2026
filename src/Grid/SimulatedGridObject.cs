@@ -60,7 +60,10 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
   public void CheckAgainstHazards(List<IHazard> hazards, RoundContext context) {
     if (dead) return;
     if (hazards.Any(h => h.Coords == Coords && h.Hazardous)) {
-      context.RegisterOutcome(Die);
+      context.RegisterOutcome(() => {
+        Die();
+        Visible = false;
+      });
     }
   }
 

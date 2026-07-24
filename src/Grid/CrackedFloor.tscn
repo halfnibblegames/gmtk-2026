@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://bmwqlxeni7vcf"]
+
+[ext_resource type="Script" uid="uid://c6pm3sqimjsjv" path="res://src/Grid/CrackedFloor.cs" id="1_dpbil"]
+[ext_resource type="Texture2D" uid="uid://dxx6g2h3h0jac" path="res://assets/tilemap.png" id="1_xix1k"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gft63"]
+atlas = ExtResource("1_xix1k")
+region = Rect2(119, 68, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dpbil"]
+atlas = ExtResource("1_xix1k")
+region = Rect2(119, 17, 16, 16)
+
+[node name="CrackedFloor" type="Node2D" unique_id=406908158]
+script = ExtResource("1_dpbil")
+
+[node name="FloorSprite" type="Sprite2D" parent="." unique_id=307370809]
+texture = SubResource("AtlasTexture_gft63")
+
+[node name="GapSprite" type="Sprite2D" parent="." unique_id=1016107297]
+visible = false
+texture = SubResource("AtlasTexture_dpbil")
