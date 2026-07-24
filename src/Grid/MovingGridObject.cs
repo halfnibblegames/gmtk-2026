@@ -35,13 +35,12 @@ public abstract partial class MovingGridObject : GridObject {
     var accumulatedMovement = Vector2I.Zero;
 
     while (accumulatedMovement != diff) {
-      var targetPos = Coords + diff;
+      var targetPos = Coords + accumulatedMovement + dir;
       var targetTile = Level.GetTile(targetPos);
       if (targetTile.Collides) {
         Move(accumulatedMovement);
         return new MoveResult(MoveOutcome.Collided, accumulatedMovement);
       }
-
       if (targetTile.Pit) {
         accumulatedMovement += dir;
         Move(accumulatedMovement);
