@@ -99,11 +99,6 @@ public partial class Orchestrator : Node {
     // Switch adventurers
     if (@event.IsActionReleased(InputActions.SwitchAdventurers)) {
       focusNextAdventurer();
-      var plannedRoundCount = focusedAdventurer!.PlannedRoundCount;
-      // We don't move forward in time (yet?), so instead we only check if we need to go back in time.
-      if (plannedRoundCount < timeline.CurrentRound) {
-        timeline.ResetToRound(plannedRoundCount);
-      }
     }
   }
 
@@ -134,9 +129,31 @@ public partial class Orchestrator : Node {
   private void focusNextAdventurer() {
     var nextIndex = (focusedAdventurerIndex + 1) % adventurers.Count;
     unfocusAdventurer();
-    focusedAdventurerIndex = nextIndex;
+    focusAdventurer(nextIndex);
+  }
+
+  private void focusNextAdventurerWithUnplannedMoves() {
+    var startIndex = focusedAdventurerIndex;
+    var index = (startIndex + 1) % adventurers.Count;
+    while (index != startIndex) {
+      if (adventurers[index].PlannedRoundCount < timeline!.TotalRoundCount) {
+        focusAdventurer(index);
+        break;
+      }
+      index = (index + 1) % adventurers.Count;
+    }
+  }
+
+  private void focusAdventurer(int index) {
+    focusedAdventurerIndex = index;
     focusedAdventurer!.Moved += onAdventurerMoved;
     onAdventurerMoved(focusedAdventurer.Coords);
+
+    var plannedRoundCount = focusedAdventurer!.PlannedRoundCount;
+    // We don't move forward in time (yet?), so instead we only check if we need to go back in time.
+    if (plannedRoundCount < timeline!.CurrentRound) {
+      timeline.ResetToRound(plannedRoundCount);
+    }
   }
 
   private void onAdventurerMoved(Vector2I newCoords) {
@@ -156,6 +173,11 @@ public partial class Orchestrator : Node {
     focusedAdventurer?.SetActionForRound(timeline!.CurrentRound, action);
     timeline!.Advance();
     playbackTimeRemaining = Constants.TimeBetweenRounds;
+
+    // Automatically focus the next adventurer that still needs moves if there is one.
+    if (focusedAdventurer?.PlannedRoundCount == timeline.TotalRoundCount) {
+      focusNextAdventurerWithUnplannedMoves();
+    }
   }
 
   private void clearLastAdventurerAction() {
