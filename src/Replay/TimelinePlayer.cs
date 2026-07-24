@@ -12,10 +12,10 @@ public partial class TimelinePlayer : Node {
 
   public bool IsPlaying { get; private set; }
 
-  public void Play(int roundCount) {
+  public void Play(Timeline timelineToPlay, int roundCount) {
     if (IsPlaying) throw new Exception("Cannot play more than once");
 
-    // TODO: get the timeline from somewhere
+    timeline = timelineToPlay;
     timeline.Advance();
     timeUntilNextFrame = TimeBetweenRounds;
     roundsLeft = roundCount - 1;
