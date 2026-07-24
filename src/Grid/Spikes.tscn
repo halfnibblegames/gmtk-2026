@@ -1,0 +1,64 @@
+[gd_scene format=4 uid="uid://ctklr4sab4rhr"]
+
+[ext_resource type="Script" uid="uid://cndj85il0ebvq" path="res://src/Grid/Spikes.cs" id="1_cmb1g"]
+
+[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_cmb1g"]
+_data = PackedByteArray("AAADAAUAAAABAAAAIAAAACAAAACeAAAAUklGRpYAAABXRUJQVlA4TIoAAAAvH8AHEB8gECBTFnRoIiQgUw5IThIIkCkLohSY/wBkTT84qm2rdc57pD1XTwISfjHSjLEyywxPoTqI6L/Ctm0bZ+/2DYbJxSWJh/iMz/zO78VKfWipcQEPEJ+Q37BYmT8UDq3enWTi3V1KEDoIqcD/AsBiuwEceitlgQLlatLyK3F8GX33YgDdPwM=")
+size_override = Vector2(32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_re76b"]
+atlas = SubResource("PortableCompressedTexture2D_cmb1g")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_85syc"]
+atlas = SubResource("PortableCompressedTexture2D_cmb1g")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eiy75"]
+atlas = SubResource("PortableCompressedTexture2D_cmb1g")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ly8oc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_re76b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_85syc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eiy75")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 14.0
+}]
+
+[node name="Spikes" type="Node2D" unique_id=1746732369]
+script = ExtResource("1_cmb1g")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=730609687]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_ly8oc")
+metadata/_aseprite_wizard_interface_config_ = {
+"animation_section": false,
+"layer_section": false,
+"output_section": false,
+"pending_changes": {},
+"slice_section": false
+}
+metadata/_aseprite_wizard_config_ = {
+"embed_tex": true,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"scale": "1.0",
+"should_round_fps": true,
+"slice": "",
+"source": "res://assets/spikes.aseprite",
+"source_uid": 8328361724662745991
+}
+metadata/_aseprite_wizard_source_file_hash_ = "c82c5873cbe4eb4cafcfab286425ebb6"
