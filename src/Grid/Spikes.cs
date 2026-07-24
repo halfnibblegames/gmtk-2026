@@ -4,16 +4,20 @@ using HalfNibbleGame.Replay;
 
 namespace HalfNibbleGame.Grid;
 
-public partial class Spikes : StaticGridObject, ISimulated {
+public partial class Spikes : StaticGridObject, IHazard, ISimulated {
   [Export] private bool initiallyExtended;
   private bool extended;
 
   // Lazily initialized
   private AnimatedSprite2D sprite = null!;
 
+  public bool IsHazardous => extended;
+
   public override void _Ready() {
     AddToGroup(Groups.Simulated);
+    AddToGroup(Groups.Hazard);
     sprite = GetNode<AnimatedSprite2D>("Sprite");
+    base._Ready();
   }
 
   public void Advance(RoundContext context) {

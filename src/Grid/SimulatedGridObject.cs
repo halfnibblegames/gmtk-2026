@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using HalfNibbleGame.Data;
 using HalfNibbleGame.Planning;
@@ -7,7 +8,7 @@ using HalfNibbleGame.Replay;
 
 namespace HalfNibbleGame.Grid;
 
-public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated {
+public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated, IMortal {
 
   // TODO: should probably be more complex
   private bool dead;
@@ -23,6 +24,7 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
   public override void _Ready() {
     base._Ready();
     AddToGroup(Groups.Simulated);
+    AddToGroup(Groups.Mortal);
   }
 
   public void Advance(RoundContext context) {
@@ -39,6 +41,12 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
     stunnedTurns = 0;
     Visible = true;
     TeleportTo(storedCoords);
+  }
+
+  public void CheckAgainstHazards(List<IHazard> hazards, RoundContext context) {
+    if (hazards.Any(h => h.Coords == Coords && h.IsHazardous)) {
+      context.RegisterOutcome(Die);
+    }
   }
 
   public void Snapshot() {
