@@ -40,6 +40,8 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
     dead = false;
     stunnedTurns = 0;
     Visible = true;
+    Modulate = new Color(1, 1, 1);
+    Scale = Vector2.One;
     TeleportTo(storedCoords);
   }
 
@@ -57,7 +59,6 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
   public void Die() {
     GD.Print("Oh dear, you're dead!");
     dead = true;
-    Visible = false;
   }
 
   public void Stun(int turnCount) {

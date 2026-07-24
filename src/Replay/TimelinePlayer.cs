@@ -1,11 +1,12 @@
 using System;
 using Godot;
 using HalfNibbleGame.Autoload;
+using static HalfNibbleGame.Data.Constants;
 
 namespace HalfNibbleGame.Replay;
 
 public partial class TimelinePlayer : Node {
-  private const double timeBetweenFrames = 60.0 / 120; // 120 BPM;
+
 
   private Timeline? timeline;
   private double timeUntilNextFrame;
@@ -22,7 +23,7 @@ public partial class TimelinePlayer : Node {
 
     timeline = Global.Services.Get<Timeline>();
     timeline.Advance();
-    timeUntilNextFrame = timeBetweenFrames;
+    timeUntilNextFrame = TimeBetweenRounds;
     roundsLeft = roundCount - 1;
     IsPlaying = true;
   }
@@ -34,7 +35,7 @@ public partial class TimelinePlayer : Node {
     while (IsPlaying && timeUntilNextFrame <= 0) {
       if (roundsLeft > 0) {
         timeline!.Advance();
-        timeUntilNextFrame += timeBetweenFrames;
+        timeUntilNextFrame += TimeBetweenRounds;
         roundsLeft--;
       }
       else {

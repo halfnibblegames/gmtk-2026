@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 namespace HalfNibbleGame.Grid;
@@ -8,8 +9,13 @@ public abstract partial class GridObject : Node2D {
 
   protected void SnapToTile() {
     if (Level is null) return;
+    Position = ToTilePosition(Coords);
+  }
+
+  protected Vector2 ToTilePosition(Vector2I coords) {
+    if (Level is null) throw new Exception("Cannot handle grid tile positions without level");
 
     var tile = Level.GetTile(Coords);
-    Position = tile.Position;
+    return tile.Position;
   }
 }

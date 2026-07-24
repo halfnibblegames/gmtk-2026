@@ -8,6 +8,10 @@ public abstract partial class MovingGridObject : GridObject {
   [Signal]
   public delegate void MovedEventHandler(Vector2I newCoords);
 
+  public delegate MoveAnimation MoveAnimationFactory(MovingGridObject target, Vector2 start, Vector2 end);
+
+  private MoveAnimation? moveAnimation;
+
   [Export] public Orchestrator Orchestrator = null!;
 
   public Vector2I Forward { get; protected set; }
@@ -16,6 +20,11 @@ public abstract partial class MovingGridObject : GridObject {
     if (Level != Orchestrator.CurrentLevel) {
       Level = Orchestrator.CurrentLevel;
       SnapToTile();
+    }
+
+    if (moveAnimation is not null) {
+      moveAnimation.Update(delta);
+      EmitSignalMoved(Coords);
     }
   }
 
@@ -38,18 +47,18 @@ public abstract partial class MovingGridObject : GridObject {
       var targetPos = Coords + accumulatedMovement + dir;
       var targetTile = Level.GetTile(targetPos);
       if (targetTile.Collides) {
-        Move(accumulatedMovement);
+        Move(accumulatedMovement, MoveAnimation.Collide);
         return new MoveResult(MoveOutcome.Collided, accumulatedMovement);
       }
       if (targetTile.Pit) {
         accumulatedMovement += dir;
-        Move(accumulatedMovement);
+        Move(accumulatedMovement, MoveAnimation.Fall);
         return new MoveResult(MoveOutcome.FellDown, accumulatedMovement);
       }
       accumulatedMovement += dir;
     }
 
-    Move(accumulatedMovement);
+    Move(accumulatedMovement, MoveAnimation.Move);
     return new MoveResult(MoveOutcome.Moved, accumulatedMovement);
   }
 
@@ -71,13 +80,27 @@ public abstract partial class MovingGridObject : GridObject {
     return new Vector2I(Math.Sign(diff.X), Math.Sign(diff.Y));
   }
 
-  public void Move(Vector2I diff) {
-    // TODO: make move look different than teleport
-    TeleportTo(Coords + diff);
-    Forward = new Vector2I(Math.Sign(diff.X), Math.Sign(diff.Y));
+  public void Move(Vector2I diff, MoveAnimationFactory animationFactory) {
+    if (moveAnimation is not null) {
+      SnapToTile();
+      moveAnimation = null;
+    }
+
+    var start = ToTilePosition(Coords);
+    Coords += diff;
+    if (diff.LengthSquared() > 0) {
+      Forward = new Vector2I(Math.Sign(diff.X), Math.Sign(diff.Y));
+    }
+
+    var end = ToTilePosition(Coords);
+
+    moveAnimation = animationFactory(this, start, end);
+
+    EmitSignalMoved(Coords);
   }
 
   public void TeleportTo(Vector2I coords) {
+    moveAnimation = null;
     Coords = coords;
     SnapToTile();
     EmitSignalMoved(Coords);
