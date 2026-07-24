@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://ctklr4sab4rhr" path="res://src/Grid/Spikes.tscn" id="6_5wled"]
 [ext_resource type="Texture2D" uid="uid://ce8mk5c54jbej" path="res://assets/backpack.png" id="7_jg52e"]
 [ext_resource type="PackedScene" uid="uid://bmwqlxeni7vcf" path="res://src/Grid/CrackedFloor.tscn" id="8_pgaa1"]
+[ext_resource type="PackedScene" uid="uid://cvey5n11da3a5" path="res://src/Grid/FloorSwitch.tscn" id="9_qujo2"]
+[ext_resource type="PackedScene" uid="uid://c4eg0ny1w4uqh" path="res://src/Grid/Door.tscn" id="10_urhqb"]
 
 [node name="Level" type="Node2D" unique_id=77528087]
 script = ExtResource("1_ykgtj")
@@ -48,3 +50,10 @@ texture = ExtResource("7_jg52e")
 
 [node name="CrackedFloor" parent="." unique_id=406908158 instance=ExtResource("8_pgaa1")]
 position = Vector2(104, 72)
+
+[node name="FloorSwitch" parent="." unique_id=2146298685 node_paths=PackedStringArray("door") instance=ExtResource("9_qujo2")]
+position = Vector2(136, 72)
+door = NodePath("../Door")
+
+[node name="Door" parent="." unique_id=944657870 instance=ExtResource("10_urhqb")]
+position = Vector2(120, 120)

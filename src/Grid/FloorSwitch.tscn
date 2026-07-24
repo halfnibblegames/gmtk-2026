@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cvey5n11da3a5"]
+
+[ext_resource type="Texture2D" uid="uid://b8builnlxpm41" path="res://assets/input/tilemap_packed.png" id="1_0qh0n"]
+[ext_resource type="Script" uid="uid://dq82syt75cxtk" path="res://src/Grid/FloorSwitch.cs" id="1_5dovc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gft63"]
+atlas = ExtResource("1_0qh0n")
+region = Rect2(192, 0, 16, 16)
+
+[node name="FloorSwitch" type="Node2D" unique_id=2146298685]
+script = ExtResource("1_5dovc")
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1368004339]
+texture = SubResource("AtlasTexture_gft63")
