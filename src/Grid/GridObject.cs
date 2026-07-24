@@ -15,7 +15,7 @@ public abstract partial class GridObject : Node2D {
   protected Vector2 ToTilePosition(Vector2I coords) {
     if (Level is null) throw new Exception("Cannot handle grid tile positions without level");
 
-    var tile = Level.GetTile(Coords);
+    var tile = Level.GetTile(coords);
     return tile.Position;
   }
 }
