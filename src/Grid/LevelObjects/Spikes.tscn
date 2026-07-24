@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://ctklr4sab4rhr"]
 
-[ext_resource type="Script" uid="uid://cndj85il0ebvq" path="res://src/Grid/Spikes.cs" id="1_cmb1g"]
+[ext_resource type="Script" uid="uid://cndj85il0ebvq" path="res://src/Grid/LevelObjects/Spikes.cs" id="1_cmb1g"]
 
 [sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_cmb1g"]
 _data = PackedByteArray("AAADAAUAAAABAAAAIAAAACAAAACgAAAAUklGRpgAAABXRUJQVlA4TIsAAAAvH8AHEB8gECBTFnRoIiQgUw5IThIIkCkLohSY/wBkTT84qm2rdc57pD1XTwISfjHSjLEyywxPoTqI6L/Ctm0bZ+/2Dbrk4pLEQ3zGZ37n92KlPrTUuIAHiE/Ib1iszB8Kh1bvTjLx7i4lCB2EVOB/AWCx3QAOvZWyQIFyNWn5lTi+jL57MYCxPwMAAA==")

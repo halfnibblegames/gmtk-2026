@@ -1,6 +1,6 @@
 using Godot;
 
-namespace HalfNibbleGame.Grid;
+namespace HalfNibbleGame.Grid.LevelObjects;
 
 public partial class Portal : StaticGridObject {
   [Export] private PackedScene? adventurerScene;

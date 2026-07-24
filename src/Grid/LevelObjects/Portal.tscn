@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://vp2xjv4c74nm"]
 
-[ext_resource type="Script" uid="uid://lxbfm5l5qysx" path="res://src/Grid/Portal.cs" id="1_5moso"]
+[ext_resource type="Script" uid="uid://lxbfm5l5qysx" path="res://src/Grid/LevelObjects/Portal.cs" id="1_5moso"]
 
 [sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_4kmk4"]
 _data = PackedByteArray("AAADAAUAAAABAAAAIAAAABAAAABsAAAAUklGRmQAAABXRUJQVlA4TFcAAAAvH8ADEBcgEEhxCNOsIG0Dpv4NdcecQCDJf8Rl5j9A9g9sIttqdciUuadGBSIQhByMwg8KIvqvNm0DJpn6IfzP3WFWllxyiCEa+ADaQ9MQTpzirJxHjwQA")

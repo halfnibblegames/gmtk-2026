@@ -4,6 +4,7 @@ using System.Linq;
 using Godot;
 using HalfNibbleGame.Data;
 using HalfNibbleGame.Grid;
+using Portal = HalfNibbleGame.Grid.LevelObjects.Portal;
 
 namespace HalfNibbleGame.Levels;
 

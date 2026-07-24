@@ -4,7 +4,7 @@ using HalfNibbleGame.Adventurers;
 using HalfNibbleGame.Data;
 using HalfNibbleGame.Replay;
 
-namespace HalfNibbleGame.Grid;
+namespace HalfNibbleGame.Grid.LevelObjects;
 
 public partial class CrackedFloor : StaticGridObject, ISimulated {
 

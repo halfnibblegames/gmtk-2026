@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bmwqlxeni7vcf"]
 
-[ext_resource type="Script" uid="uid://c6pm3sqimjsjv" path="res://src/Grid/CrackedFloor.cs" id="1_dpbil"]
+[ext_resource type="Script" uid="uid://c6pm3sqimjsjv" path="res://src/Grid/LevelObjects/CrackedFloor.cs" id="1_dpbil"]
 [ext_resource type="Texture2D" uid="uid://dxx6g2h3h0jac" path="res://assets/tilemap.png" id="1_xix1k"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gft63"]

@@ -2,7 +2,7 @@ using Godot;
 using HalfNibbleGame.Data;
 using HalfNibbleGame.Replay;
 
-namespace HalfNibbleGame.Grid;
+namespace HalfNibbleGame.Grid.LevelObjects;
 
 public partial class Spikes : StaticGridObject, IHazard, ISimulated {
   [Export] private bool initiallyExtended;

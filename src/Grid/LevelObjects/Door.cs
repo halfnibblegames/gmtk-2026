@@ -1,7 +1,7 @@
 using Godot;
 using HalfNibbleGame.Data;
 
-namespace HalfNibbleGame.Grid;
+namespace HalfNibbleGame.Grid.LevelObjects;
 
 public partial class Door : StaticGridObject {
   // Lazily initialized

@@ -2,14 +2,14 @@
 
 [ext_resource type="Script" uid="uid://ceeo3sjor5wuv" path="res://src/Levels/Level.cs" id="1_ykgtj"]
 [ext_resource type="TileSet" uid="uid://bkpxxbiy6ywwm" path="res://assets/tilemap.tres" id="2_pgaa1"]
-[ext_resource type="PackedScene" uid="uid://vp2xjv4c74nm" path="res://src/Grid/Portal.tscn" id="3_nwf8y"]
+[ext_resource type="PackedScene" uid="uid://vp2xjv4c74nm" path="res://src/Grid/LevelObjects/Portal.tscn" id="3_nwf8y"]
 [ext_resource type="PackedScene" uid="uid://bcl3vatoebel6" path="res://src/Adventurers/Rogue.tscn" id="4_qujo2"]
 [ext_resource type="PackedScene" uid="uid://cabw7txv30txh" path="res://src/Adventurers/Wizard.tscn" id="5_urhqb"]
-[ext_resource type="PackedScene" uid="uid://ctklr4sab4rhr" path="res://src/Grid/Spikes.tscn" id="6_5wled"]
+[ext_resource type="PackedScene" uid="uid://ctklr4sab4rhr" path="res://src/Grid/LevelObjects/Spikes.tscn" id="6_5wled"]
 [ext_resource type="Texture2D" uid="uid://ce8mk5c54jbej" path="res://assets/backpack.png" id="7_jg52e"]
-[ext_resource type="PackedScene" uid="uid://bmwqlxeni7vcf" path="res://src/Grid/CrackedFloor.tscn" id="8_pgaa1"]
-[ext_resource type="PackedScene" uid="uid://cvey5n11da3a5" path="res://src/Grid/FloorSwitch.tscn" id="9_qujo2"]
-[ext_resource type="PackedScene" uid="uid://c4eg0ny1w4uqh" path="res://src/Grid/Door.tscn" id="10_urhqb"]
+[ext_resource type="PackedScene" uid="uid://bmwqlxeni7vcf" path="res://src/Grid/LevelObjects/CrackedFloor.tscn" id="8_pgaa1"]
+[ext_resource type="PackedScene" uid="uid://cvey5n11da3a5" path="res://src/Grid/LevelObjects/FloorSwitch.tscn" id="9_qujo2"]
+[ext_resource type="PackedScene" uid="uid://c4eg0ny1w4uqh" path="res://src/Grid/LevelObjects/Door.tscn" id="10_urhqb"]
 
 [node name="Level" type="Node2D" unique_id=77528087]
 script = ExtResource("1_ykgtj")

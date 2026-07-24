@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://ceeo3sjor5wuv" path="res://src/Levels/Level.cs" id="1_moir1"]
 [ext_resource type="TileSet" uid="uid://bkpxxbiy6ywwm" path="res://assets/tilemap.tres" id="2_xy6t8"]
-[ext_resource type="PackedScene" uid="uid://vp2xjv4c74nm" path="res://src/Grid/Portal.tscn" id="3_wcua8"]
+[ext_resource type="PackedScene" uid="uid://vp2xjv4c74nm" path="res://src/Grid/LevelObjects/Portal.tscn" id="3_wcua8"]
 [ext_resource type="PackedScene" uid="uid://bcl3vatoebel6" path="res://src/Adventurers/Rogue.tscn" id="4_af7hf"]
-[ext_resource type="PackedScene" uid="uid://ctklr4sab4rhr" path="res://src/Grid/Spikes.tscn" id="6_t7yax"]
+[ext_resource type="PackedScene" uid="uid://ctklr4sab4rhr" path="res://src/Grid/LevelObjects/Spikes.tscn" id="6_t7yax"]
 [ext_resource type="Texture2D" uid="uid://ce8mk5c54jbej" path="res://assets/backpack.png" id="7_yfsy5"]
 
 [node name="Level" type="Node2D" unique_id=77528087]

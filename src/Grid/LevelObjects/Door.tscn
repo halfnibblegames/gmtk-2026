@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c4eg0ny1w4uqh"]
 
-[ext_resource type="Script" uid="uid://cwjulf0yk5viv" path="res://src/Grid/Door.cs" id="1_fyd1v"]
+[ext_resource type="Script" uid="uid://cwjulf0yk5viv" path="res://src/Grid/LevelObjects/Door.cs" id="1_fyd1v"]
 [ext_resource type="Texture2D" uid="uid://dxx6g2h3h0jac" path="res://assets/tilemap.png" id="1_hpuat"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gft63"]
