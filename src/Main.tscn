@@ -5,7 +5,17 @@
 [ext_resource type="PackedScene" uid="uid://c2f1gq83ftprk" path="res://src/Planning/SlotButton.tscn" id="3_5qjmp"]
 [ext_resource type="Script" uid="uid://bwditjdpfy1ka" path="res://src/Planning/Planner.cs" id="3_8ec3e"]
 [ext_resource type="Texture2D" uid="uid://csgei5c200c2e" path="res://assets/action_border.png" id="5_8ec3e"]
+[ext_resource type="Texture2D" uid="uid://d18bvinphdswj" path="res://assets/ui/ui_tiles.png" id="5_38a0m"]
 [ext_resource type="PackedScene" uid="uid://bfpj04a166dpv" path="res://src/Planning/ActionButton.tscn" id="5_vjwby"]
+[ext_resource type="Script" uid="uid://bycy3xid28202" path="res://src/Planning/SlotButton.cs" id="7_fh42b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vjwby"]
+atlas = ExtResource("5_38a0m")
+region = Rect2(99, 33, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ec3e"]
+atlas = ExtResource("5_38a0m")
+region = Rect2(66, 33, 32, 32)
 
 [node name="Main" type="Control" unique_id=732094339]
 layout_mode = 3
@@ -56,7 +66,7 @@ grow_horizontal = 0
 grow_vertical = 2
 script = ExtResource("3_8ec3e")
 slotButtonScene = ExtResource("3_5qjmp")
-slotsCount = 6
+slotsCount = 10
 
 [node name="NinePatchRect" type="NinePatchRect" parent="PlanningPanel" unique_id=685156273]
 layout_mode = 1
@@ -96,6 +106,50 @@ layout_mode = 2
 
 [node name="Slot6" parent="PlanningPanel/Slots" unique_id=1405006999 instance=ExtResource("3_5qjmp")]
 layout_mode = 2
+
+[node name="Slot7" type="TextureButton" parent="PlanningPanel/Slots" unique_id=1123057747 instance=ExtResource("3_5qjmp")]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = SubResource("AtlasTexture_vjwby")
+stretch_mode = 5
+script = ExtResource("7_fh42b")
+emptyTexture = SubResource("AtlasTexture_vjwby")
+fullTexture = SubResource("AtlasTexture_8ec3e")
+
+[node name="Slot8" type="TextureButton" parent="PlanningPanel/Slots" unique_id=307379605 instance=ExtResource("3_5qjmp")]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = SubResource("AtlasTexture_vjwby")
+stretch_mode = 5
+script = ExtResource("7_fh42b")
+emptyTexture = SubResource("AtlasTexture_vjwby")
+fullTexture = SubResource("AtlasTexture_8ec3e")
+
+[node name="Slot9" type="TextureButton" parent="PlanningPanel/Slots" unique_id=1312386114 instance=ExtResource("3_5qjmp")]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = SubResource("AtlasTexture_vjwby")
+stretch_mode = 5
+script = ExtResource("7_fh42b")
+emptyTexture = SubResource("AtlasTexture_vjwby")
+fullTexture = SubResource("AtlasTexture_8ec3e")
+
+[node name="Slot10" type="TextureButton" parent="PlanningPanel/Slots" unique_id=1775599870 instance=ExtResource("3_5qjmp")]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = SubResource("AtlasTexture_vjwby")
+stretch_mode = 5
+script = ExtResource("7_fh42b")
+emptyTexture = SubResource("AtlasTexture_vjwby")
+fullTexture = SubResource("AtlasTexture_8ec3e")
 
 [node name="Actions" type="VBoxContainer" parent="PlanningPanel" unique_id=226240548]
 layout_mode = 0
