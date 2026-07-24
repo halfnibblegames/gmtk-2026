@@ -57,6 +57,8 @@ public partial class Orchestrator : Node {
   }
 
   public override void _Process(double delta) {
+    if (hasWon) return;
+
     if (!levelActivated && CurrentLevel is not null) {
       activateLevel();
     }
