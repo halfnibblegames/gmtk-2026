@@ -21,14 +21,14 @@ public class Timeline(SceneTree tree, int totalRoundCount) {
 
   public void Rollback() {
     if (CurrentRound <= 0) return;
-    resetToRound(CurrentRound - 1);
+    ResetToRound(CurrentRound - 1);
   }
 
   public void Reset() {
-    resetToRound(0);
+    ResetToRound(0);
   }
 
-  private void resetToRound(int round) {
+  public void ResetToRound(int round) {
     simulatedObjects().ForEach(obj => obj.ResetToRound(round));
     CurrentRound = round;
   }

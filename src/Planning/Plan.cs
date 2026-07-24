@@ -6,6 +6,8 @@ namespace HalfNibbleGame.Planning;
 public class Plan {
   private readonly List<IPlannedAction> actions = [];
 
+  public int PlannedRoundCount => actions.Count;
+
   public void SetActionForRound(int round, IPlannedAction action) {
     if (round > actions.Count) {
       throw new Exception("Cannot skip rounds");

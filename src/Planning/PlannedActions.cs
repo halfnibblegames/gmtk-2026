@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Godot;
 using HalfNibbleGame.Data;
 using HalfNibbleGame.Grid;
@@ -8,13 +7,11 @@ using HalfNibbleGame.Replay;
 namespace HalfNibbleGame.Planning;
 
 public static class PlannedActions {
-  private static IPlannedAction moveLeft { get; } = new MoveAction(Vector2I.Left, InputActions.Left);
-  private static IPlannedAction moveRight { get; } = new MoveAction(Vector2I.Right, InputActions.Right);
-  private static IPlannedAction moveUp { get; } = new MoveAction(Vector2I.Up, InputActions.Up);
-  private static IPlannedAction moveDown { get; } = new MoveAction(Vector2I.Down, InputActions.Down);
-  private static IPlannedAction dash { get; } = new ForwardAction(2, InputActions.Dash);
-
-  public static IReadOnlyList<IPlannedAction> All { get; } = [moveLeft, moveRight, moveUp, moveDown, dash];
+  public static IPlannedAction MoveLeft { get; } = new MoveAction(Vector2I.Left, InputActions.Left);
+  public static IPlannedAction MoveRight { get; } = new MoveAction(Vector2I.Right, InputActions.Right);
+  public static IPlannedAction MoveUp { get; } = new MoveAction(Vector2I.Up, InputActions.Up);
+  public static IPlannedAction MoveDown { get; } = new MoveAction(Vector2I.Down, InputActions.Down);
+  public static IPlannedAction Dash { get; } = new ForwardAction(2, InputActions.Dash);
 
   private abstract class ActionBase(StringName? shortcut) : IPlannedAction {
     public StringName? Shortcut => shortcut;

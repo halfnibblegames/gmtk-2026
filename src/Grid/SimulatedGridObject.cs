@@ -16,6 +16,8 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
   private bool dead;
   private int stunnedTurns;
 
+  public int PlannedRoundCount => plan.PlannedRoundCount;
+
   public override void _Ready() {
     base._Ready();
     AddToGroup(Groups.Simulated);

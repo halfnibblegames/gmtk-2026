@@ -24,13 +24,13 @@ public partial class Portal : StaticGridObject, ISimulated {
     turnsLeft = turnCount - roundNumber;
   }
 
-  public Adventurer? TryInstantiateAdventurer() {
+  public Adventurers.Adventurer? TryInstantiateAdventurer() {
     if (adventurerScene is null) {
       GD.PushWarning($"Spawn at {Coords} could not spawn an adventurer.");
       return null;
     }
 
-    var adventurer = adventurerScene.Instantiate<Adventurer>();
+    var adventurer = adventurerScene.Instantiate<Adventurers.Adventurer>();
     adventurer.TeleportTo(Coords);
     return adventurer;
   }

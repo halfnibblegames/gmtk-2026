@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://bcl3vatoebel6"]
 
-[ext_resource type="Script" uid="uid://lqsgwsxag3d4" path="res://src/Grid/Adventurer.cs" id="1_2r4l0"]
+[ext_resource type="Script" uid="uid://lqsgwsxag3d4" path="res://src/Adventurers/Adventurer.cs" id="1_wp8wy"]
 
 [sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_ioxv6"]
 _data = PackedByteArray("AAADAAUAAAABAAAAKgAAADkAAAAIAQAAUklGRgABAABXRUJQVlA4TPQAAAAvKQAOEDegEAAaJn+lPEphfzoEghBNdN0QG5BJ29S/pWnYOxsTMAbzH4B5BhNxh7lfAXIDuHGj8fkX0oDBCgzXQOi9F/3OOf3XsKFo7vmO6D8Dt40UZY/BB8/AHxovZploNjVcIJ1ZdQ+42Uuk6h3gk4uk2nQgLSJ9wJ29hLMIAg6NJCS8F0pbufRecj/Gu2uZPcc+cs9wndFwM/7V8WKWkWg2HUtk1T2Qzq2nek9INSVhEekDiY13FkFGIjOSkG7nGktb6fBsK10krWV29lpa6f8fL2aZaDYlZlbdM6neE9Vci0iP4/EZEgmZ6lQynU8dftsA")
@@ -90,8 +90,8 @@ animations = [{
 "speed": 7.0
 }]
 
-[node name="Adventurer" type="Node2D" unique_id=1259344524]
-script = ExtResource("1_2r4l0")
+[node name="Rogue" type="Node2D" unique_id=1259344524]
+script = ExtResource("1_wp8wy")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1208374403]
 texture_filter = 1

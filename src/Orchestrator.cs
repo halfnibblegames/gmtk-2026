@@ -6,6 +6,7 @@ using HalfNibbleGame.Data;
 using HalfNibbleGame.Grid;
 using HalfNibbleGame.Planning;
 using HalfNibbleGame.Replay;
+using Adventurer = HalfNibbleGame.Adventurers.Adventurer;
 
 namespace HalfNibbleGame;
 
@@ -53,7 +54,7 @@ public partial class Orchestrator : Node {
     if (!levelActivated || focusedAdventurerIndex < 0) return;
 
     if (timeline.CurrentRound < timeline.TotalRoundCount) {
-      foreach (var action in PlannedActions.All) {
+      foreach (var action in focusedAdventurer!.AvailableActions) {
         var shortcut = action.Shortcut;
         if (shortcut is null) continue;
         if (@event.IsActionReleased(shortcut)) {
@@ -67,10 +68,14 @@ public partial class Orchestrator : Node {
       clearLastAdventurerAction();
     }
 
-    // Start playback
+    // Switch adventurers
     if (@event.IsActionReleased(InputActions.SwitchAdventurers)) {
       focusNextAdventurer();
-      // TODO: set the round to the earliest round the adventurer has no action for
+      var plannedRoundCount = focusedAdventurer!.PlannedRoundCount;
+      // We don't move forward in time (yet?), so instead we only check if we need to go back in time.
+      if (plannedRoundCount < timeline.CurrentRound) {
+        timeline.ResetToRound(plannedRoundCount);
+      }
     }
   }
 
