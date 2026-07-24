@@ -17,6 +17,7 @@ public partial class Spikes : StaticGridObject, IHazard, ISimulated {
     AddToGroup(Groups.Simulated);
     AddToGroup(Groups.Hazard);
     sprite = GetNode<AnimatedSprite2D>("Sprite");
+    Reset();
     base._Ready();
   }
 
