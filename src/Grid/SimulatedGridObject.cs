@@ -10,6 +10,7 @@ namespace HalfNibbleGame.Grid;
 public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated {
 
   // TODO: should probably be more complex
+  private bool dead;
   private int stunnedTurns;
 
   private Vector2I storedCoords;
@@ -34,12 +35,20 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
   public void Reset() {
     planExecutor.Reset();
     Forward = Vector2I.Zero;
+    dead = false;
     stunnedTurns = 0;
+    Visible = true;
     TeleportTo(storedCoords);
   }
 
   public void Snapshot() {
     storedCoords = Coords;
+  }
+
+  public void Die() {
+    GD.Print("Oh dear, you're dead!");
+    dead = true;
+    Visible = false;
   }
 
   public void Stun(int turnCount) {
@@ -48,7 +57,7 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
   }
 
   protected override bool IsMovementPrevented() {
-    return stunnedTurns > 0;
+    return dead || stunnedTurns > 0;
   }
 
   // <== Hack

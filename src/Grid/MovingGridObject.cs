@@ -41,6 +41,12 @@ public abstract partial class MovingGridObject : GridObject {
         Move(accumulatedMovement);
         return new MoveResult(MoveOutcome.Collided, accumulatedMovement);
       }
+
+      if (targetTile.Pit) {
+        accumulatedMovement += dir;
+        Move(accumulatedMovement);
+        return new MoveResult(MoveOutcome.FellDown, accumulatedMovement);
+      }
       accumulatedMovement += dir;
     }
 

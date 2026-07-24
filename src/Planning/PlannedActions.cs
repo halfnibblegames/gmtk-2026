@@ -30,9 +30,7 @@ public static class PlannedActions {
     : ActionBase(asEnum, name, shortcut) {
     public override void Do(RoundContext context, SimulatedGridObject target) {
       var result = target.TryMove(diff);
-      if (result.Outcome == MovingGridObject.MoveOutcome.Collided) {
-        context.RegisterOutcome(() => target.Stun(1));
-      }
+      handleMoveResult(result, context, target);
     }
   }
 
@@ -40,10 +38,26 @@ public static class PlannedActions {
     : ActionBase(asEnum, name, shortcut) {
     public override void Do(RoundContext context, SimulatedGridObject target) {
       var result = target.TryMove(target.Forward * amount);
-      if (result.Outcome == MovingGridObject.MoveOutcome.Collided) {
+      handleMoveResult(result, context, target);
+    }
+  }
+
+  private static void handleMoveResult(
+    MovingGridObject.MoveResult result, RoundContext context, SimulatedGridObject target) {
+    switch (result.Outcome) {
+      case MovingGridObject.MoveOutcome.Moved:
+      case MovingGridObject.MoveOutcome.Prevented:
+        break;
+      case MovingGridObject.MoveOutcome.Collided:
         // Stun for 1 turn + 1 turn for every tile moved
-        context.RegisterOutcome(() => target.Stun(1 + Math.Max(Math.Abs(result.ActuallyMoved.X), Math.Abs(result.ActuallyMoved.Y))));
-      }
+        context.RegisterOutcome(() =>
+          target.Stun(1 + Math.Max(Math.Abs(result.ActuallyMoved.X), Math.Abs(result.ActuallyMoved.Y))));
+        break;
+      case MovingGridObject.MoveOutcome.FellDown:
+        context.RegisterOutcome(target.Die);
+        break;
+      default:
+        throw new ArgumentOutOfRangeException(nameof(result), result, null);
     }
   }
 }
