@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 using Godot;
 using HalfNibbleGame.Autoload;
+using HalfNibbleGame.Data;
 using HalfNibbleGame.Grid;
+using HalfNibbleGame.Planning;
 using HalfNibbleGame.Replay;
 
 namespace HalfNibbleGame;
@@ -10,9 +13,14 @@ public partial class Orchestrator : Node {
   [Export] private Camera2D camera = null!;
 
   public Level? CurrentLevel { get; private set; }
-  public MovingGridObject? FocusedObject { get; private set; }
+
+  private Timeline timeline = null!;
 
   private bool levelActivated = true;
+  private readonly List<Adventurer> adventurers = [];
+  private int focusedAdventurerIndex = -1;
+
+  private Adventurer? focusedAdventurer => focusedAdventurerIndex >= 0 ? adventurers[focusedAdventurerIndex] : null;
 
   public void SetLevel(Level level) {
     if (CurrentLevel is not null) {
@@ -30,7 +38,8 @@ public partial class Orchestrator : Node {
   }
 
   public override void _Ready() {
-    var timeline = new Timeline(GetTree());
+    // TODO: don't hardcode the number of rounds
+    timeline = new Timeline(GetTree(), 10);
     Global.Services.ProvideInScene(timeline);
   }
 
@@ -40,45 +49,77 @@ public partial class Orchestrator : Node {
     }
   }
 
-  private void activateLevel() {
-    unfocusObject();
+  public override void _Input(InputEvent @event) {
+    if (!levelActivated || focusedAdventurerIndex < 0) return;
 
-    foreach (var spawn in CurrentLevel!.AllPortals) {
-      var adventurer = spawn.TryInstantiateAdventurer();
+    if (timeline.CurrentRound < timeline.TotalRoundCount) {
+      foreach (var action in PlannedActions.All) {
+        var shortcut = action.Shortcut;
+        if (shortcut is null) continue;
+        if (@event.IsActionReleased(shortcut)) {
+          queueAdventurerAction(action);
+        }
+      }
+    }
+
+    // Clear last action
+    if (@event.IsActionReleased(InputActions.Back)) {
+      clearLastAdventurerAction();
+    }
+
+    // Start playback
+    if (@event.IsActionReleased(InputActions.SwitchAdventurers)) {
+      focusNextAdventurer();
+      // TODO: set the round to the earliest round the adventurer has no action for
+    }
+  }
+
+  private void activateLevel() {
+    unfocusAdventurer();
+
+    foreach (var portal in CurrentLevel!.AllPortals) {
+      var adventurer = portal.TryInstantiateAdventurer();
       if (adventurer is null) continue;
 
       adventurer.Orchestrator = this;
       AddSibling(adventurer);
+      adventurers.Add(adventurer);
+    }
 
-      if (FocusedObject is null) {
-        FocusObject(adventurer);
-      }
+    if (adventurers.Count > 0) {
+      focusNextAdventurer();
     }
 
     levelActivated = true;
   }
 
-  public void FocusObject(MovingGridObject obj) {
-    if (FocusedObject is not null) {
-      FocusedObject.Moved -= onFocusedObjectMoved;
-    }
-
-    FocusedObject = obj;
-    FocusedObject.Moved += onFocusedObjectMoved;
-    onFocusedObjectMoved(FocusedObject.Coords);
+  private void unfocusAdventurer() {
+    focusedAdventurer?.Moved -= onAdventurerMoved;
+    focusedAdventurerIndex = -1;
   }
 
-  private void unfocusObject() {
-    if (FocusedObject is not null) {
-      FocusedObject.Moved -= onFocusedObjectMoved;
-    }
-
-    FocusedObject = null;
+  private void focusNextAdventurer() {
+    var nextIndex = (focusedAdventurerIndex + 1) % adventurers.Count;
+    unfocusAdventurer();
+    focusedAdventurerIndex = nextIndex;
+    focusedAdventurer!.Moved += onAdventurerMoved;
+    onAdventurerMoved(focusedAdventurer.Coords);
   }
 
-  private void onFocusedObjectMoved(Vector2I newCoords) {
+  private void onAdventurerMoved(Vector2I newCoords) {
     if (CurrentLevel is not null) {
       camera.Position = CurrentLevel.GetTile(newCoords).Position;
     }
+  }
+
+  private void queueAdventurerAction(IPlannedAction action) {
+    focusedAdventurer?.SetActionForRound(timeline.CurrentRound, action);
+    timeline.Advance();
+  }
+
+  private void clearLastAdventurerAction() {
+    if (timeline.CurrentRound <= 0) return;
+    focusedAdventurer?.ClearActionForRound(timeline.CurrentRound - 1);
+    timeline.Rollback();
   }
 }

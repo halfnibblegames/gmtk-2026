@@ -13,15 +13,15 @@ public partial class Portal : StaticGridObject, ISimulated {
   public override void _Ready() {
     base._Ready();
     AddToGroup(Groups.Simulated);
-    Reset();
+    ResetToRound(0);
   }
 
   public void Advance(RoundContext context) {
     turnsLeft = turnCount - context.RoundNumber - 1;
   }
 
-  public void Reset() {
-    turnsLeft = turnCount;
+  public void ResetToRound(int roundNumber) {
+    turnsLeft = turnCount - roundNumber;
   }
 
   public Adventurer? TryInstantiateAdventurer() {
@@ -32,7 +32,6 @@ public partial class Portal : StaticGridObject, ISimulated {
 
     var adventurer = adventurerScene.Instantiate<Adventurer>();
     adventurer.TeleportTo(Coords);
-    adventurer.Snapshot();
     return adventurer;
   }
 }

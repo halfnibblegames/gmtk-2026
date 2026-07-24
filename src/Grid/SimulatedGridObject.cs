@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -10,16 +9,12 @@ namespace HalfNibbleGame.Grid;
 
 public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated, IMortal {
 
+  private readonly Plan plan = new();
+  private readonly History<RoundState> history = new();
+
   // TODO: should probably be more complex
   private bool dead;
   private int stunnedTurns;
-
-  private Vector2I storedCoords;
-  private readonly PlanExecutor planExecutor;
-
-  protected SimulatedGridObject() {
-    planExecutor = new PlanExecutor(this);
-  }
 
   public override void _Ready() {
     base._Ready();
@@ -28,32 +23,42 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
   }
 
   public void Advance(RoundContext context) {
-    planExecutor.Advance(context);
+    history.Push(new RoundState(Coords, Forward, dead, stunnedTurns));
+    var action = plan.GetActionForRound(context.RoundNumber);
+    action?.Do(context, this);
+
     if (stunnedTurns > 0) {
       stunnedTurns--;
     }
   }
 
-  public void Reset() {
-    planExecutor.Reset();
-    Forward = Vector2I.Zero;
-    dead = false;
-    stunnedTurns = 0;
-    Visible = true;
+  public void ResetToRound(int roundNumber) {
+    var roundState = history.LastKnownStateInRound(roundNumber);
+    TeleportTo(roundState.Coords);
+    Forward = roundState.Forward;
+    dead = roundState.Dead;
+    stunnedTurns = roundState.StunnedTurns;
+
+    Visible = !dead;
     Modulate = new Color(1, 1, 1);
     Scale = Vector2.One;
-    TeleportTo(storedCoords);
+
+    history.InvalidateFrom(roundNumber);
+  }
+
+  public void SetActionForRound(int roundNumber, IPlannedAction action) {
+    plan.SetActionForRound(roundNumber, action);
+  }
+
+  public void ClearActionForRound(int roundNumber) {
+    plan.ClearActionForRound(roundNumber);
   }
 
   public void CheckAgainstHazards(List<IHazard> hazards, RoundContext context) {
     if (dead) return;
-    if (hazards.Any(h => h.Coords == Coords && h.IsHazardous)) {
+    if (hazards.Any(h => h.Coords == Coords && h.Hazardous)) {
       context.RegisterOutcome(Die);
     }
-  }
-
-  public void Snapshot() {
-    storedCoords = Coords;
   }
 
   public void Die() {
@@ -70,35 +75,5 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
     return dead || stunnedTurns > 0;
   }
 
-  // <== Hack
-  public void QueueActions(List<IPlannedAction> actions) {
-    planExecutor.SetPlan(actions);
-  }
-  // ==>
-
-  private class PlanExecutor(SimulatedGridObject target) {
-    private List<IPlannedAction> actions = [];
-    private int currentRound;
-
-    public void SetPlan(List<IPlannedAction> plan) {
-      actions = plan;
-    }
-
-    public void Advance(RoundContext context) {
-      if (context.RoundNumber != currentRound) {
-        throw new Exception("Round numbers aren't matching");
-      }
-
-      if (actions.Count <= currentRound) {
-        GD.PushWarning("Tried executing more rounds than the plan accounts for");
-        return;
-      }
-
-      actions[currentRound++].Do(context, target);
-    }
-
-    public void Reset() {
-      currentRound = 0;
-    }
-  }
+  private readonly record struct RoundState(Vector2I Coords, Vector2I Forward, bool Dead, int StunnedTurns);
 }

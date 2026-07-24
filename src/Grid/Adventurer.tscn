@@ -97,6 +97,7 @@ script = ExtResource("1_2r4l0")
 texture_filter = 1
 position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_2wb0h")
+autoplay = "default"
 metadata/_aseprite_wizard_interface_config_ = {
 "animation_section": false,
 "layer_section": true,

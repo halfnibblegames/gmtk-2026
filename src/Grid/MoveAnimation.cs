@@ -11,11 +11,21 @@ public abstract class MoveAnimation(MovingGridObject target) {
 
   public void Update(double elapsedTime) {
     timeSinceStart += elapsedTime;
-    var t = (float) Mathf.Clamp(timeSinceStart / TimeBetweenRounds, 0.0, 1.0);
-    Animate(t);
+    if (timeSinceStart > TimeBetweenRounds) {
+      Complete();
+    }
+    else {
+      var t = (float) Mathf.Clamp(timeSinceStart / TimeBetweenRounds, 0.0, 1.0);
+      Animate(t);
+    }
+  }
+
+  public void CompleteInstantly() {
+    Complete();
   }
 
   protected abstract void Animate(float t);
+  protected abstract void Complete();
 
   public static MoveAnimation Move(MovingGridObject target, Vector2 from, Vector2 to) {
     return new NormalMoveAnimation(target, from, to);
@@ -35,6 +45,10 @@ public abstract class MoveAnimation(MovingGridObject target) {
       // with the second half of the animation time.
       t = Mathf.Min(1.0f, t * 2);
       Target.Position = from + t * (to - from);
+    }
+
+    protected override void Complete() {
+      Target.Position = to;
     }
   }
 
@@ -63,6 +77,11 @@ public abstract class MoveAnimation(MovingGridObject target) {
       var flashStrength = 1 - (2.5f * t2);
       Target.Modulate = new Color(1, 1, 1 - flashStrength);
     }
+
+    protected override void Complete() {
+      base.Complete();
+      Target.Modulate = new Color(1, 1, 1);
+    }
   }
 
   private class FallMoveAnimation(MovingGridObject target, Vector2 from, Vector2 to) : NormalMoveAnimation(target, from, to) {
@@ -79,6 +98,14 @@ public abstract class MoveAnimation(MovingGridObject target) {
       Target.Scale = scale * Vector2.One;
       var offset = step * 1.5f * Vector2.Down;
       Target.Position = to + offset;
+    }
+
+    protected override void Complete() {
+      base.Complete();
+      Target.Scale = Vector2.One;
+      Target.Position = to;
+      Target.Modulate = new Color(1, 1, 1);
+      Target.Visible = false;
     }
   }
 }

@@ -6,21 +6,31 @@ using HalfNibbleGame.Grid;
 
 namespace HalfNibbleGame.Replay;
 
-public class Timeline(SceneTree tree) {
+public class Timeline(SceneTree tree, int totalRoundCount) {
 
-  private int roundNumber;
+  public int CurrentRound { get; private set; }
+  public int TotalRoundCount => totalRoundCount;
 
   public void Advance() {
-    var roundContext = new RoundContext(roundNumber++);
+    var roundContext = new RoundContext(CurrentRound++);
     simulatedObjects().ForEach(obj => obj.Advance(roundContext));
     var hazardList = hazards();
     mortals().ForEach(mortal => mortal.CheckAgainstHazards(hazardList, roundContext));
-    roundContext.Finalize();
+    roundContext.Finish();
+  }
+
+  public void Rollback() {
+    if (CurrentRound <= 0) return;
+    resetToRound(CurrentRound - 1);
   }
 
   public void Reset() {
-    simulatedObjects().ForEach(obj => obj.Reset());
-    roundNumber = 0;
+    resetToRound(0);
+  }
+
+  private void resetToRound(int round) {
+    simulatedObjects().ForEach(obj => obj.ResetToRound(round));
+    CurrentRound = round;
   }
 
   private List<ISimulated> simulatedObjects() {

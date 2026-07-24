@@ -12,7 +12,7 @@ public class RoundContext(int roundNumber) {
     outcomes.Add(action);
   }
 
-  public void Finalize() {
+  public void Finish() {
     foreach (var action in outcomes) {
       action();
     }

@@ -7,7 +7,6 @@ namespace HalfNibbleGame.Replay;
 
 public partial class TimelinePlayer : Node {
 
-
   private Timeline? timeline;
   private double timeUntilNextFrame;
   private int roundsLeft;

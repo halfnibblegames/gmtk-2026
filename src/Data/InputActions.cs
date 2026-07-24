@@ -10,4 +10,5 @@ public static class InputActions {
   public static readonly StringName Dash = "dash";
   public static readonly StringName Back = "revert";
   public static readonly StringName Playback = "playback";
+  public static readonly StringName SwitchAdventurers = "switch";
 }
