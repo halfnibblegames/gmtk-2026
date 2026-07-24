@@ -13,6 +13,8 @@ namespace HalfNibbleGame;
 public partial class Orchestrator : Node {
   [Export] private Camera2D camera = null!;
 
+  public delegate void AdventurerChanged();
+
   public Levels.Level? CurrentLevel { get; private set; }
 
   private Timeline? timeline;
@@ -23,6 +25,7 @@ public partial class Orchestrator : Node {
   private double playbackTimeRemaining;
   private bool hasWon;
   private IPlannedAction? actionAfterPlayback;
+  public event AdventurerChanged OnAdventurerChanged = delegate {};
 
   private Adventurer? focusedAdventurer => focusedAdventurerIndex >= 0 ? adventurers[focusedAdventurerIndex] : null;
 
@@ -98,7 +101,7 @@ public partial class Orchestrator : Node {
 
     // Switch adventurers
     if (@event.IsActionReleased(InputActions.SwitchAdventurers)) {
-      focusNextAdventurer();
+      FocusNextAdventurer();
     }
   }
 
@@ -115,7 +118,7 @@ public partial class Orchestrator : Node {
     }
 
     if (adventurers.Count > 0) {
-      focusNextAdventurer();
+      FocusNextAdventurer();
     }
 
     levelActivated = true;
@@ -126,7 +129,7 @@ public partial class Orchestrator : Node {
     focusedAdventurerIndex = -1;
   }
 
-  private void focusNextAdventurer() {
+  public void FocusNextAdventurer() {
     var nextIndex = (focusedAdventurerIndex + 1) % adventurers.Count;
     unfocusAdventurer();
     focusAdventurer(nextIndex);
@@ -154,6 +157,7 @@ public partial class Orchestrator : Node {
     if (plannedRoundCount < timeline!.CurrentRound) {
       timeline.ResetToRound(plannedRoundCount);
     }
+    OnAdventurerChanged();
   }
 
   private void onAdventurerMoved(Vector2I newCoords) {

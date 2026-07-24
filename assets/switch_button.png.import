@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://3b1tilcv3p2y"
-path="res://.godot/imported/rogue_portrait.png-9b0ef554309c7eac59c57cdcd84045b0.ctex"
+uid="uid://cvphb1ojcecvw"
+path="res://.godot/imported/switch_button.png-acc38069fdc0b8bc053c23b3456ee9f1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/rogue_portrait.png"
-dest_files=["res://.godot/imported/rogue_portrait.png-9b0ef554309c7eac59c57cdcd84045b0.ctex"]
+source_file="res://assets/switch_button.png"
+dest_files=["res://.godot/imported/switch_button.png-acc38069fdc0b8bc053c23b3456ee9f1.ctex"]
 
 [params]
 
