@@ -8,11 +8,15 @@ namespace HalfNibbleGame.Replay;
 
 public class Timeline(SceneTree tree, int totalRoundCount) {
 
+  public delegate void CountdownChanged(int currentRound, int totalRoundCount);
+  public event CountdownChanged OnCountdownChanged = delegate { };
+
   public int CurrentRound { get; private set; }
   public int TotalRoundCount => totalRoundCount;
 
   public void Advance() {
     var roundContext = new RoundContext(CurrentRound++);
+    OnCountdownChanged(CurrentRound, totalRoundCount);
     simulatedObjects().ForEach(obj => obj.Advance(roundContext));
     var hazardList = hazards();
     mortals().ForEach(mortal => mortal.CheckAgainstHazards(hazardList, roundContext));
@@ -29,6 +33,7 @@ public class Timeline(SceneTree tree, int totalRoundCount) {
   }
 
   public void ResetToRound(int round) {
+    OnCountdownChanged(round, totalRoundCount);
     simulatedObjects().ForEach(obj => obj.ResetToRound(round));
     CurrentRound = round;
   }

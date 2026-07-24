@@ -12,6 +12,7 @@ $ASEPRITE -b ./assets/ui/portraits.aseprite --layer Rogue --scale 4 --save-as ./
 $ASEPRITE -b ./assets/ui/portraits.aseprite --layer Wizard --scale 4 --save-as ./assets/ui/portrait_wizard.png
 
 # Other UI elements
+$ASEPRITE -b ./assets/ui/d20.aseprite --scale 4 --save-as ./assets/ui/d20.png
 $ASEPRITE -b ./assets/ui/action_border.aseprite --layer Wizard --scale 4 --save-as ./assets/ui/action_border.png
 $ASEPRITE -b ./assets/ui/switch_button.aseprite --frame-range 0,0 --scale 4 --save-as ./assets/ui/switch_button.png
 $ASEPRITE -b ./assets/ui/switch_button.aseprite --frame-range 1,1 --scale 4 --save-as ./assets/ui/switch_button_pressed.png

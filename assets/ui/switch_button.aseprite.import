@@ -3,12 +3,12 @@
 importer="aseprite_wizard.plugin.noop"
 type="PackedDataContainer"
 uid="uid://dqtvjlr7n6jai"
-path="res://.godot/imported/switch_button.aseprite-d57c3200e392c76967c0cbbd4b6cd60b.res"
+path="res://.godot/imported/switch_button.aseprite-876f552b6c133dbbe3616636b38c90c6.res"
 
 [deps]
 
-source_file="res://assets/switch_button.aseprite"
-dest_files=["res://.godot/imported/switch_button.aseprite-d57c3200e392c76967c0cbbd4b6cd60b.res"]
+source_file="res://assets/ui/switch_button.aseprite"
+dest_files=["res://.godot/imported/switch_button.aseprite-876f552b6c133dbbe3616636b38c90c6.res"]
 
 [params]
 

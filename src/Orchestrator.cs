@@ -17,7 +17,7 @@ public partial class Orchestrator : Node {
 
   public Levels.Level? CurrentLevel { get; private set; }
 
-  private Timeline? timeline;
+  public Timeline? Timeline;
 
   private bool levelActivated = true;
   private readonly List<Adventurer> adventurers = [];
@@ -26,6 +26,7 @@ public partial class Orchestrator : Node {
   private bool hasWon;
   private IPlannedAction? actionAfterPlayback;
   public event AdventurerChanged OnAdventurerChanged = delegate {};
+  public event Timeline.CountdownChanged OnTimelineCountdownChanged = delegate {};
 
   private Adventurer? focusedAdventurer => focusedAdventurerIndex >= 0 ? adventurers[focusedAdventurerIndex] : null;
 
@@ -37,7 +38,10 @@ public partial class Orchestrator : Node {
     CurrentLevel = level;
     levelActivated = false;
     hasWon = false;
-    timeline = new Timeline(GetTree(), level.RoundCount);
+    Timeline = new(GetTree(), level.RoundCount);
+    Timeline?.OnCountdownChanged += (c, t) => {
+       OnTimelineCountdownChanged(c, t);
+    };
 
     camera.LimitLeft = 0;
     camera.LimitRight = level.WidthInPixels;
@@ -84,7 +88,7 @@ public partial class Orchestrator : Node {
   public override void _Input(InputEvent @event) {
     if (!levelActivated || focusedAdventurerIndex < 0 || hasWon) return;
 
-    if (timeline!.CurrentRound < timeline.TotalRoundCount) {
+    if (Timeline!.CurrentRound < Timeline.TotalRoundCount) {
       foreach (var action in focusedAdventurer!.AvailableActions) {
         var shortcut = action.Shortcut;
         if (shortcut is null) continue;
@@ -139,7 +143,7 @@ public partial class Orchestrator : Node {
     var startIndex = focusedAdventurerIndex;
     var index = (startIndex + 1) % adventurers.Count;
     while (index != startIndex) {
-      if (adventurers[index].PlannedRoundCount < timeline!.TotalRoundCount) {
+      if (adventurers[index].PlannedRoundCount < Timeline!.TotalRoundCount) {
         focusAdventurer(index);
         break;
       }
@@ -154,8 +158,8 @@ public partial class Orchestrator : Node {
 
     var plannedRoundCount = focusedAdventurer!.PlannedRoundCount;
     // We don't move forward in time (yet?), so instead we only check if we need to go back in time.
-    if (plannedRoundCount < timeline!.CurrentRound) {
-      timeline.ResetToRound(plannedRoundCount);
+    if (plannedRoundCount < Timeline!.CurrentRound) {
+      Timeline.ResetToRound(plannedRoundCount);
     }
     OnAdventurerChanged();
   }
@@ -174,30 +178,30 @@ public partial class Orchestrator : Node {
       return;
     }
 
-    focusedAdventurer?.SetActionForRound(timeline!.CurrentRound, action);
-    timeline!.Advance();
+    focusedAdventurer?.SetActionForRound(Timeline!.CurrentRound, action);
+    Timeline!.Advance();
     playbackTimeRemaining = Constants.TimeBetweenRounds;
 
     // Automatically focus the next adventurer that still needs moves if there is one.
-    if (focusedAdventurer?.PlannedRoundCount == timeline.TotalRoundCount) {
+    if (focusedAdventurer?.PlannedRoundCount == Timeline.TotalRoundCount) {
       focusNextAdventurerWithUnplannedMoves();
     }
   }
 
   private void clearLastAdventurerAction() {
-    if (timeline!.CurrentRound <= 0) return;
-    focusedAdventurer?.ClearActionForRound(timeline.CurrentRound - 1);
-    timeline.Rollback();
+    if (Timeline!.CurrentRound <= 0) return;
+    focusedAdventurer?.ClearActionForRound(Timeline.CurrentRound - 1);
+    Timeline.Rollback();
   }
 
   private bool checkWinCondition() {
     // The timeline needs to be advanced all the way to the last round to check the win condition.
-    if (timeline!.CurrentRound != timeline.TotalRoundCount) return false;
+    if (Timeline!.CurrentRound != Timeline.TotalRoundCount) return false;
 
     var portalLocations = CurrentLevel!.AllPortals;
 
     foreach (var adventurer in adventurers) {
-      if (adventurer.PlannedRoundCount != timeline.TotalRoundCount) {
+      if (adventurer.PlannedRoundCount != Timeline.TotalRoundCount) {
         return false;
       }
 
@@ -217,7 +221,7 @@ public partial class Orchestrator : Node {
   private void startPlayback() {
     hasWon = true;
     unfocusAdventurer();
-    Global.Services.Get<TimelinePlayer>().Play(timeline!, onPlaybackComplete);
+    Global.Services.Get<TimelinePlayer>().Play(Timeline!, onPlaybackComplete);
   }
 
   private void onPlaybackComplete() {
