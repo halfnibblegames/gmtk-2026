@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dqwk5vlxjod4b"
+path="res://.godot/imported/spikes.aseprite-bcd2afd6d13c71d301922f61bda7356f.res"
+
+[deps]
+
+source_file="res://assets/spikes.aseprite"
+dest_files=["res://.godot/imported/spikes.aseprite-bcd2afd6d13c71d301922f61bda7356f.res"]
+
+[params]
+
