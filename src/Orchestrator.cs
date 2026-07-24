@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Godot;
 using HalfNibbleGame.Autoload;
 using HalfNibbleGame.Data;
-using HalfNibbleGame.Grid;
 using HalfNibbleGame.Planning;
 using HalfNibbleGame.Replay;
 using Adventurer = HalfNibbleGame.Adventurers.Adventurer;
@@ -20,6 +19,7 @@ public partial class Orchestrator : Node {
   private bool levelActivated = true;
   private readonly List<Adventurer> adventurers = [];
   private int focusedAdventurerIndex = -1;
+  private double playbackTimeRemaining;
 
   private Adventurer? focusedAdventurer => focusedAdventurerIndex >= 0 ? adventurers[focusedAdventurerIndex] : null;
 
@@ -45,13 +45,17 @@ public partial class Orchestrator : Node {
   }
 
   public override void _Process(double delta) {
+    if (playbackTimeRemaining > 0) {
+      playbackTimeRemaining = Math.Max(0, playbackTimeRemaining - delta);
+    }
+
     if (!levelActivated && CurrentLevel is not null) {
       activateLevel();
     }
   }
 
   public override void _Input(InputEvent @event) {
-    if (!levelActivated || focusedAdventurerIndex < 0) return;
+    if (!levelActivated || focusedAdventurerIndex < 0 || playbackTimeRemaining > 0) return;
 
     if (timeline.CurrentRound < timeline.TotalRoundCount) {
       foreach (var action in focusedAdventurer!.AvailableActions) {
@@ -120,6 +124,7 @@ public partial class Orchestrator : Node {
   private void queueAdventurerAction(IPlannedAction action) {
     focusedAdventurer?.SetActionForRound(timeline.CurrentRound, action);
     timeline.Advance();
+    playbackTimeRemaining = Constants.TimeBetweenRounds;
   }
 
   private void clearLastAdventurerAction() {
