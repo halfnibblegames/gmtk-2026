@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using HalfNibbleGame.Autoload;
 using HalfNibbleGame.Data;
@@ -39,6 +40,9 @@ public partial class Orchestrator : Node {
   }
 
   private void cleanUpPreviousLevel() {
+    CurrentLevel?.QueueFree();
+    adventurers.ForEach(a => a.QueueFree());
+
     CurrentLevel = null;
     unfocusAdventurer();
     adventurers.Clear();
@@ -50,12 +54,17 @@ public partial class Orchestrator : Node {
   }
 
   public override void _Process(double delta) {
+    if (!levelActivated && CurrentLevel is not null) {
+      activateLevel();
+    }
+
     if (playbackTimeRemaining > 0) {
       playbackTimeRemaining = Math.Max(0, playbackTimeRemaining - delta);
     }
 
-    if (!levelActivated && CurrentLevel is not null) {
-      activateLevel();
+    if (playbackTimeRemaining <= 0 && checkWinCondition()) {
+      GD.Print("You win!");
+      startPlayback();
     }
   }
 
@@ -136,5 +145,40 @@ public partial class Orchestrator : Node {
     if (timeline!.CurrentRound <= 0) return;
     focusedAdventurer?.ClearActionForRound(timeline.CurrentRound - 1);
     timeline.Rollback();
+  }
+
+  private bool checkWinCondition() {
+    // The timeline needs to be advanced all the way to the last round to check the win condition.
+    if (timeline!.CurrentRound != timeline.TotalRoundCount) return false;
+
+    var portalLocations = CurrentLevel!.AllPortals;
+
+    foreach (var adventurer in adventurers) {
+      if (adventurer.PlannedRoundCount != timeline.TotalRoundCount) {
+        return false;
+      }
+
+      if (!adventurer.Alive) {
+        return false;
+      }
+
+      if (portalLocations.All(p => p.Coords != adventurer.Coords)) {
+        return false;
+      }
+    }
+
+    // TODO: check that the loot has been picked up
+    return true;
+  }
+
+  private void startPlayback() {
+    playbackTimeRemaining = 9999;
+    unfocusAdventurer();
+    Global.Services.Get<TimelinePlayer>().Play(timeline!, onPlaybackComplete);
+  }
+
+  private void onPlaybackComplete() {
+    playbackTimeRemaining = 0;
+    Global.Services.Get<GameProgression>().LoadNextLevel();
   }
 }

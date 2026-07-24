@@ -23,6 +23,16 @@ public partial class GameProgression : Node2D {
     loadLevel(0);
   }
 
+  public void LoadNextLevel() {
+    var nextLevel = currentLevelIndex + 1;
+    if (nextLevel >= levels.Length) {
+      // TODO: win the game
+      nextLevel = 0;
+    }
+
+    loadLevel(nextLevel);
+  }
+
   private void loadLevel(int levelIndex) {
     var instance = levels[levelIndex].Instantiate<Level>();
     AddChild(instance);

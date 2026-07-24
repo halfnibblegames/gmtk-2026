@@ -17,6 +17,7 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
   private int stunnedTurns;
 
   public int PlannedRoundCount => plan.PlannedRoundCount;
+  public bool Alive => !dead;
 
   public override void _Ready() {
     base._Ready();

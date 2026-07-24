@@ -1,24 +1,30 @@
 using System;
 using Godot;
+using HalfNibbleGame.Autoload;
 using static HalfNibbleGame.Data.Constants;
 
 namespace HalfNibbleGame.Replay;
 
 public partial class TimelinePlayer : Node {
-
   private Timeline? timeline;
+  private Action? onCompleteCallback;
   private double timeUntilNextFrame;
-  private int roundsLeft;
 
   public bool IsPlaying { get; private set; }
 
-  public void Play(Timeline timelineToPlay, int roundCount) {
+  public override void _Ready() {
+    Global.Services.ProvideInScene(this);
+  }
+
+  public void Play(Timeline timelineToPlay, Action? callback) {
     if (IsPlaying) throw new Exception("Cannot play more than once");
 
     timeline = timelineToPlay;
+    onCompleteCallback = callback;
+
+    timeline.Reset();
     timeline.Advance();
     timeUntilNextFrame = TimeBetweenRounds;
-    roundsLeft = roundCount - 1;
     IsPlaying = true;
   }
 
@@ -27,15 +33,17 @@ public partial class TimelinePlayer : Node {
 
     timeUntilNextFrame -= delta;
     while (IsPlaying && timeUntilNextFrame <= 0) {
-      if (roundsLeft > 0) {
-        timeline!.Advance();
+      if (timeline!.CurrentRound < timeline.TotalRoundCount) {
+        timeline.Advance();
         timeUntilNextFrame += TimeBetweenRounds;
-        roundsLeft--;
       }
       else {
-        timeline!.Reset();
         IsPlaying = false;
         timeUntilNextFrame = 0;
+        onCompleteCallback?.Invoke();
+
+        timeline = null;
+        onCompleteCallback = null;
       }
     }
   }
