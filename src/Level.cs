@@ -19,7 +19,7 @@ public partial class Level : Node2D {
   public int WidthInPixels => tileMapLayer.GetUsedRect().Size.X * tileMapLayer.TileSet.TileSize.X;
   public int HeightInPixels => tileMapLayer.GetUsedRect().Size.Y * tileMapLayer.TileSet.TileSize.Y;
 
-  public List<Spawn> AllSpawns => GetChildren().OfType<Spawn>().ToList();
+  public List<Portal> AllPortals => GetChildren().OfType<Portal>().ToList();
 
   public override void _Ready() {
     orchestrator.SetLevel(this);

@@ -43,7 +43,7 @@ public partial class Orchestrator : Node {
   private void activateLevel() {
     unfocusObject();
 
-    foreach (var spawn in CurrentLevel!.AllSpawns) {
+    foreach (var spawn in CurrentLevel!.AllPortals) {
       var adventurer = spawn.TryInstantiateAdventurer();
       if (adventurer is null) continue;
 

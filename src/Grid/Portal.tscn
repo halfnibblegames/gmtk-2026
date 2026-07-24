@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://vp2xjv4c74nm"]
 
-[ext_resource type="Script" uid="uid://lxbfm5l5qysx" path="res://src/Grid/Spawn.cs" id="1_5moso"]
+[ext_resource type="Script" uid="uid://lxbfm5l5qysx" path="res://src/Grid/Portal.cs" id="1_5moso"]
 [ext_resource type="Texture2D" uid="uid://dxx6g2h3h0jac" path="res://assets/tilemap.png" id="2_4pb5j"]
 [ext_resource type="Script" uid="uid://c2pce663bjmor" path="res://src/Tools/EditorOnlySprite2D.cs" id="3_4ovte"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o40nt"]
 atlas = ExtResource("2_4pb5j")
-region = Rect2(0, 85, 16, 16)
+region = Rect2(0, 34, 16, 16)
 
 [node name="Spawn" type="Node2D" unique_id=1793866855]
 script = ExtResource("1_5moso")
