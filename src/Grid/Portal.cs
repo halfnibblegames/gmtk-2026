@@ -18,10 +18,16 @@ public partial class Portal : StaticGridObject, ISimulated {
 
   public void Advance(RoundContext context) {
     turnsLeft = turnCount - context.RoundNumber - 1;
+    updateSprite();
   }
 
   public void ResetToRound(int roundNumber) {
     turnsLeft = turnCount - roundNumber;
+    updateSprite();
+  }
+
+  private void updateSprite() {
+    GetNode<AnimatedSprite2D>("Sprite").Frame = turnsLeft == 0 ? 1 : 0;
   }
 
   public Adventurers.Adventurer? TryInstantiateAdventurer() {

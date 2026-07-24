@@ -1,16 +1,53 @@
-[gd_scene format=3 uid="uid://vp2xjv4c74nm"]
+[gd_scene format=4 uid="uid://vp2xjv4c74nm"]
 
 [ext_resource type="Script" uid="uid://lxbfm5l5qysx" path="res://src/Grid/Portal.cs" id="1_5moso"]
-[ext_resource type="Texture2D" uid="uid://dxx6g2h3h0jac" path="res://assets/tilemap.png" id="2_4pb5j"]
-[ext_resource type="Script" uid="uid://c2pce663bjmor" path="res://src/Tools/EditorOnlySprite2D.cs" id="3_4ovte"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_o40nt"]
-atlas = ExtResource("2_4pb5j")
-region = Rect2(0, 34, 16, 16)
+[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_4kmk4"]
+_data = PackedByteArray("AAADAAUAAAABAAAAIAAAABAAAABsAAAAUklGRmQAAABXRUJQVlA4TFcAAAAvH8ADEBcgEEhxCNOsIG0Dpv4NdcecQCDJf8Rl5j9A9g9sIttqdciUuadGBSIQhByMwg8KIvqvNm0DJpn6IfzP3WFWllxyiCEa+ADaQ9MQTpzirJxHjwQA")
+size_override = Vector2(32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gw16j"]
+atlas = SubResource("PortableCompressedTexture2D_4kmk4")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ruqd5"]
+atlas = SubResource("PortableCompressedTexture2D_4kmk4")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v1y38"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gw16j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ruqd5")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 14.0
+}]
 
 [node name="Spawn" type="Node2D" unique_id=1793866855]
 script = ExtResource("1_5moso")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1847806503]
-texture = SubResource("AtlasTexture_o40nt")
-script = ExtResource("3_4ovte")
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=398037927]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_v1y38")
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"embed_tex": true,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"scale": "1.0",
+"should_round_fps": true,
+"slice": "",
+"source": "res://assets/portal.aseprite",
+"source_uid": 1946382019970603258
+}
+metadata/_aseprite_wizard_source_file_hash_ = "9ea498ef91bf689f853c430c25a47bb1"
