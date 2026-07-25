@@ -2,7 +2,15 @@
 
 [ext_resource type="Script" uid="uid://c772xqsqhdoqa" path="res://src/Autoload/Prefabs.cs" id="1_na7ta"]
 [ext_resource type="PackedScene" uid="uid://brv7sxisnw8jk" path="res://src/Replay/HistoryArrow.tscn" id="2_cmgij"]
+[ext_resource type="Texture2D" uid="uid://bccvm4pneqqsk" path="res://assets/ui/action_up.png" id="2_m0g35"]
+[ext_resource type="Texture2D" uid="uid://byiclkto6i0oe" path="res://assets/ui/action_down.png" id="3_qywyv"]
+[ext_resource type="Texture2D" uid="uid://bbtkwqni2y84h" path="res://assets/ui/action_left.png" id="4_muwan"]
+[ext_resource type="Texture2D" uid="uid://kqfo46bwgqfr" path="res://assets/ui/action_right.png" id="5_fv715"]
 
 [node name="Prefabs" type="Node" unique_id=1541348071]
 script = ExtResource("1_na7ta")
 HistoryArrow = ExtResource("2_cmgij")
+ActionUp = ExtResource("2_m0g35")
+ActionDown = ExtResource("3_qywyv")
+ActionLeft = ExtResource("4_muwan")
+ActionRight = ExtResource("5_fv715")

@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://nry80h505ob7"]
+
+[ext_resource type="Script" uid="uid://fhg0bqrn1dxc" path="res://src/Controls/TimelineBar.cs" id="1_8jj46"]
+[ext_resource type="PackedScene" uid="uid://dfises5xi7yox" path="res://src/Controls/ActionSocket.tscn" id="2_01c5w"]
+[ext_resource type="Texture2D" uid="uid://bf12pqa34cylx" path="res://assets/ui/action_border.png" id="2_7pye4"]
+
+[node name="TimelineBar" type="Control" unique_id=1343674095 node_paths=PackedStringArray("box")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8jj46")
+socketScene = ExtResource("2_01c5w")
+box = NodePath("MarginContainer/Box")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=195054413]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer" unique_id=1453624475]
+layout_mode = 2
+texture = ExtResource("2_7pye4")
+patch_margin_left = 44
+patch_margin_top = 38
+patch_margin_right = 54
+patch_margin_bottom = 14
+
+[node name="Box" type="HBoxContainer" parent="MarginContainer" unique_id=878836427]
+layout_mode = 2
+alignment = 1
