@@ -19,14 +19,15 @@ public partial class Orchestrator : Node {
 
   public Timeline? Timeline;
 
+  public event AdventurerChanged OnAdventurerChanged = delegate {};
+  public event Timeline.CountdownChanged OnTimelineCountdownChanged = delegate {};
+
   private bool levelActivated = true;
   private readonly List<Adventurer> adventurers = [];
   private int focusedAdventurerIndex = -1;
   private double playbackTimeRemaining;
   private bool hasWon;
   private IPlannedAction? actionAfterPlayback;
-  public event AdventurerChanged OnAdventurerChanged = delegate {};
-  public event Timeline.CountdownChanged OnTimelineCountdownChanged = delegate {};
 
   private Adventurer? focusedAdventurer => focusedAdventurerIndex >= 0 ? adventurers[focusedAdventurerIndex] : null;
 
@@ -38,10 +39,8 @@ public partial class Orchestrator : Node {
     CurrentLevel = level;
     levelActivated = false;
     hasWon = false;
-    Timeline = new(GetTree(), level.RoundCount);
-    Timeline?.OnCountdownChanged += (c, t) => {
-       OnTimelineCountdownChanged(c, t);
-    };
+    Timeline = new Timeline(GetTree(), level.RoundCount);
+    Timeline.OnCountdownChanged += (c, t) => OnTimelineCountdownChanged(c, t);
 
     camera.LimitLeft = 0;
     camera.LimitRight = level.WidthInPixels;
@@ -125,6 +124,7 @@ public partial class Orchestrator : Node {
     }
 
     camera.ForceUpdateScroll();
+    OnTimelineCountdownChanged(0, Timeline!.TotalRoundCount);
     levelActivated = true;
   }
 
