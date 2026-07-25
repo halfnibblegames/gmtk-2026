@@ -1,0 +1,106 @@
+[gd_scene format=4 uid="uid://bxvix326tjgem"]
+
+[ext_resource type="Script" uid="uid://lqsgwsxag3d4" path="res://src/Adventurers/Adventurer.cs" id="1_2e0q2"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_2e0q2"]
+size = Vector2(128, 128)
+
+[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_2e0q2"]
+_data = PackedByteArray("AAADAAUAAAABAAAAHAAAABMAAACiAAAAUklGRpoAAABXRUJQVlA4TI0AAAAvG4AEED+gJgAShv4B4eJ0G0hN20ZQ+DPqc/PNh+iIBCBc8X+CDarmggPK/AeA/2yMiO56KHasAttIkpwc0v6tTwDpf9V9AIiLAOGTA/mbv4gIIvo/AfLrcmKmSf1Vp4rg/S2UKhFVdSVCVDNCgg0dI13HDV3ONIuVxDlu53mmRMwApnRARggAMA7IGBoA")
+size_override = Vector2(28, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ocy6i"]
+atlas = SubResource("PortableCompressedTexture2D_2e0q2")
+region = Rect2(0, 0, 14, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8tu8p"]
+atlas = SubResource("PortableCompressedTexture2D_2e0q2")
+region = Rect2(14, 0, 14, 19)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_imckx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ocy6i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ocy6i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ocy6i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ocy6i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8tu8p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8tu8p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8tu8p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8tu8p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8tu8p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8tu8p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8tu8p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8tu8p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8tu8p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8tu8p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8tu8p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8tu8p")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 7.0
+}]
+
+[node name="Barbarian" type="Node2D" unique_id=1259344524]
+z_index = 2
+script = ExtResource("1_2e0q2")
+adventurerClass = 2
+Portrait = SubResource("PlaceholderTexture2D_2e0q2")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1208374403]
+texture_filter = 1
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_imckx")
+metadata/_aseprite_wizard_interface_config_ = {
+"animation_section": false,
+"layer_section": true,
+"output_section": false,
+"pending_changes": {},
+"slice_section": false
+}
+metadata/_aseprite_wizard_config_ = {
+"embed_tex": true,
+"layers": ["Barbarian"],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"scale": "1.0",
+"should_round_fps": true,
+"slice": "",
+"source": "res://assets/adventurers.aseprite",
+"source_uid": 5444602691565163215
+}
+metadata/_aseprite_wizard_source_file_hash_ = "d07d35098c277baf14c33dcd9ee9bbe7"

@@ -86,6 +86,7 @@ animations = [{
 [node name="Wizard" type="Node2D" unique_id=1259344524]
 z_index = 2
 script = ExtResource("1_1q6o0")
+adventurerClass = 1
 Portrait = ExtResource("2_0pl3f")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1208374403]

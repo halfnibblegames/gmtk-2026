@@ -6,7 +6,8 @@ namespace HalfNibbleGame.Adventurers;
 
 public enum AdventurerClass {
   Rogue,
-  Wizard
+  Wizard,
+  Barbarian
 }
 
 public static class AdventurerClassExtensions {
@@ -18,6 +19,7 @@ public static class AdventurerClassExtensions {
     public IReadOnlyList<IPlannedAction> AvailableActions => clazz switch {
       AdventurerClass.Rogue => [.. sharedActions, PlannedActions.Dash],
       AdventurerClass.Wizard => [.. sharedActions],
+      AdventurerClass.Barbarian => [.. sharedActions],
       _ => throw new ArgumentOutOfRangeException(nameof(clazz), clazz, null)
     };
   }
