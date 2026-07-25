@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://dko1e835081bl"]
+
+[ext_resource type="Texture2D" uid="uid://vrna5y2ys8ou" path="res://assets/ui/portrait_frame.png" id="1_yu3cd"]
+[ext_resource type="Script" uid="uid://olikq552e5kl" path="res://src/Controls/AdventurerPortrait.cs" id="2_tk2a2"]
+
+[node name="AdventurerPortrait" type="TextureRect" unique_id=1128784682]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_yu3cd")
+script = ExtResource("2_tk2a2")
+
+[node name="Portrait" type="TextureRect" parent="." unique_id=162135975]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=1090003907]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5019608)

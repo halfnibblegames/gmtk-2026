@@ -35,6 +35,8 @@ public partial class Orchestrator : Node {
 
   private Adventurer? focusedAdventurer => focusedAdventurerIndex >= 0 ? adventurers[focusedAdventurerIndex] : null;
 
+  public IReadOnlyList<Adventurer> Adventurers => adventurers;
+
   public void SetLevel(Levels.Level level) {
     if (CurrentLevel is not null) {
       cleanUpPreviousLevel();
@@ -129,13 +131,15 @@ public partial class Orchestrator : Node {
       historyArrows.Add(historyArrow);
     }
 
+    camera.ForceUpdateScroll();
+    TimelineCountdownChanged(0, Timeline!.TotalRoundCount);
+    LevelStarted();
+
+    // Focus the adventurer here so that LevelStarted is triggered first
     if (adventurers.Count > 0) {
       FocusNextAdventurer();
     }
 
-    camera.ForceUpdateScroll();
-    TimelineCountdownChanged(0, Timeline!.TotalRoundCount);
-    LevelStarted();
     levelActivated = true;
   }
 
