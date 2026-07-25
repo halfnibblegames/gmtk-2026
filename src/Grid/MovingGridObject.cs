@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Godot;
 
 namespace HalfNibbleGame.Grid;
@@ -33,21 +34,24 @@ public abstract partial class MovingGridObject : GridObject {
     // We move one step at a time
     var dir = toDirection(diff);
     var accumulatedMovement = Vector2I.Zero;
+    var tilesVisited = new List<Vector2I>();
 
     while (accumulatedMovement != diff) {
       var targetPos = Coords + accumulatedMovement + dir;
       var targetTile = Level.GetTile(targetPos);
       if (targetTile.Collides) {
-        return new MoveResult(MoveOutcome.Collided, accumulatedMovement);
+        return new MoveResult(MoveOutcome.Collided, accumulatedMovement, tilesVisited);
       }
-      if (targetTile.Pit) {
-        accumulatedMovement += dir;
-        return new MoveResult(MoveOutcome.FellDown, accumulatedMovement);
-      }
+
       accumulatedMovement += dir;
+      tilesVisited.Add(targetPos);
+
+      if (targetTile.Pit) {
+        return new MoveResult(MoveOutcome.FellDown, accumulatedMovement, tilesVisited);
+      }
     }
 
-    return new MoveResult(MoveOutcome.Moved, accumulatedMovement);
+    return new MoveResult(MoveOutcome.Moved, accumulatedMovement, tilesVisited);
   }
 
   public void DoMove(MoveResult moveResult) {
@@ -109,7 +113,7 @@ public abstract partial class MovingGridObject : GridObject {
     EmitSignalMoved(Coords);
   }
 
-  public readonly record struct MoveResult(MoveOutcome Outcome, Vector2I ActuallyMoved) {
+  public readonly record struct MoveResult(MoveOutcome Outcome, Vector2I ActuallyMoved, List<Vector2I> TilesVisited) {
     public bool Valid => Outcome is MoveOutcome.Moved or MoveOutcome.FellDown;
   }
 

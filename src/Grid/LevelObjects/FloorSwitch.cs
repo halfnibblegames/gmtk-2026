@@ -23,21 +23,20 @@ public partial class FloorSwitch : StaticGridObject, ISimulated {
   }
 
   public void Advance(RoundContext context) {
-    context.RegisterOutcome(() => checkPressed(context.RoundNumber, false));
+    context.RegisterOutcome(() => checkPressed(context, false));
   }
 
   public void ResetToRound(RoundContext context) {
     if (active && context.RoundNumber <= pressedRound) {
       deactivate();
-      context.RegisterOutcome(() => checkPressed(context.RoundNumber, true));
+      context.RegisterOutcome(() => checkPressed(context, true));
     }
   }
 
-  private void checkPressed(int roundNumber, bool instant) {
+  private void checkPressed(RoundContext context, bool instant) {
     // If any adventurer is on this tile after a round, then we break the next round whether the adventurer moves or not
-    // TODO: maybe this should not just check for adventurers
-    if (GetTree().GetNodesInGroup(Groups.Simulated).OfType<Adventurer>().Any(a => a.Coords == Coords)) {
-      pressedRound = roundNumber;
+    if (context.ObjectsInTile(Coords).Any()) {
+      pressedRound = context.RoundNumber;
       // Because we check after the movement of a round, we can safely already activate this switch
       activate(instant);
     }

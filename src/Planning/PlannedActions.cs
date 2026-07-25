@@ -1,4 +1,3 @@
-using System;
 using Godot;
 using HalfNibbleGame.Data;
 using HalfNibbleGame.Grid;
@@ -51,6 +50,10 @@ public static class PlannedActions {
 
   private static void handleMoveResult(
     MovingGridObject.MoveResult result, RoundContext context, SimulatedGridObject target) {
+    foreach (var tile in result.TilesVisited) {
+      context.RegisterTileEntered(target, tile);
+    }
+
     if (result.Outcome == MovingGridObject.MoveOutcome.FellDown) {
       context.RegisterOutcome(target.Die);
     }

@@ -22,21 +22,19 @@ public partial class Treasure : StaticGridObject, ISimulated {
   }
 
   public void Advance(RoundContext context) {
-    context.RegisterOutcome(() => checkPickedUp(context.RoundNumber));
+    context.RegisterOutcome(() => checkPickedUp(context));
   }
 
   public void ResetToRound(RoundContext context) {
     if (PickedUpBy is not null && context.RoundNumber <= pickedUpRound) {
       drop();
-      context.RegisterOutcome(() => checkPickedUp(context.RoundNumber));
+      context.RegisterOutcome(() => checkPickedUp(context));
     }
   }
 
-  private void checkPickedUp(int roundNumber) {
-    // If any adventurer is on this tile after a round, then we break the next round whether the adventurer moves or not
-    // TODO: maybe this should not just check for adventurers
-    if (GetTree().GetNodesInGroup(Groups.Simulated).OfType<Adventurer>().FirstOrDefault(a => a.Coords == Coords) is { } adventurer) {
-      pickedUpRound = roundNumber;
+  private void checkPickedUp(RoundContext context) {
+    if (context.ObjectsInTile(Coords).OfType<Adventurer>().FirstOrDefault() is { } adventurer) {
+      pickedUpRound = context.RoundNumber;
       pickUp(adventurer);
     }
   }
