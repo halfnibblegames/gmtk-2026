@@ -25,7 +25,7 @@ public abstract partial class MovingGridObject : GridObject {
     Scale = new Vector2(Flipped ? -1 : 1, 1);
   }
 
-  public MoveResult PreviewMove(Vector2I diff) {
+  public MoveResult PreviewMove(Vector2I diff, bool isStrong = false) {
     if (Level is null) {
       throw new Exception($"Attempting to move {this} without a level");
     }
@@ -40,7 +40,15 @@ public abstract partial class MovingGridObject : GridObject {
       var targetPos = Coords + accumulatedMovement + dir;
       var targetTile = Level.GetTile(targetPos);
       if (targetTile.Collides) {
-        return new MoveResult(MoveOutcome.Collided, accumulatedMovement, tilesVisited);
+        var willPush = isStrong && targetTile.CollidesWith is not null;
+        var outcome = willPush ? MoveOutcome.Moved : MoveOutcome.Collided;
+
+        if (willPush) {
+          accumulatedMovement += dir;
+          tilesVisited.Add(targetPos);
+        }
+
+        return new MoveResult(outcome, accumulatedMovement, tilesVisited, targetTile.CollidesWith);
       }
 
       accumulatedMovement += dir;
@@ -113,7 +121,11 @@ public abstract partial class MovingGridObject : GridObject {
     EmitSignalMoved(Coords);
   }
 
-  public readonly record struct MoveResult(MoveOutcome Outcome, Vector2I ActuallyMoved, List<Vector2I> TilesVisited) {
+  public readonly record struct MoveResult(
+    MoveOutcome Outcome,
+    Vector2I ActuallyMoved,
+    List<Vector2I> TilesVisited,
+    MovingGridObject? CollidedWith = null) {
     public bool Valid => Outcome is MoveOutcome.Moved or MoveOutcome.FellDown;
   }
 

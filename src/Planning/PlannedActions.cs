@@ -10,6 +10,10 @@ public static class PlannedActions {
   public static IPlannedAction MoveRight { get; } = new MoveAction(Vector2I.Right, InputActions.Right);
   public static IPlannedAction MoveUp { get; } = new MoveAction(Vector2I.Up, InputActions.Up);
   public static IPlannedAction MoveDown { get; } = new MoveAction(Vector2I.Down, InputActions.Down);
+  public static IPlannedAction StrongMoveLeft { get; } = new StrongMoveAction(Vector2I.Left, InputActions.Left);
+  public static IPlannedAction StrongMoveRight { get; } = new StrongMoveAction(Vector2I.Right, InputActions.Right);
+  public static IPlannedAction StrongMoveUp { get; } = new StrongMoveAction(Vector2I.Up, InputActions.Up);
+  public static IPlannedAction StrongMoveDown { get; } = new StrongMoveAction(Vector2I.Down, InputActions.Down);
   public static IPlannedAction Dash { get; } = new ForwardAction(2, InputActions.Dash);
 
   private abstract class ActionBase(StringName? shortcut) : IPlannedAction {
@@ -28,6 +32,30 @@ public static class PlannedActions {
     public override void Do(RoundContext context, SimulatedGridObject target) {
       var result = target.PreviewMove(diff);
       target.DoMove(result);
+      handleMoveResult(result, context, target);
+    }
+  }
+
+  private class StrongMoveAction(Vector2I diff, StringName? shortcut) : ActionBase(shortcut) {
+    public override bool CheckValid(SimulatedGridObject target) {
+      var result = target.PreviewMove(diff, true);
+      if (result.CollidedWith is null || !result.Valid) {
+        return result.Valid;
+      }
+
+      var pushableResult = result.CollidedWith.PreviewMove(diff);
+      return pushableResult.Valid;
+    }
+
+    public override void Do(RoundContext context, SimulatedGridObject target) {
+      var result = target.PreviewMove(diff, true);
+      target.DoMove(result);
+
+      if (result.CollidedWith is not null) {
+        var pushableResult = result.CollidedWith.PreviewMove(diff);
+        result.CollidedWith?.DoMove(pushableResult);
+      }
+
       handleMoveResult(result, context, target);
     }
   }

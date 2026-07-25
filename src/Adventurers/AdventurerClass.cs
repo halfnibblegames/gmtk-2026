@@ -19,7 +19,12 @@ public static class AdventurerClassExtensions {
     public IReadOnlyList<IPlannedAction> AvailableActions => clazz switch {
       AdventurerClass.Rogue => [.. sharedActions, PlannedActions.Dash],
       AdventurerClass.Wizard => [.. sharedActions],
-      AdventurerClass.Barbarian => [.. sharedActions],
+      AdventurerClass.Barbarian => [
+        PlannedActions.StrongMoveLeft,
+        PlannedActions.StrongMoveRight,
+        PlannedActions.StrongMoveUp,
+        PlannedActions.StrongMoveDown
+      ],
       _ => throw new ArgumentOutOfRangeException(nameof(clazz), clazz, null)
     };
   }
