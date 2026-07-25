@@ -8,7 +8,7 @@ public partial class SpindownDice : Control {
 
   public override void _Ready() {
     var orchestrator = Global.Services.Get<Orchestrator>();
-    orchestrator.OnTimelineCountdownChanged += countdownChanged;
+    orchestrator.TimelineCountdownChanged += countdownChanged;
     var initialTimeline = orchestrator.Timeline!;
     countdownChanged(initialTimeline.CurrentRound, initialTimeline.TotalRoundCount);
     base._Ready();

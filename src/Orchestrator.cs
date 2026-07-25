@@ -13,14 +13,16 @@ namespace HalfNibbleGame;
 public partial class Orchestrator : Node {
   [Export] private Camera2D camera = null!;
 
-  public delegate void AdventurerChanged();
+  public delegate void AdventurerChangedEventHandler(Adventurer adventurer);
+  public delegate void LevelStartedEventHandler();
 
   public Levels.Level? CurrentLevel { get; private set; }
 
   public Timeline? Timeline;
 
-  public event AdventurerChanged OnAdventurerChanged = delegate {};
-  public event Timeline.CountdownChanged OnTimelineCountdownChanged = delegate {};
+  public event AdventurerChangedEventHandler AdventurerChanged = delegate {};
+  public event Timeline.CountdownChangedEventHandler TimelineCountdownChanged = delegate {};
+  public event LevelStartedEventHandler LevelStarted = delegate {};
 
   private bool levelActivated = true;
   private readonly List<Adventurer> adventurers = [];
@@ -40,7 +42,7 @@ public partial class Orchestrator : Node {
     levelActivated = false;
     hasWon = false;
     Timeline = new Timeline(GetTree(), level.RoundCount);
-    Timeline.OnCountdownChanged += (c, t) => OnTimelineCountdownChanged(c, t);
+    Timeline.CountdownChanged += (c, t) => TimelineCountdownChanged(c, t);
 
     camera.LimitLeft = 0;
     camera.LimitRight = level.WidthInPixels;
@@ -124,7 +126,8 @@ public partial class Orchestrator : Node {
     }
 
     camera.ForceUpdateScroll();
-    OnTimelineCountdownChanged(0, Timeline!.TotalRoundCount);
+    TimelineCountdownChanged(0, Timeline!.TotalRoundCount);
+    LevelStarted();
     levelActivated = true;
   }
 
@@ -161,7 +164,7 @@ public partial class Orchestrator : Node {
     if (plannedRoundCount < Timeline!.CurrentRound) {
       Timeline.ResetToRound(plannedRoundCount);
     }
-    OnAdventurerChanged();
+    AdventurerChanged(focusedAdventurer!);
   }
 
   private void onAdventurerMoved(Vector2I newCoords) {

@@ -1,28 +1,35 @@
 using Godot;
-using HalfNibbleGame;
+using HalfNibbleGame.Adventurers;
 using HalfNibbleGame.Autoload;
-using System;
+
+namespace HalfNibbleGame.Controls;
 
 public partial class CurrentAdventurer : Control {
 
-  private int frontFrameIndex = 0;
+  private int frontFrameIndex;
   private Tween? portraitRotationTween;
-  [Export]
-  private TextureButton SwitchButton;
 
+  // Lazily initialized
+  private Orchestrator orchestrator = null!;
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready() {
-    Global.Services.Get<Orchestrator>().OnAdventurerChanged += OnAdventurerChanged;
-    SwitchButton.Pressed += SwitchButtonOnPressed;
+  [Export] private TextureButton? switchButton;
+
+  public override void _Ready() {
+    orchestrator = Global.Services.Get<Orchestrator>();
+    orchestrator.AdventurerChanged += onAdventurerChanged;
+    switchButton?.Pressed += switchButtonOnPressed;
     base._Ready();
-	}
-
-  private void SwitchButtonOnPressed() {
-    Global.Services.Get<Orchestrator>().FocusNextAdventurer();
   }
 
-  private void OnAdventurerChanged() {
+  private void switchButtonOnPressed() {
+    orchestrator.FocusNextAdventurer();
+  }
+
+  private void onLevelStarted() {
+    // TODO: initialize the portraits dynamically based on orchestrator adventurers
+  }
+
+  private void onAdventurerChanged(Adventurer adventurer) {
     var indexOfFrameToBringToFront = (frontFrameIndex + 1) % 2;
     var frontFrame = GetNode<Control>($"Frame{frontFrameIndex + 1}");
     var backFrame = GetNode<Control>($"Frame{indexOfFrameToBringToFront + 1}");
