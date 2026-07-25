@@ -15,6 +15,7 @@ public abstract partial class MovingGridObject : GridObject {
   [Export] public Orchestrator Orchestrator = null!;
 
   public Vector2I Forward { get; protected set; }
+  protected bool Flipped { get; set; }
 
   public override void _Process(double delta) {
     if (Level != Orchestrator.CurrentLevel) {
@@ -26,6 +27,8 @@ public abstract partial class MovingGridObject : GridObject {
       moveAnimation.Update(delta);
       EmitSignalMoved(Coords);
     }
+
+    Scale = new Vector2(Flipped ? -1 : 1, 1);
   }
 
   public MoveResult PreviewMove(Vector2I diff) {
@@ -91,6 +94,11 @@ public abstract partial class MovingGridObject : GridObject {
     Coords += diff;
     if (diff.LengthSquared() > 0) {
       Forward = new Vector2I(Math.Sign(diff.X), Math.Sign(diff.Y));
+      if (Forward == Vector2I.Right && Flipped) {
+        Flipped = false;
+      } else if (Forward == Vector2I.Left && !Flipped) {
+        Flipped = true;
+      }
     }
 
     var end = ToTilePosition(Coords);

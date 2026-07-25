@@ -26,7 +26,7 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
   }
 
   public void Advance(RoundContext context) {
-    History.Push(new RoundState(Coords, Forward, desynced, dead));
+    History.Push(new RoundState(Coords, Forward, Flipped, desynced, dead));
     if (desynced) {
       return;
     }
@@ -49,6 +49,7 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
     var roundState = History.LastKnownStateInRound(context.RoundNumber);
     TeleportTo(roundState.Coords);
     Forward = roundState.Forward;
+    Flipped = roundState.Flipped;
     desynced = roundState.Desynced;
     dead = roundState.Dead;
 
@@ -82,5 +83,5 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
     dead = true;
   }
 
-  public readonly record struct RoundState(Vector2I Coords, Vector2I Forward, bool Desynced, bool Dead);
+  public readonly record struct RoundState(Vector2I Coords, Vector2I Forward, bool Flipped, bool Desynced, bool Dead);
 }
