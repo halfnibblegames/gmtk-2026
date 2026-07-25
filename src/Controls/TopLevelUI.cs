@@ -21,6 +21,8 @@ public partial class TopLevelUI : Node {
   [Export] private Control spindownDice = null!;
   [Export] private Control timelineBar = null!;
   [Export] private ColorRect postProcessing = null!;
+  [Export] private AudioStreamPlayer planningMusic = null!;
+  [Export] private AudioStreamPlayer playingMusic = null!;
 
   [Export] private BaseButton playbackButton = null!;
 
@@ -31,6 +33,9 @@ public partial class TopLevelUI : Node {
     orchestrator.WinConditionChanged += isSonWinning => isPlaybackReady = isSonWinning;
     playbackButton.Pressed += startPlayback;
     resetTransforms();
+
+    planningMusic.Play();
+    playingMusic.Play();
   }
 
   public override void _Input(InputEvent @event) {
@@ -71,6 +76,12 @@ public partial class TopLevelUI : Node {
       .Parallel()
       .TweenProperty(timelineBar, "offset_transform_position", 150 * Vector2.Down, transitionDuration)
       .SetEase(Tween.EaseType.In);
+    playbackTween
+      .Parallel()
+      .TweenProperty(planningMusic, "volume_linear", 0f, transitionDuration);
+    playbackTween
+      .Parallel()
+      .TweenProperty(playingMusic, "volume_linear", 1f, transitionDuration);
 
     playbackTween
       .Chain()
@@ -98,6 +109,8 @@ public partial class TopLevelUI : Node {
     timelineBar.OffsetTransformPosition = Vector2.Zero;
     playbackButton.OffsetTransformPosition = Vector2.Zero;
     setVignetteAmount(0);
+    planningMusic.VolumeLinear = 1;
+    playingMusic.VolumeLinear = 0;
   }
 
   private void setVignetteAmount(float amount) {
