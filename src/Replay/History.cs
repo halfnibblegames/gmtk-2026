@@ -11,6 +11,8 @@ public class History<T> {
 
   public T this[int index] => roundStates[index];
 
+  public T this[Index index] => roundStates[index];
+
   public T LastKnownStateInRound(int round) {
     return roundStates[Math.Min(round, roundStates.Count - 1)];
   }

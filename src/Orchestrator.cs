@@ -138,7 +138,7 @@ public partial class Orchestrator : Node {
 
       var historyArrow = Global.Prefabs.HistoryArrow.Instantiate<HistoryArrow>();
       historyArrow.Name = $"{adventurer.Name}History";
-      historyArrow.SetHistory(adventurer.History);
+      historyArrow.SetHistory(adventurer.History, adventurer);
       adventurer.AddSibling(historyArrow);
       historyArrows.Add(historyArrow);
     }

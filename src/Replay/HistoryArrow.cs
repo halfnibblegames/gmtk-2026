@@ -10,13 +10,15 @@ namespace HalfNibbleGame.Replay;
 public partial class HistoryArrow : TileMapLayer, ISimulated {
 
   private History<SimulatedGridObject.RoundState>? history;
+  private SimulatedGridObject? target;
 
   public override void _Ready() {
     AddToGroup(Groups.Simulated);
   }
 
-  public void SetHistory(History<SimulatedGridObject.RoundState> hist) {
+  public void SetHistory(History<SimulatedGridObject.RoundState> hist, SimulatedGridObject trgt) {
     history = hist;
+    target = trgt;
   }
 
   public void Advance(RoundContext context) {
@@ -32,7 +34,7 @@ public partial class HistoryArrow : TileMapLayer, ISimulated {
 
     var endRound = Math.Min(round, history.Length - 1);
 
-    if (endRound <= 0) {
+    if (endRound < 0) {
       Clear();
       return;
     }
@@ -41,10 +43,12 @@ public partial class HistoryArrow : TileMapLayer, ISimulated {
     var steps = Enumerable.Range(1, endRound)
       .SelectMany(i => toSteps(history[i].Coords - history[i - 1].Coords))
       .ToList();
+    var lastLocation = history[^1];
+    steps.AddRange(toSteps(target!.Coords - lastLocation.Coords));
 
     Clear();
     var coords = startLocation;
-    for (var i = 0; i < steps.Count; i++) {
+    for (var i = 0; i < steps.Count - 1; i++) {
       coords += toDiff(steps[i]);
 
       var arrowPiece = toArrowPiece(steps[i], i < steps.Count - 1 ? steps[i + 1] : null);
