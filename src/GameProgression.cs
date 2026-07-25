@@ -6,6 +6,7 @@ namespace HalfNibbleGame;
 
 public partial class GameProgression : Node2D {
 
+  [Export] private int startLevel;
   [Export] private PackedScene[] levels = [];
 
   private int currentLevelIndex = -1;
@@ -20,7 +21,7 @@ public partial class GameProgression : Node2D {
     }
 
     // We make sure Orchestrator is a child of this node, so that we can access it.
-    loadLevel(0);
+    loadLevel(startLevel);
   }
 
   public void LoadNextLevel() {
