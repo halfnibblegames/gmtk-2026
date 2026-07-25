@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://vp2xjv4c74nm" path="res://src/Grid/LevelObjects/Portal.tscn" id="3_hrjdn"]
 [ext_resource type="PackedScene" uid="uid://bcl3vatoebel6" path="res://src/Adventurers/Rogue.tscn" id="4_w0ije"]
 [ext_resource type="PackedScene" uid="uid://cabw7txv30txh" path="res://src/Adventurers/Wizard.tscn" id="5_3cmsf"]
-[ext_resource type="Texture2D" uid="uid://ce8mk5c54jbej" path="res://assets/backpack.png" id="7_4s2uc"]
+[ext_resource type="PackedScene" uid="uid://dalnpkxjsgkpn" path="res://src/Grid/LevelObjects/Treasure.tscn" id="8_rja2y"]
 [ext_resource type="PackedScene" uid="uid://cvey5n11da3a5" path="res://src/Grid/LevelObjects/FloorSwitch.tscn" id="9_w1ock"]
 [ext_resource type="PackedScene" uid="uid://c4eg0ny1w4uqh" path="res://src/Grid/LevelObjects/Door.tscn" id="10_a5fgn"]
 
@@ -27,14 +27,12 @@ adventurerScene = ExtResource("4_w0ije")
 position = Vector2(88, 120)
 adventurerScene = ExtResource("5_3cmsf")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2098376972]
-position = Vector2(168.00002, 56)
-scale = Vector2(0.032895446, 0.032895446)
-texture = ExtResource("7_4s2uc")
-
 [node name="FloorSwitch" parent="." unique_id=2146298685 node_paths=PackedStringArray("door") instance=ExtResource("9_w1ock")]
 position = Vector2(232, 120)
 door = NodePath("../Door")
 
 [node name="Door" parent="." unique_id=944657870 instance=ExtResource("10_a5fgn")]
 position = Vector2(168, 72)
+
+[node name="Treasure" parent="." unique_id=848941562 instance=ExtResource("8_rja2y")]
+position = Vector2(168, 56)

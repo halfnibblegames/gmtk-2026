@@ -4,6 +4,7 @@ using System.Linq;
 using Godot;
 using HalfNibbleGame.Autoload;
 using HalfNibbleGame.Data;
+using HalfNibbleGame.Grid.LevelObjects;
 using HalfNibbleGame.Planning;
 using HalfNibbleGame.Replay;
 using Adventurer = HalfNibbleGame.Adventurers.Adventurer;
@@ -234,13 +235,19 @@ public partial class Orchestrator : Node {
       }
     }
 
-    // TODO: check that the loot has been picked up
+    foreach (var treasure in GetTree().GetNodesInGroup(Groups.Treasure).OfType<Treasure>()) {
+      if (treasure.PickedUpBy is null) {
+        return false;
+      }
+    }
+
     return true;
   }
 
   private void startPlayback() {
     hasWon = true;
     unfocusAdventurer();
+    // TODO: follow the adventurer that picked up the loot
     historyArrows.ForEach(a => a.Visible = false);
     Global.Services.Get<TimelinePlayer>().Play(Timeline!, onPlaybackComplete);
   }

@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://dalnpkxjsgkpn"]
+
+[ext_resource type="Script" uid="uid://c7knsu7sk6hjr" path="res://src/Grid/LevelObjects/Treasure.cs" id="1_or54f"]
+[ext_resource type="Texture2D" uid="uid://ce8mk5c54jbej" path="res://assets/backpack.png" id="1_wkmab"]
+
+[node name="Treasure" type="Node2D" unique_id=848941562]
+script = ExtResource("1_or54f")
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=839220017]
+scale = Vector2(0.032895446, 0.032895446)
+texture = ExtResource("1_wkmab")

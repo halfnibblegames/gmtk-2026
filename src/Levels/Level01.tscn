@@ -4,7 +4,7 @@
 [ext_resource type="TileSet" uid="uid://bkpxxbiy6ywwm" path="res://assets/tilemap.tres" id="2_pgaa1"]
 [ext_resource type="PackedScene" uid="uid://vp2xjv4c74nm" path="res://src/Grid/LevelObjects/Portal.tscn" id="3_nwf8y"]
 [ext_resource type="PackedScene" uid="uid://bcl3vatoebel6" path="res://src/Adventurers/Rogue.tscn" id="4_qujo2"]
-[ext_resource type="Texture2D" uid="uid://ce8mk5c54jbej" path="res://assets/backpack.png" id="7_jg52e"]
+[ext_resource type="PackedScene" uid="uid://dalnpkxjsgkpn" path="res://src/Grid/LevelObjects/Treasure.tscn" id="6_0a0hh"]
 [ext_resource type="PackedScene" uid="uid://bmwqlxeni7vcf" path="res://src/Grid/LevelObjects/CrackedFloor.tscn" id="8_pgaa1"]
 
 [node name="Level" type="Node2D" unique_id=77528087]
@@ -21,10 +21,8 @@ navigation_enabled = false
 position = Vector2(104, 104)
 adventurerScene = ExtResource("4_qujo2")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2098376972]
-position = Vector2(216, 104.00001)
-scale = Vector2(0.032895446, 0.032895446)
-texture = ExtResource("7_jg52e")
-
 [node name="CrackedFloor" parent="." unique_id=406908158 instance=ExtResource("8_pgaa1")]
 position = Vector2(168, 104)
+
+[node name="Treasure" parent="." unique_id=848941562 instance=ExtResource("6_0a0hh")]
+position = Vector2(216, 104)

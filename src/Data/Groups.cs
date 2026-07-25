@@ -4,4 +4,5 @@ public static class Groups {
   public const string Simulated = "simulated";
   public const string Hazard = "hazard";
   public const string Mortal = "mortal";
+  public const string Treasure = "treasure";
 }

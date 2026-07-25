@@ -4,8 +4,8 @@
 [ext_resource type="TileSet" uid="uid://bkpxxbiy6ywwm" path="res://assets/tilemap.tres" id="2_xy6t8"]
 [ext_resource type="PackedScene" uid="uid://vp2xjv4c74nm" path="res://src/Grid/LevelObjects/Portal.tscn" id="3_wcua8"]
 [ext_resource type="PackedScene" uid="uid://bcl3vatoebel6" path="res://src/Adventurers/Rogue.tscn" id="4_af7hf"]
+[ext_resource type="PackedScene" uid="uid://dalnpkxjsgkpn" path="res://src/Grid/LevelObjects/Treasure.tscn" id="6_34g7j"]
 [ext_resource type="PackedScene" uid="uid://ctklr4sab4rhr" path="res://src/Grid/LevelObjects/Spikes.tscn" id="6_t7yax"]
-[ext_resource type="Texture2D" uid="uid://ce8mk5c54jbej" path="res://assets/backpack.png" id="7_yfsy5"]
 
 [node name="Level" type="Node2D" unique_id=77528087]
 script = ExtResource("1_moir1")
@@ -35,7 +35,5 @@ initiallyExtended = true
 [node name="Spikes4" parent="." unique_id=35112802 instance=ExtResource("6_t7yax")]
 position = Vector2(168, 120)
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2098376972]
+[node name="Treasure" parent="." unique_id=848941562 instance=ExtResource("6_34g7j")]
 position = Vector2(200, 104)
-scale = Vector2(0.032895446, 0.032895446)
-texture = ExtResource("7_yfsy5")
