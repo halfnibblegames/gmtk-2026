@@ -1,9 +1,7 @@
 [gd_scene format=4 uid="uid://bxvix326tjgem"]
 
 [ext_resource type="Script" uid="uid://lqsgwsxag3d4" path="res://src/Adventurers/Adventurer.cs" id="1_2e0q2"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_2e0q2"]
-size = Vector2(128, 128)
+[ext_resource type="Texture2D" uid="uid://cayawvu4v0c3g" path="res://assets/ui/portrait_barbarian.png" id="2_2e0q2"]
 
 [sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_2e0q2"]
 _data = PackedByteArray("AAADAAUAAAABAAAAHAAAABMAAACiAAAAUklGRpoAAABXRUJQVlA4TI0AAAAvG4AEED+gJgAShv4B4eJ0G0hN20ZQ+DPqc/PNh+iIBCBc8X+CDarmggPK/AeA/2yMiO56KHasAttIkpwc0v6tTwDpf9V9AIiLAOGTA/mbv4gIIvo/AfLrcmKmSf1Vp4rg/S2UKhFVdSVCVDNCgg0dI13HDV3ONIuVxDlu53mmRMwApnRARggAMA7IGBoA")
@@ -77,7 +75,7 @@ animations = [{
 z_index = 2
 script = ExtResource("1_2e0q2")
 adventurerClass = 2
-Portrait = SubResource("PlaceholderTexture2D_2e0q2")
+Portrait = ExtResource("2_2e0q2")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1208374403]
 texture_filter = 1
