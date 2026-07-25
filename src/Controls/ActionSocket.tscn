@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://dfises5xi7yox"]
+
+[ext_resource type="Texture2D" uid="uid://dtf7hupu3w7pd" path="res://assets/ui/action_sockets.png" id="1_4mton"]
+[ext_resource type="Script" uid="uid://c1c6d7otd03n1" path="res://src/Controls/ActionSocket.cs" id="1_5v7sp"]
+[ext_resource type="Texture2D" uid="uid://cf7isbjtw5roc" path="res://assets/ui/action_pip.png" id="2_5v7sp"]
+[ext_resource type="Texture2D" uid="uid://bccvm4pneqqsk" path="res://assets/ui/action_up.png" id="3_v5ah7"]
+
+[node name="ActionSocket" type="Control" unique_id=1946679221 node_paths=PackedStringArray("Pip", "Action")]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 3
+anchor_right = 0.031000001
+anchor_bottom = 0.056
+offset_right = 0.3199997
+offset_bottom = -0.3199997
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+script = ExtResource("1_5v7sp")
+Pip = NodePath("Pip")
+Action = NodePath("Action")
+
+[node name="Socket" type="TextureRect" parent="." unique_id=540823775]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_4mton")
+
+[node name="Pip" type="TextureRect" parent="." unique_id=1495539690]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_5v7sp")
+
+[node name="Action" type="TextureRect" parent="." unique_id=1372400687]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_v5ah7")
