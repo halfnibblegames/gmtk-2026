@@ -16,6 +16,7 @@ public partial class Orchestrator : Node {
 
   public delegate void AdventurerChangedEventHandler(Adventurer adventurer);
   public delegate void LevelStartedEventHandler();
+  public delegate void WinConditionChangedEventHandler(bool isWinning);
 
   public Levels.Level? CurrentLevel { get; private set; }
 
@@ -24,12 +25,20 @@ public partial class Orchestrator : Node {
   public event AdventurerChangedEventHandler AdventurerChanged = delegate {};
   public event Timeline.CountdownChangedEventHandler TimelineCountdownChanged = delegate {};
   public event LevelStartedEventHandler LevelStarted = delegate {};
+  public event WinConditionChangedEventHandler WinConditionChanged = delegate {};
 
   private bool levelActivated = true;
   private readonly List<Adventurer> adventurers = [];
   private readonly List<HistoryArrow> historyArrows = [];
   private int focusedAdventurerIndex = -1;
   private double playbackTimeRemaining;
+  private bool isReadyForPlayback {
+    get;
+    set {
+      field = value;
+      WinConditionChanged(value);
+    }
+  }
   private bool hasWon;
   private IPlannedAction? actionAfterPlayback;
 
@@ -86,8 +95,7 @@ public partial class Orchestrator : Node {
     }
 
     if (playbackTimeRemaining <= 0 && checkWinCondition()) {
-      GD.Print("You win!");
-      startPlayback();
+      isReadyForPlayback = true;
     }
   }
 
@@ -106,6 +114,9 @@ public partial class Orchestrator : Node {
     // Clear last action
     if (@event.IsActionReleased(InputActions.Back)) {
       clearLastAdventurerAction();
+      if (isReadyForPlayback) {
+        isReadyForPlayback = false;
+      }
     }
 
     // Switch adventurers
@@ -249,15 +260,11 @@ public partial class Orchestrator : Node {
     return true;
   }
 
-  private void startPlayback() {
+  public void PreparePlayback() {
     hasWon = true;
     unfocusAdventurer();
     // TODO: follow the adventurer that picked up the loot
     historyArrows.ForEach(a => a.Visible = false);
-    Global.Services.Get<TimelinePlayer>().Play(Timeline!, onPlaybackComplete);
-  }
-
-  private void onPlaybackComplete() {
-    Global.Services.Get<GameProgression>().LoadNextLevel();
+    Timeline!.Reset();
   }
 }

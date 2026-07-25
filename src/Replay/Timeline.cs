@@ -33,6 +33,8 @@ public class Timeline(SceneTree tree, int totalRoundCount) {
   }
 
   public void ResetToRound(int round) {
+    if (CurrentRound == round) return;
+
     CurrentRound = round;
     var roundContext = new RoundContext(round);
     simulatedObjects().ForEach(obj => obj.ResetToRound(roundContext));

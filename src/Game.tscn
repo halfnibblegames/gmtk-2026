@@ -12,7 +12,6 @@
 [node name="Game" type="Node2D" unique_id=1550737297]
 y_sort_enabled = true
 script = ExtResource("1_7omc5")
-startLevel = 3
 levels = [ExtResource("1_2c5w0"), ExtResource("3_km1yn"), ExtResource("4_dbp7n"), ExtResource("5_rgpsw")]
 
 [node name="Extent" type="Marker2D" parent="." unique_id=1116238729]

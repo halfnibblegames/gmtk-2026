@@ -6,8 +6,11 @@ using static HalfNibbleGame.Data.Constants;
 namespace HalfNibbleGame.Replay;
 
 public partial class TimelinePlayer : Node {
+
+  [Signal]
+  public delegate void PlaybackCompletedEventHandler();
+
   private Timeline? timeline;
-  private Action? onCompleteCallback;
   private double timeUntilNextFrame;
 
   public bool IsPlaying { get; private set; }
@@ -16,11 +19,10 @@ public partial class TimelinePlayer : Node {
     Global.Services.ProvideInScene(this);
   }
 
-  public void Play(Timeline timelineToPlay, Action? callback) {
+  public void Play(Timeline timelineToPlay) {
     if (IsPlaying) throw new Exception("Cannot play more than once");
 
     timeline = timelineToPlay;
-    onCompleteCallback = callback;
 
     timeline.Reset();
     timeline.Advance();
@@ -40,10 +42,9 @@ public partial class TimelinePlayer : Node {
       else {
         IsPlaying = false;
         timeUntilNextFrame = 0;
-        onCompleteCallback?.Invoke();
+        EmitSignalPlaybackCompleted();
 
         timeline = null;
-        onCompleteCallback = null;
       }
     }
   }
