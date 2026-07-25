@@ -43,11 +43,6 @@ public abstract partial class MovingGridObject : GridObject {
         var willPush = isStrong && targetTile.CollidesWith is not null;
         var outcome = willPush ? MoveOutcome.Moved : MoveOutcome.Collided;
 
-        if (willPush) {
-          accumulatedMovement += dir;
-          tilesVisited.Add(targetPos);
-        }
-
         return new MoveResult(outcome, accumulatedMovement, tilesVisited, targetTile.CollidesWith);
       }
 
