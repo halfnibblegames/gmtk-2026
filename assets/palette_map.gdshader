@@ -16,7 +16,7 @@ void fragment() {
   vec2 pixelized_screen_uv = SCREEN_UV - offset_from_pixel;
   float distance_from_center = distance(vec2(0.5, 0.5), pixelized_screen_uv);
   
-  if (distance_from_center > vignette_amount * half_sqrt2) {
+  if (distance_from_center > vignette_amount * half_sqrt2 || vignette_amount < 0.01) {
     float step = 1.0 / float(color_count);
     vec4 target_color = screen_color;
     
