@@ -28,14 +28,9 @@ public abstract partial class MovingGridObject : GridObject {
     }
   }
 
-  public MoveResult TryMove(Vector2I diff) {
+  public MoveResult PreviewMove(Vector2I diff) {
     if (Level is null) {
       throw new Exception($"Attempting to move {this} without a level");
-    }
-
-    if (IsMovementPrevented()) {
-      GD.Print("Not moving, movement was prevented");
-      return new MoveResult(MoveOutcome.Prevented, Vector2I.Zero);
     }
 
     validateValidMoveDiff(diff);
@@ -47,22 +42,28 @@ public abstract partial class MovingGridObject : GridObject {
       var targetPos = Coords + accumulatedMovement + dir;
       var targetTile = Level.GetTile(targetPos);
       if (targetTile.Collides) {
-        Move(accumulatedMovement, MoveAnimation.Collide);
         return new MoveResult(MoveOutcome.Collided, accumulatedMovement);
       }
       if (targetTile.Pit) {
         accumulatedMovement += dir;
-        Move(accumulatedMovement, MoveAnimation.Fall);
         return new MoveResult(MoveOutcome.FellDown, accumulatedMovement);
       }
       accumulatedMovement += dir;
     }
 
-    Move(accumulatedMovement, MoveAnimation.Move);
     return new MoveResult(MoveOutcome.Moved, accumulatedMovement);
   }
 
-  protected virtual bool IsMovementPrevented() => false;
+  public void DoMove(MoveResult moveResult) {
+    MoveAnimationFactory animation = moveResult.Outcome switch {
+      MoveOutcome.Moved => MoveAnimation.Move,
+      MoveOutcome.Collided => throw new InvalidOperationException($"Attempting to move {this} with an invalid move"),
+      MoveOutcome.FellDown => MoveAnimation.Fall,
+      _ => throw new ArgumentOutOfRangeException()
+    };
+
+    Move(moveResult.ActuallyMoved, animation);
+  }
 
   private static void validateValidMoveDiff(Vector2I diff) {
     // Pure horizontal or vertical moves are fine
@@ -107,11 +108,12 @@ public abstract partial class MovingGridObject : GridObject {
     EmitSignalMoved(Coords);
   }
 
-  public readonly record struct MoveResult(MoveOutcome Outcome, Vector2I ActuallyMoved);
+  public readonly record struct MoveResult(MoveOutcome Outcome, Vector2I ActuallyMoved) {
+    public bool Valid => Outcome is MoveOutcome.Moved or MoveOutcome.FellDown;
+  }
 
   public enum MoveOutcome {
     Moved,
-    Prevented,
     Collided,
     FellDown
   }

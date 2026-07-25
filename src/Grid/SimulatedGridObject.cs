@@ -13,8 +13,8 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
   private readonly History<RoundState> history = new();
 
   // TODO: should probably be more complex
+  private bool desynced;
   private bool dead;
-  private int stunnedTurns;
 
   public int PlannedRoundCount => plan.PlannedRoundCount;
   public bool Alive => !dead;
@@ -26,21 +26,31 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
   }
 
   public void Advance(RoundContext context) {
-    history.Push(new RoundState(Coords, Forward, dead, stunnedTurns));
-    var action = plan.GetActionForRound(context.RoundNumber);
-    action?.Do(context, this);
-
-    if (stunnedTurns > 0) {
-      stunnedTurns--;
+    history.Push(new RoundState(Coords, Forward, desynced, dead));
+    if (desynced) {
+      return;
     }
+
+    var action = plan.GetActionForRound(context.RoundNumber);
+    if (action is null) {
+      return;
+    }
+
+    // A previously planned action is no longer valid, which means something in the past changed to mess this up.
+    // We go in a desynced state and stop executing the plan.
+    if (!action.CheckValid(this)) {
+      desynced = true;
+      return;
+    }
+    action.Do(context, this);
   }
 
   public void ResetToRound(int roundNumber) {
     var roundState = history.LastKnownStateInRound(roundNumber);
     TeleportTo(roundState.Coords);
     Forward = roundState.Forward;
+    desynced = roundState.Desynced;
     dead = roundState.Dead;
-    stunnedTurns = roundState.StunnedTurns;
 
     Visible = !dead;
     Modulate = new Color(1, 1, 1);
@@ -72,14 +82,5 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
     dead = true;
   }
 
-  public void Stun(int turnCount) {
-    GD.Print($"Oof! stunned for {turnCount} turns");
-    stunnedTurns = turnCount;
-  }
-
-  protected override bool IsMovementPrevented() {
-    return dead || stunnedTurns > 0;
-  }
-
-  private readonly record struct RoundState(Vector2I Coords, Vector2I Forward, bool Dead, int StunnedTurns);
+  private readonly record struct RoundState(Vector2I Coords, Vector2I Forward, bool Desynced, bool Dead);
 }

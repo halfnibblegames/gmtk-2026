@@ -16,39 +16,43 @@ public static class PlannedActions {
   private abstract class ActionBase(StringName? shortcut) : IPlannedAction {
     public StringName? Shortcut => shortcut;
 
+    public abstract bool CheckValid(SimulatedGridObject target);
     public abstract void Do(RoundContext context, SimulatedGridObject target);
   }
 
   private class MoveAction(Vector2I diff, StringName? shortcut) : ActionBase(shortcut) {
+    public override bool CheckValid(SimulatedGridObject target) {
+      var result = target.PreviewMove(diff);
+      return result.Valid;
+    }
+
     public override void Do(RoundContext context, SimulatedGridObject target) {
-      var result = target.TryMove(diff);
+      var result = target.PreviewMove(diff);
+      target.DoMove(result);
       handleMoveResult(result, context, target);
     }
   }
 
   private class ForwardAction(int amount, StringName? shortcut) : ActionBase(shortcut) {
+    public override bool CheckValid(SimulatedGridObject target) {
+      if (target.Forward.LengthSquared() < 0) {
+        return false;
+      }
+      var result = target.PreviewMove(target.Forward * amount);
+      return result.Valid;
+    }
+
     public override void Do(RoundContext context, SimulatedGridObject target) {
-      var result = target.TryMove(target.Forward * amount);
+      var result = target.PreviewMove(target.Forward * amount);
+      target.DoMove(result);
       handleMoveResult(result, context, target);
     }
   }
 
   private static void handleMoveResult(
     MovingGridObject.MoveResult result, RoundContext context, SimulatedGridObject target) {
-    switch (result.Outcome) {
-      case MovingGridObject.MoveOutcome.Moved:
-      case MovingGridObject.MoveOutcome.Prevented:
-        break;
-      case MovingGridObject.MoveOutcome.Collided:
-        // Stun for 1 turn + 1 turn for every tile moved
-        context.RegisterOutcome(() =>
-          target.Stun(1 + Math.Max(Math.Abs(result.ActuallyMoved.X), Math.Abs(result.ActuallyMoved.Y))));
-        break;
-      case MovingGridObject.MoveOutcome.FellDown:
-        context.RegisterOutcome(target.Die);
-        break;
-      default:
-        throw new ArgumentOutOfRangeException(nameof(result), result, null);
+    if (result.Outcome == MovingGridObject.MoveOutcome.FellDown) {
+      context.RegisterOutcome(target.Die);
     }
   }
 }

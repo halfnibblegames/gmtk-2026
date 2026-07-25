@@ -75,7 +75,7 @@ public partial class Orchestrator : Node {
     }
 
     if (playbackTimeRemaining <= 0 && actionAfterPlayback is not null) {
-      queueAdventurerAction(actionAfterPlayback);
+      tryQueueAdventurerAction(actionAfterPlayback);
       actionAfterPlayback = null;
     }
 
@@ -92,9 +92,8 @@ public partial class Orchestrator : Node {
       foreach (var action in focusedAdventurer!.AvailableActions) {
         var shortcut = action.Shortcut;
         if (shortcut is null) continue;
-        if (@event.IsActionReleased(shortcut)) {
-          queueAdventurerAction(action);
-        }
+        if (!@event.IsActionReleased(shortcut)) continue;
+        if (tryQueueAdventurerAction(action)) break;
       }
     }
 
@@ -170,22 +169,32 @@ public partial class Orchestrator : Node {
     }
   }
 
-  private void queueAdventurerAction(IPlannedAction action) {
+  private bool tryQueueAdventurerAction(IPlannedAction action) {
+    if (focusedAdventurer is null) {
+      return false;
+    }
+
+    if (!action.CheckValid(focusedAdventurer)) {
+      return false;
+    }
+
     // If we are still playing back the previous animation, we may already hit the new animation early.
     // We queue it up (overriding any previous actions) and immediately execute it after.
     if (playbackTimeRemaining > 0) {
       actionAfterPlayback = action;
-      return;
+      return true;
     }
 
-    focusedAdventurer?.SetActionForRound(Timeline!.CurrentRound, action);
+    focusedAdventurer.SetActionForRound(Timeline!.CurrentRound, action);
     Timeline!.Advance();
     playbackTimeRemaining = Constants.TimeBetweenRounds;
 
     // Automatically focus the next adventurer that still needs moves if there is one.
-    if (focusedAdventurer?.PlannedRoundCount == Timeline.TotalRoundCount) {
+    if (focusedAdventurer.PlannedRoundCount == Timeline.TotalRoundCount) {
       focusNextAdventurerWithUnplannedMoves();
     }
+
+    return true;
   }
 
   private void clearLastAdventurerAction() {
