@@ -31,10 +31,6 @@ public abstract class MoveAnimation(MovingGridObject target) {
     return new NormalMoveAnimation(target, from, to);
   }
 
-  public static MoveAnimation Collide(MovingGridObject target, Vector2 from, Vector2 to) {
-    return new CollideMoveAnimation(target, from, to);
-  }
-
   public static MoveAnimation Fall(MovingGridObject target, Vector2 from, Vector2 to) {
     return new FallMoveAnimation(target, from, to);
   }
@@ -49,38 +45,6 @@ public abstract class MoveAnimation(MovingGridObject target) {
 
     protected override void Complete() {
       Target.Position = to;
-    }
-  }
-
-  private class CollideMoveAnimation(MovingGridObject target, Vector2 from, Vector2 to) : NormalMoveAnimation(target, from, to) {
-    private readonly Vector2 from = from;
-    private readonly Vector2 to = to;
-
-    protected override void Animate(float t) {
-      base.Animate(t);
-      if (t < 0.5f) return;
-
-      var velocity = (to - from).LengthSquared() < 1
-        ? new Vector2(Target.Forward.X, Target.Forward.Y) * 32f
-        : 2 * (to - from);
-
-      if (t < 0.6f) {
-        var overshoot = t - 0.5f;
-        Target.Position = to + velocity * overshoot;
-        return;
-      }
-
-      var t2 = t - 0.6f;
-      var bounce = Mathf.Max(0, 0.1f - t2);
-      Target.Position = to + velocity * bounce;
-
-      var flashStrength = 1 - (2.5f * t2);
-      Target.Modulate = new Color(1, 1, 1 - flashStrength);
-    }
-
-    protected override void Complete() {
-      base.Complete();
-      Target.Modulate = new Color(1, 1, 1);
     }
   }
 
