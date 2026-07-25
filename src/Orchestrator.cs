@@ -61,6 +61,7 @@ public partial class Orchestrator : Node {
     CurrentLevel = null;
     unfocusAdventurer();
     adventurers.Clear();
+    historyArrows.Clear();
     playbackTimeRemaining = 0;
   }
 
