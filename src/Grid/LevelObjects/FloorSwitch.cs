@@ -37,7 +37,7 @@ public partial class FloorSwitch : StaticGridObject, ISimulated {
   }
 
   public void ResetToRound(int roundNumber) {
-    if (active && roundNumber <= pressedRound) {
+    if (active && roundNumber < pressedRound) {
       deactivate();
     }
   }
