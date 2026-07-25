@@ -124,6 +124,7 @@ public partial class Orchestrator : Node {
       FocusNextAdventurer();
     }
 
+    camera.ForceUpdateScroll();
     levelActivated = true;
   }
 
