@@ -10,7 +10,7 @@ namespace HalfNibbleGame.Grid;
 public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated, IMortal {
 
   private readonly Plan plan = new();
-  private readonly History<RoundState> history = new();
+  public History<RoundState> History { get; } = new();
 
   // TODO: should probably be more complex
   private bool desynced;
@@ -26,7 +26,7 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
   }
 
   public void Advance(RoundContext context) {
-    history.Push(new RoundState(Coords, Forward, desynced, dead));
+    History.Push(new RoundState(Coords, Forward, desynced, dead));
     if (desynced) {
       return;
     }
@@ -46,7 +46,7 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
   }
 
   public void ResetToRound(int roundNumber) {
-    var roundState = history.LastKnownStateInRound(roundNumber);
+    var roundState = History.LastKnownStateInRound(roundNumber);
     TeleportTo(roundState.Coords);
     Forward = roundState.Forward;
     desynced = roundState.Desynced;
@@ -56,7 +56,7 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
     Modulate = new Color(1, 1, 1);
     Scale = Vector2.One;
 
-    history.InvalidateFrom(roundNumber);
+    History.InvalidateFrom(roundNumber);
   }
 
   public void SetActionForRound(int roundNumber, IPlannedAction action) {
@@ -82,5 +82,5 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
     dead = true;
   }
 
-  private readonly record struct RoundState(Vector2I Coords, Vector2I Forward, bool Desynced, bool Dead);
+  public readonly record struct RoundState(Vector2I Coords, Vector2I Forward, bool Desynced, bool Dead);
 }

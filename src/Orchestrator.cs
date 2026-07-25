@@ -26,6 +26,7 @@ public partial class Orchestrator : Node {
 
   private bool levelActivated = true;
   private readonly List<Adventurer> adventurers = [];
+  private readonly List<HistoryArrow> historyArrows = [];
   private int focusedAdventurerIndex = -1;
   private double playbackTimeRemaining;
   private bool hasWon;
@@ -119,6 +120,12 @@ public partial class Orchestrator : Node {
       adventurer.Orchestrator = this;
       AddSibling(adventurer);
       adventurers.Add(adventurer);
+
+      var historyArrow = Global.Prefabs.HistoryArrow.Instantiate<HistoryArrow>();
+      historyArrow.Name = $"{adventurer.Name}History";
+      historyArrow.SetHistory(adventurer.History);
+      adventurer.AddSibling(historyArrow);
+      historyArrows.Add(historyArrow);
     }
 
     if (adventurers.Count > 0) {
@@ -234,6 +241,7 @@ public partial class Orchestrator : Node {
   private void startPlayback() {
     hasWon = true;
     unfocusAdventurer();
+    historyArrows.ForEach(a => a.Visible = false);
     Global.Services.Get<TimelinePlayer>().Play(Timeline!, onPlaybackComplete);
   }
 

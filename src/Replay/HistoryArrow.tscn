@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://brv7sxisnw8jk"]
+
+[ext_resource type="Texture2D" uid="uid://dy0tmr0mvumcq" path="res://assets/arrows.png" id="1_lnxun"]
+[ext_resource type="Script" uid="uid://xq4kxcsy8fpw" path="res://src/Replay/HistoryArrow.cs" id="2_wdu2g"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ylaj8"]
+texture = ExtResource("1_lnxun")
+separation = Vector2i(1, 1)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_0ua8p"]
+sources/0 = SubResource("TileSetAtlasSource_ylaj8")
+
+[node name="HistoryArrow" type="TileMapLayer" unique_id=1350743336]
+z_index = 1
+tile_set = SubResource("TileSet_0ua8p")
+collision_enabled = false
+navigation_enabled = false
+script = ExtResource("2_wdu2g")

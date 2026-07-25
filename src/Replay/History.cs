@@ -7,6 +7,10 @@ public class History<T> {
   // The entry at index i is the state at the START of round i
   private readonly List<T> roundStates = [];
 
+  public int Length => roundStates.Count;
+
+  public T this[int index] => roundStates[index];
+
   public T LastKnownStateInRound(int round) {
     return roundStates[Math.Min(round, roundStates.Count - 1)];
   }
