@@ -37,9 +37,6 @@ public abstract class MoveAnimation(MovingGridObject target) {
 
   private class NormalMoveAnimation(MovingGridObject target, Vector2 from, Vector2 to) : MoveAnimation(target) {
     protected override void Animate(float t) {
-      // We move in the first half of the animation only. Doing it this way allows other animations to do something else
-      // with the second half of the animation time.
-      t = Mathf.Min(1.0f, t * 2);
       Target.Position = from + t * (to - from);
     }
 
@@ -52,7 +49,10 @@ public abstract class MoveAnimation(MovingGridObject target) {
     private readonly Vector2 to = to;
 
     protected override void Animate(float t) {
-      base.Animate(t);
+      // We move in the first half of the animation only. Doing it this way allows us to do the fall animation in the
+      // second half.
+      // TODO: the movement here will now happen twice as fast.
+      base.Animate(Mathf.Min(1.0f, t * 2));
       if (t < 0.5f) return;
 
       var step = Mathf.FloorToInt((t - 0.5f) * 6);

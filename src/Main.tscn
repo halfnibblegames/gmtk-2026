@@ -13,7 +13,7 @@
 shader = ExtResource("2_8ec3e")
 shader_parameter/original_palette = ExtResource("3_fh42b")
 shader_parameter/target_palette = ExtResource("4_insap")
-shader_parameter/vignette_amount = 0.50400002394
+shader_parameter/vignette_amount = 1.0
 
 [node name="Main" type="Control" unique_id=732094339]
 layout_mode = 3
