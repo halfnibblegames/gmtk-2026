@@ -89,6 +89,12 @@ public partial class TopLevelUI : Node {
     playbackTween
       .Chain()
       .TweenAwait(new Signal(Global.Services.Get<TimelinePlayer>(), TimelinePlayer.SignalName.PlaybackCompleted));
+    playbackTween
+      .Chain()
+      .TweenProperty(planningMusic, "volume_linear", 1f, 0.5);
+    playbackTween
+      .Parallel()
+      .TweenProperty(playingMusic, "volume_linear", 0f, 0.5);
 
     playbackTween
       .Chain()
