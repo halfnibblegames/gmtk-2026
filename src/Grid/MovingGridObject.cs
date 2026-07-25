@@ -12,17 +12,10 @@ public abstract partial class MovingGridObject : GridObject {
 
   private MoveAnimation? moveAnimation;
 
-  [Export] public Orchestrator Orchestrator = null!;
-
   public Vector2I Forward { get; protected set; }
   protected bool Flipped { get; set; }
 
   public override void _Process(double delta) {
-    if (Level != Orchestrator.CurrentLevel) {
-      Level = Orchestrator.CurrentLevel;
-      SnapToTile();
-    }
-
     if (moveAnimation is not null) {
       moveAnimation.Update(delta);
       EmitSignalMoved(Coords);

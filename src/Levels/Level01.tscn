@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://vp2xjv4c74nm" path="res://src/Grid/LevelObjects/Portal.tscn" id="3_nwf8y"]
 [ext_resource type="PackedScene" uid="uid://bcl3vatoebel6" path="res://src/Adventurers/Rogue.tscn" id="4_qujo2"]
 [ext_resource type="PackedScene" uid="uid://dalnpkxjsgkpn" path="res://src/Grid/LevelObjects/Treasure.tscn" id="6_0a0hh"]
+[ext_resource type="PackedScene" uid="uid://k08pmvg6ly8e" path="res://src/Grid/LevelObjects/PushableBox.tscn" id="7_ykgtj"]
 [ext_resource type="PackedScene" uid="uid://bmwqlxeni7vcf" path="res://src/Grid/LevelObjects/CrackedFloor.tscn" id="8_pgaa1"]
 
 [node name="Level" type="Node2D" unique_id=77528087]
@@ -26,3 +27,6 @@ position = Vector2(168, 104)
 
 [node name="Treasure" parent="." unique_id=848941562 instance=ExtResource("6_0a0hh")]
 position = Vector2(216, 104)
+
+[node name="PushableBox" parent="." unique_id=294382958 instance=ExtResource("7_ykgtj")]
+position = Vector2(104, 72)

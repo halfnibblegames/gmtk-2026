@@ -120,8 +120,8 @@ public partial class Orchestrator : Node {
       var adventurer = portal.TryInstantiateAdventurer();
       if (adventurer is null) continue;
 
-      adventurer.Orchestrator = this;
-      AddSibling(adventurer);
+      adventurer.Position = portal.Position;
+      CurrentLevel.AddChild(adventurer);
       adventurers.Add(adventurer);
 
       var historyArrow = Global.Prefabs.HistoryArrow.Instantiate<HistoryArrow>();

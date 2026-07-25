@@ -44,4 +44,8 @@ public partial class Level : Node2D {
       throw new InvalidOperationException("Cannot add more than one modifier to a tile");
     }
   }
+
+  public void UnregisterTileModifier(Vector2I coords) {
+    tileModifiers.Remove(coords);
+  }
 }
