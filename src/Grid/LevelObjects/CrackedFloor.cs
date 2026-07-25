@@ -20,7 +20,7 @@ public partial class CrackedFloor : StaticGridObject, ISimulated {
     AddToGroup(Groups.Simulated);
     floorSprite = GetNode<Sprite2D>("FloorSprite");
     gapSprite = GetNode<Sprite2D>("GapSprite");
-    ResetToRound(0);
+    ResetToRound(new RoundContext(0));
     Level!.RegisterTileModifier(Coords, applyBrokenToTile);
   }
 
@@ -43,12 +43,12 @@ public partial class CrackedFloor : StaticGridObject, ISimulated {
     }
   }
 
-  public void ResetToRound(int roundNumber) {
-    if (broken && roundNumber <= breakRound) {
+  public void ResetToRound(RoundContext context) {
+    if (broken && context.RoundNumber <= breakRound) {
       broken = false;
       updateVisuals();
     }
-    if (roundNumber < breakRound) {
+    if (context.RoundNumber < breakRound) {
       breakRound = int.MaxValue;
     }
   }

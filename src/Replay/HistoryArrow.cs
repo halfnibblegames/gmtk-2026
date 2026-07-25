@@ -23,8 +23,8 @@ public partial class HistoryArrow : TileMapLayer, ISimulated {
     context.RegisterOutcome(() => updateForRound(context.RoundNumber));
   }
 
-  public void ResetToRound(int roundNumber) {
-    updateForRound(roundNumber);
+  public void ResetToRound(RoundContext context) {
+    updateForRound(context.RoundNumber);
   }
 
   private void updateForRound(int round) {

@@ -16,11 +16,11 @@ public class Timeline(SceneTree tree, int totalRoundCount) {
 
   public void Advance() {
     var roundContext = new RoundContext(CurrentRound++);
-    CountdownChanged(CurrentRound, totalRoundCount);
     simulatedObjects().ForEach(obj => obj.Advance(roundContext));
     var hazardList = hazards();
     mortals().ForEach(mortal => mortal.CheckAgainstHazards(hazardList, roundContext));
     roundContext.Finish();
+    CountdownChanged(CurrentRound, totalRoundCount);
   }
 
   public void Rollback() {
@@ -33,9 +33,11 @@ public class Timeline(SceneTree tree, int totalRoundCount) {
   }
 
   public void ResetToRound(int round) {
-    CountdownChanged(round, totalRoundCount);
-    simulatedObjects().ForEach(obj => obj.ResetToRound(round));
     CurrentRound = round;
+    var roundContext = new RoundContext(round);
+    simulatedObjects().ForEach(obj => obj.ResetToRound(roundContext));
+    roundContext.Finish();
+    CountdownChanged(round, totalRoundCount);
   }
 
   private List<ISimulated> simulatedObjects() {

@@ -45,8 +45,8 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
     action.Do(context, this);
   }
 
-  public void ResetToRound(int roundNumber) {
-    var roundState = History.LastKnownStateInRound(roundNumber);
+  public void ResetToRound(RoundContext context) {
+    var roundState = History.LastKnownStateInRound(context.RoundNumber);
     TeleportTo(roundState.Coords);
     Forward = roundState.Forward;
     desynced = roundState.Desynced;
@@ -56,7 +56,7 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
     Modulate = new Color(1, 1, 1);
     Scale = Vector2.One;
 
-    History.InvalidateFrom(roundNumber);
+    History.InvalidateFrom(context.RoundNumber);
   }
 
   public void SetActionForRound(int roundNumber, IPlannedAction action) {

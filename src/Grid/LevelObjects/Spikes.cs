@@ -17,7 +17,7 @@ public partial class Spikes : StaticGridObject, IHazard, ISimulated {
     AddToGroup(Groups.Simulated);
     AddToGroup(Groups.Hazard);
     sprite = GetNode<AnimatedSprite2D>("Sprite");
-    ResetToRound(0);
+    ResetToRound(new RoundContext(0));
     base._Ready();
   }
 
@@ -32,8 +32,8 @@ public partial class Spikes : StaticGridObject, IHazard, ISimulated {
     }
   }
 
-  public void ResetToRound(int roundNumber) {
-    extended = roundNumber % 2 == 0 ? initiallyExtended : !initiallyExtended;
+  public void ResetToRound(RoundContext context) {
+    extended = context.RoundNumber % 2 == 0 ? initiallyExtended : !initiallyExtended;
 
     sprite.Stop();
     if (extended) {
