@@ -62,7 +62,7 @@ public static class PlannedActions {
 
   private class ForwardAction(int amount, StringName? shortcut) : ActionBase(shortcut) {
     public override bool CheckValid(SimulatedGridObject target) {
-      if (target.Forward.LengthSquared() < 0) {
+      if (target.Forward.LengthSquared() <= 0) {
         return false;
       }
       var result = target.PreviewMove(target.Forward * amount);
