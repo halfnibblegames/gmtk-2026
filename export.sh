@@ -10,6 +10,7 @@ fi
 $ASEPRITE -b ./assets/ui/portraits.aseprite --layer Frame --scale 4 --save-as ./assets/ui/portrait_frame.png
 $ASEPRITE -b ./assets/ui/portraits.aseprite --layer Rogue --scale 4 --save-as ./assets/ui/portrait_rogue.png
 $ASEPRITE -b ./assets/ui/portraits.aseprite --layer Wizard --scale 4 --save-as ./assets/ui/portrait_wizard.png
+$ASEPRITE -b ./assets/ui/portraits.aseprite --layer Barbarian --scale 4 --save-as ./assets/ui/portrait_barbarian.png
 
 # Action sockets
 $ASEPRITE -b ./assets/ui/actions.aseprite --layer Socket --frame-range 0,0 --save-as ./assets/ui/action_sockets.png
