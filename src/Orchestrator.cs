@@ -37,8 +37,12 @@ public partial class Orchestrator : Node {
     set {
       field = value;
       WinConditionChanged(value);
+      if (!value) {
+        followedInPlayback = null;
+      }
     }
   }
+  private Adventurer? followedInPlayback;
   private bool hasWon;
   private IPlannedAction? actionAfterPlayback;
 
@@ -94,7 +98,7 @@ public partial class Orchestrator : Node {
       actionAfterPlayback = null;
     }
 
-    if (playbackTimeRemaining <= 0 && checkWinCondition()) {
+    if (playbackTimeRemaining <= 0 && checkWinCondition(out followedInPlayback)) {
       isReadyForPlayback = true;
     }
   }
@@ -232,7 +236,9 @@ public partial class Orchestrator : Node {
     Timeline.Rollback();
   }
 
-  private bool checkWinCondition() {
+  private bool checkWinCondition(out Adventurer? winner) {
+    winner = null;
+
     // The timeline needs to be advanced all the way to the last round to check the win condition.
     if (Timeline!.CurrentRound != Timeline.TotalRoundCount) return false;
 
@@ -256,6 +262,8 @@ public partial class Orchestrator : Node {
       if (treasure.PickedUpBy is null) {
         return false;
       }
+
+      winner ??= treasure.PickedUpBy;
     }
 
     return true;
@@ -264,7 +272,7 @@ public partial class Orchestrator : Node {
   public void PreparePlayback() {
     hasWon = true;
     unfocusAdventurer();
-    // TODO: follow the adventurer that picked up the loot
+    focusAdventurer(adventurers.IndexOf(followedInPlayback!));
     historyArrows.ForEach(a => a.Visible = false);
     Timeline!.Reset();
   }
