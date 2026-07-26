@@ -143,7 +143,6 @@ public partial class Orchestrator : Node {
       historyArrows.Add(historyArrow);
     }
 
-    camera.ForceUpdateScroll();
     TimelineCountdownChanged(0, Timeline!.TotalRoundCount);
     LevelStarted();
 
@@ -152,6 +151,7 @@ public partial class Orchestrator : Node {
       FocusNextAdventurer();
     }
 
+    camera.ResetSmoothing();
     levelActivated = true;
   }
 
