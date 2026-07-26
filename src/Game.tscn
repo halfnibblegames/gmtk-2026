@@ -9,12 +9,13 @@
 [ext_resource type="PackedScene" uid="uid://mgesy4d1uq7y" path="res://src/Levels/Level04.tscn" id="5_rgpsw"]
 [ext_resource type="PackedScene" uid="uid://kpvcj41byjv6" path="res://src/Animations/AnimationRunner.tscn" id="6_eu8jo"]
 [ext_resource type="PackedScene" uid="uid://o71tf5kgv081" path="res://src/Levels/Level05.tscn" id="6_x2540"]
+[ext_resource type="PackedScene" uid="uid://cjjbbmsdg0v8o" path="res://src/Levels/Level06.tscn" id="7_dlhd6"]
 
 [node name="Game" type="Node2D" unique_id=1550737297]
 y_sort_enabled = true
 script = ExtResource("1_7omc5")
-startLevel = 3
-levels = [ExtResource("1_2c5w0"), ExtResource("3_km1yn"), ExtResource("4_dbp7n"), ExtResource("5_rgpsw"), ExtResource("6_x2540")]
+startLevel = 5
+levels = [ExtResource("1_2c5w0"), ExtResource("3_km1yn"), ExtResource("4_dbp7n"), ExtResource("5_rgpsw"), ExtResource("6_x2540"), ExtResource("7_dlhd6")]
 
 [node name="Extent" type="Marker2D" parent="." unique_id=1116238729]
 position = Vector2(320, 180)
