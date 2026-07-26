@@ -48,6 +48,7 @@ public abstract partial class SimulatedGridObject : MovingGridObject, ISimulated
   public void ResetToRound(RoundContext context) {
     var roundState = History.LastKnownStateInRound(context.RoundNumber);
     TeleportTo(roundState.Coords);
+    context.RegisterTileEntered(this, roundState.Coords);
     Forward = roundState.Forward;
     Flipped = roundState.Flipped;
     desynced = roundState.Desynced;
