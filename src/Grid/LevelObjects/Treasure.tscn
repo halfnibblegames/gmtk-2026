@@ -1,11 +1,30 @@
 [gd_scene format=3 uid="uid://dalnpkxjsgkpn"]
 
 [ext_resource type="Script" uid="uid://c7knsu7sk6hjr" path="res://src/Grid/LevelObjects/Treasure.cs" id="1_or54f"]
-[ext_resource type="Texture2D" uid="uid://ce8mk5c54jbej" path="res://assets/backpack.png" id="1_wkmab"]
+[ext_resource type="Texture2D" uid="uid://b5dj00eq2d7y1" path="res://assets/chest.png" id="2_or54f"]
 
 [node name="Treasure" type="Node2D" unique_id=848941562]
 script = ExtResource("1_or54f")
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=839220017]
-scale = Vector2(0.032895446, 0.032895446)
-texture = ExtResource("1_wkmab")
+texture = ExtResource("2_or54f")
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {
+"convert_fps_field": 60.0,
+"convert_ms_field": 16.0,
+"convert_to_fps": false,
+"embed_tex": true,
+"i_mode": 0,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "",
+"scale": "1.0",
+"slice": "",
+"source": "res://assets/chest.aseprite",
+"source_uid": 3278247769933180177
+}
+}
