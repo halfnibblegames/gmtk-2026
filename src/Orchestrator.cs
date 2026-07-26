@@ -102,7 +102,7 @@ public partial class Orchestrator : Node {
   public override void _Input(InputEvent @event) {
     if (!levelActivated || focusedAdventurerIndex < 0 || hasWon) return;
 
-    if (Timeline!.CurrentRound < Timeline.TotalRoundCount) {
+    if (Timeline!.CurrentRound < Timeline.TotalRoundCount && focusedAdventurer!.Alive) {
       foreach (var action in focusedAdventurer!.AvailableActions) {
         var shortcut = action.Shortcut;
         if (shortcut is null) continue;
