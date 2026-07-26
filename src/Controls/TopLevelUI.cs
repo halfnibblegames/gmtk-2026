@@ -14,6 +14,7 @@ public partial class TopLevelUI : Node {
     set {
       field = value;
       playbackButton.Visible = value;
+      playbackButtonOverlay.Color = value ? new(0, 0, 0, 0.5f) : Colors.Transparent;
     }
   }
 
@@ -25,6 +26,7 @@ public partial class TopLevelUI : Node {
   [Export] private AudioStreamPlayer playingMusic = null!;
 
   [Export] private BaseButton playbackButton = null!;
+  [Export] private ColorRect playbackButtonOverlay = null!;
 
   private Tween? playbackTween;
 
@@ -70,7 +72,11 @@ public partial class TopLevelUI : Node {
       .SetEase(Tween.EaseType.In);
     playbackTween
       .Parallel()
-      .TweenProperty(playbackButton, "offset_transform_position", 300 * Vector2.Right, transitionDuration)
+      .TweenProperty(playbackButton, "offset_transform_position", 600 * Vector2.Down, transitionDuration)
+      .SetEase(Tween.EaseType.In);
+    playbackTween
+      .Parallel()
+      .TweenProperty(playbackButtonOverlay, "color", Colors.Transparent, transitionDuration / 2)
       .SetEase(Tween.EaseType.In);
     playbackTween
       .Parallel()
@@ -110,6 +116,7 @@ public partial class TopLevelUI : Node {
 
   private void resetTransforms() {
     playbackButton.Visible = false;
+    playbackButtonOverlay.Color = Colors.Transparent;
     currentAdventurer.OffsetTransformPosition = Vector2.Zero;
     spindownDice.OffsetTransformPosition = Vector2.Zero;
     timelineBar.OffsetTransformPosition = Vector2.Zero;

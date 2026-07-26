@@ -9,8 +9,11 @@
 [ext_resource type="PackedScene" uid="uid://kchp1so3ekx8" path="res://src/Controls/SpindownDice.tscn" id="4_5qjmp"]
 [ext_resource type="Texture2D" uid="uid://c67syu6e1fx3d" path="res://assets/palette_sepia.png" id="4_insap"]
 [ext_resource type="PackedScene" uid="uid://nry80h505ob7" path="res://src/Controls/TimelineBar.tscn" id="5_vjwby"]
+[ext_resource type="Texture2D" uid="uid://bl7l3gil7l4c0" path="res://assets/ui/button.png" id="10_0ri8u"]
 [ext_resource type="AudioStream" uid="uid://b6u2avspxhujm" path="res://assets/planning.wav" id="10_w32tk"]
 [ext_resource type="AudioStream" uid="uid://didusu0xknwtj" path="res://assets/playing.wav" id="11_0vhqb"]
+[ext_resource type="Texture2D" uid="uid://bposnprnqpx6l" path="res://assets/ui/button_pressed.png" id="11_y60b8"]
+[ext_resource type="FontFile" uid="uid://bkp5vavjxsluc" path="res://assets/Uncial_WIP.ttf" id="12_y60b8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gft63"]
 shader = ExtResource("2_8ec3e")
@@ -18,10 +21,7 @@ shader_parameter/original_palette = ExtResource("3_fh42b")
 shader_parameter/target_palette = ExtResource("4_insap")
 shader_parameter/vignette_amount = 1.0
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_gft63"]
-size = Vector2(192, 36)
-
-[node name="Main" type="Control" unique_id=732094339 node_paths=PackedStringArray("currentAdventurer", "spindownDice", "timelineBar", "postProcessing", "planningMusic", "playingMusic", "playbackButton")]
+[node name="Main" type="Control" unique_id=732094339 node_paths=PackedStringArray("currentAdventurer", "spindownDice", "timelineBar", "postProcessing", "planningMusic", "playingMusic", "playbackButton", "playbackButtonOverlay")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,6 +36,7 @@ postProcessing = NodePath("PixelPerfectContainer/PixelPerfectViewport/GamePostPr
 planningMusic = NodePath("PlanningMusicPlayer")
 playingMusic = NodePath("PlayingMusicPlayer")
 playbackButton = NodePath("PlaybackButton")
+playbackButtonOverlay = NodePath("PlaybackButtonOverlay")
 
 [node name="PixelPerfectContainer" type="SubViewportContainer" parent="." unique_id=1062184323]
 layout_mode = 0
@@ -105,13 +106,59 @@ offset_top = -88.0
 offset_bottom = -8.0
 grow_vertical = 0
 
+[node name="PlaybackButtonOverlay" type="ColorRect" parent="." unique_id=14098149]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
 [node name="PlaybackButton" type="TextureButton" parent="." unique_id=1678226328]
-layout_mode = 0
-offset_left = 1047.0
-offset_top = 223.0
-offset_right = 1239.0
-offset_bottom = 263.0
-texture_normal = SubResource("PlaceholderTexture2D_gft63")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -160.0
+offset_right = 400.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("10_0ri8u")
+texture_pressed = ExtResource("11_y60b8")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="PlaybackButton" unique_id=1300168129]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -328.0
+offset_top = -86.5
+offset_right = 328.0
+offset_bottom = 86.5
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(20, 0)
+theme_override_colors/font_color = Color(1, 0.6666667, 0.36862746, 1)
+theme_override_colors/font_shadow_color = Color(0.1254902, 0.23529412, 0.3372549, 1)
+theme_override_colors/font_outline_color = Color(0.1254902, 0.23529412, 0.3372549, 1)
+theme_override_constants/shadow_offset_x = -20
+theme_override_constants/shadow_offset_y = 20
+theme_override_constants/shadow_outline_size = 20
+theme_override_fonts/font = ExtResource("12_y60b8")
+theme_override_font_sizes/font_size = 172
+text = "Start Heist"
+horizontal_alignment = 1
+vertical_alignment = 1
+justification_flags = 171
 
 [node name="PlanningMusicPlayer" type="AudioStreamPlayer" parent="." unique_id=1096737015]
 stream = ExtResource("10_w32tk")

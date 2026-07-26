@@ -20,10 +20,14 @@ $ASEPRITE -b ./assets/ui/actions.aseprite --layer Action --frame-range 1,1 --sav
 $ASEPRITE -b ./assets/ui/actions.aseprite --layer Action --frame-range 2,2 --save-as ./assets/ui/action_up.png
 $ASEPRITE -b ./assets/ui/actions.aseprite --layer Action --frame-range 3,3 --save-as ./assets/ui/action_down.png
 
+# Buttons
+$ASEPRITE -b ./assets/ui/switch_button.aseprite --frame-range 0,0 --scale 4 --save-as ./assets/ui/switch_button.png
+$ASEPRITE -b ./assets/ui/switch_button.aseprite --frame-range 1,1 --scale 4 --save-as ./assets/ui/switch_button_pressed.png
+$ASEPRITE -b ./assets/ui/button.aseprite --frame-range 0,0 --scale 4 --save-as ./assets/ui/button.png
+$ASEPRITE -b ./assets/ui/button.aseprite --frame-range 1,1 --scale 4 --save-as ./assets/ui/button_pressed.png
+
 # Other UI elements
 $ASEPRITE -b ./assets/ui/d20.aseprite --scale 6 --save-as ./assets/ui/d20.png
 $ASEPRITE -b ./assets/ui/action_border.aseprite --layer Wizard --scale 2 --save-as ./assets/ui/action_border.png
-$ASEPRITE -b ./assets/ui/switch_button.aseprite --frame-range 0,0 --scale 4 --save-as ./assets/ui/switch_button.png
-$ASEPRITE -b ./assets/ui/switch_button.aseprite --frame-range 1,1 --scale 4 --save-as ./assets/ui/switch_button_pressed.png
 
 echo "Assets exported successfully <3"
