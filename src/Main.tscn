@@ -10,8 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://c67syu6e1fx3d" path="res://assets/palette_sepia.png" id="4_insap"]
 [ext_resource type="PackedScene" uid="uid://nry80h505ob7" path="res://src/Controls/TimelineBar.tscn" id="5_vjwby"]
 [ext_resource type="Texture2D" uid="uid://bl7l3gil7l4c0" path="res://assets/ui/button.png" id="10_0ri8u"]
-[ext_resource type="AudioStream" uid="uid://b6u2avspxhujm" path="res://assets/planning.wav" id="10_w32tk"]
-[ext_resource type="AudioStream" uid="uid://didusu0xknwtj" path="res://assets/playing.wav" id="11_0vhqb"]
+[ext_resource type="AudioStream" uid="uid://c7am0sbnyppr3" path="res://assets/planning.wav" id="10_w32tk"]
+[ext_resource type="AudioStream" uid="uid://bqnflgt730cs5" path="res://assets/playing.wav" id="11_0vhqb"]
 [ext_resource type="Texture2D" uid="uid://bposnprnqpx6l" path="res://assets/ui/button_pressed.png" id="11_y60b8"]
 [ext_resource type="FontFile" uid="uid://bkp5vavjxsluc" path="res://assets/Uncial_WIP.ttf" id="12_y60b8"]
 
