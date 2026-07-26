@@ -6,11 +6,16 @@ namespace HalfNibbleGame;
 
 public partial class GameProgression : Node2D {
 
+  public delegate void GameWonEventHandler(double completionTime);
+
   [Export] private int startLevel;
   [Export] private PackedScene[] levels = [];
 
   private int currentLevelIndex = -1;
   private Level? currentLevel;
+  private double totalTime;
+
+  public GameWonEventHandler GameWon = delegate { };
 
   public override void _Ready() {
     Global.Services.ProvideInScene(this);
@@ -24,11 +29,16 @@ public partial class GameProgression : Node2D {
     loadLevel(startLevel);
   }
 
+  public override void _Process(double delta) {
+    totalTime += delta;
+  }
+
   public void LoadNextLevel() {
     var nextLevel = currentLevelIndex + 1;
+
     if (nextLevel >= levels.Length) {
-      // TODO: win the game
-      nextLevel = 0;
+      GameWon(totalTime);
+      return;
     }
 
     loadLevel(nextLevel);

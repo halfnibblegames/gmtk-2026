@@ -27,6 +27,7 @@ public partial class TopLevelUI : Node {
   [Export] private ColorRect postProcessing = null!;
   [Export] private AudioStreamPlayer planningMusic = null!;
   [Export] private AudioStreamPlayer playingMusic = null!;
+  [Export] private CelebrationScreen celebrationScreen = null!;
 
   [Export] private BaseButton playbackButton = null!;
   [Export] private ColorRect playbackButtonOverlay = null!;
@@ -46,6 +47,8 @@ public partial class TopLevelUI : Node {
 
     planningMusic.Play();
     playingMusic.Play();
+
+    Global.Services.Get<GameProgression>().GameWon += onGameWon;
   }
 
   public override void _Process(double delta) {
@@ -185,5 +188,10 @@ public partial class TopLevelUI : Node {
 
   private void setVignetteAmount(float amount) {
     ((ShaderMaterial) postProcessing.Material).SetShaderParameter("vignette_amount", amount);
+  }
+
+  private void onGameWon(double completionTime) {
+    celebrationScreen.SetCompletionTime(completionTime);
+    celebrationScreen.Visible = true;
   }
 }
