@@ -171,6 +171,7 @@ public partial class Orchestrator : Node {
     var index = (startIndex + 1) % adventurers.Count;
     while (index != startIndex) {
       if (adventurers[index].PlannedRoundCount < Timeline!.TotalRoundCount) {
+        unfocusAdventurer();
         focusAdventurer(index);
         break;
       }
