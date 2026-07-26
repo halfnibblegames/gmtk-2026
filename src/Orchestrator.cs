@@ -165,6 +165,7 @@ public partial class Orchestrator : Node {
   }
 
   public void FocusNextAdventurer() {
+    if (hasWon) return;
     var nextIndex = (focusedAdventurerIndex + 1) % adventurers.Count;
     unfocusAdventurer();
     focusAdventurer(nextIndex);
@@ -270,9 +271,9 @@ public partial class Orchestrator : Node {
   }
 
   public void PreparePlayback() {
-    hasWon = true;
     unfocusAdventurer();
     focusAdventurer(adventurers.IndexOf(followedInPlayback!));
+    hasWon = true;
     historyArrows.ForEach(a => a.Visible = false);
     Timeline!.Reset();
   }
