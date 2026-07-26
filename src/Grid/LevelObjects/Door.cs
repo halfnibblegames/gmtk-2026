@@ -15,17 +15,17 @@ public partial class Door : StaticGridObject {
     Level!.RegisterTileModifier(Coords, applyCollisionToTile);
   }
 
-  public void Open(bool instant) {
+  public void Open(double duration) {
     open = true;
 
-    if (instant) {
+    if (duration <= 0) {
       sprite.Visible = false;
       return;
     }
 
     // Oh oh so hacky
-    Animations.Animations.DoDelayed(Constants.TimeBetweenRounds * 0.75, () => sprite.Modulate = new Color(sprite.Modulate, 0.5f));
-    Animations.Animations.DoDelayed(Constants.TimeBetweenRounds, () => {
+    Animations.Animations.DoDelayed(duration * 0.75, () => sprite.Modulate = new Color(sprite.Modulate, 0.5f));
+    Animations.Animations.DoDelayed(duration, () => {
       sprite.Modulate = new Color(1, 1, 1);
       sprite.Visible = false;
     });

@@ -1,9 +1,10 @@
 using Godot;
-using static HalfNibbleGame.Data.Constants;
 
 namespace HalfNibbleGame.Grid;
 
-public abstract class MoveAnimation(MovingGridObject target) {
+public abstract class MoveAnimation(MovingGridObject target, double duration) {
+
+  public delegate MoveAnimation MoveAnimationFactory(MovingGridObject target, double duration);
 
   private double timeSinceStart;
 
@@ -13,12 +14,12 @@ public abstract class MoveAnimation(MovingGridObject target) {
 
   public void Update(double elapsedTime) {
     timeSinceStart += elapsedTime;
-    if (timeSinceStart > TimeBetweenRounds) {
+    if (timeSinceStart > duration) {
       Complete();
       IsComplete = true;
     }
     else {
-      var t = (float) Mathf.Clamp(timeSinceStart / TimeBetweenRounds, 0.0, 1.0);
+      var t = (float) Mathf.Clamp(timeSinceStart / duration, 0.0, 1.0);
       Animate(t);
     }
   }
@@ -31,15 +32,15 @@ public abstract class MoveAnimation(MovingGridObject target) {
   protected abstract void Animate(float t);
   protected abstract void Complete();
 
-  public static MoveAnimation Move(MovingGridObject target, Vector2 from, Vector2 to) {
-    return new NormalMoveAnimation(target, from, to);
+  public static MoveAnimationFactory Move(Vector2 from, Vector2 to) {
+    return (target, duration) => new NormalMoveAnimation(target, duration, from, to);
   }
 
-  public static MoveAnimation Fall(MovingGridObject target, Vector2 from, Vector2 to) {
-    return new FallMoveAnimation(target, from, to);
+  public static MoveAnimationFactory Fall(Vector2 from, Vector2 to) {
+    return (target, duration) => new FallMoveAnimation(target, duration, from, to);
   }
 
-  private class NormalMoveAnimation(MovingGridObject target, Vector2 from, Vector2 to) : MoveAnimation(target) {
+  private class NormalMoveAnimation(MovingGridObject target, double duration, Vector2 from, Vector2 to) : MoveAnimation(target, duration) {
     protected override void Animate(float t) {
       Target.Position = from + t * (to - from);
     }
@@ -49,7 +50,7 @@ public abstract class MoveAnimation(MovingGridObject target) {
     }
   }
 
-  private class FallMoveAnimation(MovingGridObject target, Vector2 from, Vector2 to) : NormalMoveAnimation(target, from, to) {
+  private class FallMoveAnimation(MovingGridObject target, double duration, Vector2 from, Vector2 to) : NormalMoveAnimation(target, duration, from, to) {
     private readonly Vector2 to = to;
 
     protected override void Animate(float t) {

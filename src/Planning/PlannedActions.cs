@@ -31,7 +31,7 @@ public static class PlannedActions {
 
     public override void Do(RoundContext context, SimulatedGridObject target) {
       var result = target.PreviewMove(diff);
-      target.DoMove(result);
+      target.DoMove(result, context.RoundDuration);
       handleMoveResult(result, context, target);
     }
   }
@@ -49,11 +49,11 @@ public static class PlannedActions {
 
     public override void Do(RoundContext context, SimulatedGridObject target) {
       var result = target.PreviewMove(diff, true);
-      target.DoMove(result);
+      target.DoMove(result, context.RoundDuration);
 
       if (result.CollidedWith is not null) {
         var pushableResult = result.CollidedWith.PreviewMove(diff);
-        result.CollidedWith?.DoMove(pushableResult);
+        result.CollidedWith?.DoMove(pushableResult, context.RoundDuration);
       }
 
       handleMoveResult(result, context, target);
@@ -71,7 +71,7 @@ public static class PlannedActions {
 
     public override void Do(RoundContext context, SimulatedGridObject target) {
       var result = target.PreviewMove(target.Forward * amount);
-      target.DoMove(result);
+      target.DoMove(result, context.RoundDuration);
       handleMoveResult(result, context, target);
     }
   }

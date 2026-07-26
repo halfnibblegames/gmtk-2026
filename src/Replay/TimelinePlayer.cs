@@ -25,8 +25,8 @@ public partial class TimelinePlayer : Node {
     timeline = timelineToPlay;
 
     timeline.Reset();
-    timeline.Advance();
-    timeUntilNextFrame = TimeBetweenRounds;
+    timeline.Advance(TimeBetweenRoundsPlayback);
+    timeUntilNextFrame = TimeBetweenRoundsPlayback;
     IsPlaying = true;
   }
 
@@ -36,8 +36,8 @@ public partial class TimelinePlayer : Node {
     timeUntilNextFrame -= delta;
     while (IsPlaying && timeUntilNextFrame <= 0) {
       if (timeline!.CurrentRound < timeline.TotalRoundCount) {
-        timeline.Advance();
-        timeUntilNextFrame += TimeBetweenRounds;
+        timeline.Advance(TimeBetweenRoundsPlayback);
+        timeUntilNextFrame += TimeBetweenRoundsPlayback;
       }
       else {
         IsPlaying = false;

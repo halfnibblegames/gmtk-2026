@@ -20,7 +20,7 @@ public partial class CrackedFloor : StaticGridObject, ISimulated {
     AddToGroup(Groups.Simulated);
     floorSprite = GetNode<Sprite2D>("FloorSprite");
     gapSprite = GetNode<Sprite2D>("GapSprite");
-    ResetToRound(new RoundContext(0));
+    ResetToRound(new RoundContext(0, 0));
     Level!.RegisterTileModifier(Coords, applyBrokenToTile);
   }
 

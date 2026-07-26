@@ -9,7 +9,7 @@ public abstract partial class MovingGridObject : GridObject {
   [Signal]
   public delegate void MovedEventHandler(Vector2I newCoords);
 
-  public delegate MoveAnimation MoveAnimationFactory(MovingGridObject target, Vector2 start, Vector2 end);
+  public delegate MoveAnimation.MoveAnimationFactory MoveAnimationFactoryFactory(Vector2 start, Vector2 end);
 
   private MoveAnimation? moveAnimation;
 
@@ -61,15 +61,15 @@ public abstract partial class MovingGridObject : GridObject {
     return new MoveResult(MoveOutcome.Moved, accumulatedMovement, tilesVisited);
   }
 
-  public void DoMove(MoveResult moveResult) {
-    MoveAnimationFactory animation = moveResult.Outcome switch {
+  public void DoMove(MoveResult moveResult, double duration) {
+    MoveAnimationFactoryFactory animation = moveResult.Outcome switch {
       MoveOutcome.Moved => MoveAnimation.Move,
       MoveOutcome.Collided => throw new InvalidOperationException($"Attempting to move {this} with an invalid move"),
       MoveOutcome.FellDown => MoveAnimation.Fall,
       _ => throw new ArgumentOutOfRangeException()
     };
 
-    Move(moveResult.ActuallyMoved, animation);
+    Move(moveResult.ActuallyMoved, animation, duration);
   }
 
   private static void validateValidMoveDiff(Vector2I diff) {
@@ -88,7 +88,7 @@ public abstract partial class MovingGridObject : GridObject {
     return new Vector2I(Math.Sign(diff.X), Math.Sign(diff.Y));
   }
 
-  public void Move(Vector2I diff, MoveAnimationFactory animationFactory) {
+  public void Move(Vector2I diff, MoveAnimationFactoryFactory animationFactory, double duration) {
     if (moveAnimation is not null) {
       SnapToTile();
       moveAnimation = null;
@@ -107,7 +107,7 @@ public abstract partial class MovingGridObject : GridObject {
 
     var end = ToTilePosition(Coords);
 
-    moveAnimation = animationFactory(this, start, end);
+    moveAnimation = animationFactory(start, end)(this, duration);
 
     EmitSignalMoved(Coords);
   }

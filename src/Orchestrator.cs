@@ -214,8 +214,8 @@ public partial class Orchestrator : Node {
     }
 
     focusedAdventurer.SetActionForRound(Timeline!.CurrentRound, action);
-    Timeline!.Advance();
-    playbackTimeRemaining = Constants.TimeBetweenRounds;
+    Timeline!.Advance(Constants.TimeBetweenRoundsPlanning);
+    playbackTimeRemaining = Constants.TimeBetweenRoundsPlanning;
 
     // Automatically focus the next adventurer that still needs moves if there is one.
     if (focusedAdventurer.PlannedRoundCount == Timeline.TotalRoundCount) {

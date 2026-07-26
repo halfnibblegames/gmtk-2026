@@ -14,8 +14,8 @@ public class Timeline(SceneTree tree, int totalRoundCount) {
   public int CurrentRound { get; private set; }
   public int TotalRoundCount => totalRoundCount;
 
-  public void Advance() {
-    var roundContext = new RoundContext(CurrentRound++);
+  public void Advance(double roundDuration) {
+    var roundContext = new RoundContext(CurrentRound++, roundDuration);
     simulatedObjects().ForEach(obj => obj.Advance(roundContext));
     var hazardList = hazards();
     mortals().ForEach(mortal => mortal.CheckAgainstHazards(hazardList, roundContext));
@@ -36,7 +36,7 @@ public class Timeline(SceneTree tree, int totalRoundCount) {
     if (CurrentRound == round) return;
 
     CurrentRound = round;
-    var roundContext = new RoundContext(round);
+    var roundContext = new RoundContext(round, 0);
     simulatedObjects().ForEach(obj => obj.ResetToRound(roundContext));
     roundContext.Finish();
     CountdownChanged(round, totalRoundCount);

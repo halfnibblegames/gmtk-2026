@@ -25,28 +25,28 @@ public partial class FloorSwitch : StaticGridObject, ISimulated {
   }
 
   public void Advance(RoundContext context) {
-    context.RegisterOutcome(() => checkPressed(context, false));
+    context.RegisterOutcome(() => checkPressed(context));
   }
 
   public void ResetToRound(RoundContext context) {
     if (active && context.RoundNumber <= pressedRound) {
       deactivate();
-      context.RegisterOutcome(() => checkPressed(context, true));
+      context.RegisterOutcome(() => checkPressed(context));
     }
   }
 
-  private void checkPressed(RoundContext context, bool instant) {
+  private void checkPressed(RoundContext context) {
     // If any adventurer is on this tile after a round, then we break the next round whether the adventurer moves or not
     if (context.ObjectsInTile(Coords).Any()) {
       pressedRound = context.RoundNumber;
       // Because we check after the movement of a round, we can safely already activate this switch
-      activate(instant);
+      activate(context.RoundDuration);
     }
   }
 
-  private void activate(bool instant) {
+  private void activate(double duration) {
     active = true;
-    door?.Open(instant);
+    door?.Open(duration);
     upSprite.Visible = false;
     downSprite.Visible = true;
   }

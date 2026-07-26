@@ -6,11 +6,12 @@ using HalfNibbleGame.Grid;
 
 namespace HalfNibbleGame.Replay;
 
-public class RoundContext(int roundNumber) {
+public class RoundContext(int roundNumber, double roundDuration) {
   private readonly List<Action> outcomes = [];
   private readonly List<EnteredTile> enteredTiles = [];
 
   public int RoundNumber => roundNumber;
+  public double RoundDuration => roundDuration;
 
   public void RegisterOutcome(Action action) {
     outcomes.Add(action);
