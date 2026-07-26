@@ -20,6 +20,10 @@ $ASEPRITE -b ./assets/ui/actions.aseprite --layer Action --frame-range 1,1 --sav
 $ASEPRITE -b ./assets/ui/actions.aseprite --layer Action --frame-range 2,2 --save-as ./assets/ui/action_up.png
 $ASEPRITE -b ./assets/ui/actions.aseprite --layer Action --frame-range 3,3 --save-as ./assets/ui/action_down.png
 
+# Hazards
+$ASEPRITE -b ./assets/push_plate.aseprite --frame-range 0,0 --save-as ./assets/push_plate.png
+$ASEPRITE -b ./assets/push_plate.aseprite --frame-range 1,1 --save-as ./assets/push_plate_pressed.png
+
 # Buttons
 $ASEPRITE -b ./assets/ui/switch_button.aseprite --frame-range 0,0 --scale 4 --save-as ./assets/ui/switch_button.png
 $ASEPRITE -b ./assets/ui/switch_button.aseprite --frame-range 1,1 --scale 4 --save-as ./assets/ui/switch_button_pressed.png
