@@ -8,6 +8,7 @@ namespace HalfNibbleGame.Controls;
 public partial class TopLevelUI : Node {
 
   private const double transitionDuration = 0.5;
+  private const double inputHintDelay = 5.0;
 
   private bool isPlaybackReady {
     get;
@@ -27,8 +28,12 @@ public partial class TopLevelUI : Node {
 
   [Export] private BaseButton playbackButton = null!;
   [Export] private ColorRect playbackButtonOverlay = null!;
+  [Export] private Control inputHints = null!;
 
   private Tween? playbackTween;
+  private Tween? inputTween;
+
+  private double timeSinceLastInput;
 
   public override void _Ready() {
     var orchestrator = Global.Services.Get<Orchestrator>();
@@ -40,16 +45,49 @@ public partial class TopLevelUI : Node {
     playingMusic.Play();
   }
 
+  public override void _Process(double delta) {
+    if (playbackTween != null) return;
+
+    timeSinceLastInput += delta;
+    if (timeSinceLastInput >= inputHintDelay) {
+      showInputHints();
+    }
+  }
+
   public override void _Input(InputEvent @event) {
     if (isPlaybackReady && @event.IsActionReleased(InputActions.Playback)) {
       startPlayback();
     }
+
+    if (@event is InputEventKey or InputEventMouseButton) {
+      hideInputHints();
+    }
+  }
+
+  private void showInputHints() {
+    inputTween?.Kill();
+
+    inputTween = CreateTween();
+    inputTween.TweenProperty(inputHints, "modulate", Colors.White, 0.25);
+    inputTween.Play();
+  }
+
+  private void hideInputHints() {
+    inputTween?.Kill();
+
+    inputTween = CreateTween();
+    inputTween.TweenProperty(inputHints, "modulate", Colors.Transparent, 0.15);
+    inputTween.Play();
+
+    timeSinceLastInput = 0;
   }
 
   private void startPlayback() {
     if (!isPlaybackReady) return;
 
     Global.Services.Get<Orchestrator>().PreparePlayback();
+
+    inputHints.Visible = false;
 
     currentAdventurer.OffsetTransformEnabled = true;
     spindownDice.OffsetTransformEnabled = true;
@@ -115,6 +153,7 @@ public partial class TopLevelUI : Node {
   }
 
   private void resetTransforms() {
+    inputHints.Visible = true;
     playbackButton.Visible = false;
     playbackButtonOverlay.Color = Colors.Transparent;
     currentAdventurer.OffsetTransformPosition = Vector2.Zero;
@@ -124,6 +163,7 @@ public partial class TopLevelUI : Node {
     setVignetteAmount(0);
     planningMusic.VolumeLinear = 1;
     playingMusic.VolumeLinear = 0;
+    playbackTween = null;
   }
 
   private void setVignetteAmount(float amount) {

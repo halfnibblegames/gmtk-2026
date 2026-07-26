@@ -13,6 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://c7am0sbnyppr3" path="res://assets/planning.wav" id="10_w32tk"]
 [ext_resource type="AudioStream" uid="uid://bqnflgt730cs5" path="res://assets/playing.wav" id="11_0vhqb"]
 [ext_resource type="Texture2D" uid="uid://bposnprnqpx6l" path="res://assets/ui/button_pressed.png" id="11_y60b8"]
+[ext_resource type="PackedScene" uid="uid://dnu2oyugc5pvh" path="res://src/Controls/ControlPrompt.tscn" id="12_k2i6c"]
 [ext_resource type="FontFile" uid="uid://bkp5vavjxsluc" path="res://assets/Uncial_WIP.ttf" id="12_y60b8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gft63"]
@@ -21,7 +22,7 @@ shader_parameter/original_palette = ExtResource("3_fh42b")
 shader_parameter/target_palette = ExtResource("4_insap")
 shader_parameter/vignette_amount = 1.0
 
-[node name="Main" type="Control" unique_id=732094339 node_paths=PackedStringArray("currentAdventurer", "spindownDice", "timelineBar", "postProcessing", "planningMusic", "playingMusic", "playbackButton", "playbackButtonOverlay")]
+[node name="Main" type="Control" unique_id=732094339 node_paths=PackedStringArray("currentAdventurer", "spindownDice", "timelineBar", "postProcessing", "planningMusic", "playingMusic", "playbackButton", "playbackButtonOverlay", "inputHints")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,6 +38,7 @@ planningMusic = NodePath("PlanningMusicPlayer")
 playingMusic = NodePath("PlayingMusicPlayer")
 playbackButton = NodePath("PlaybackButton")
 playbackButtonOverlay = NodePath("PlaybackButtonOverlay")
+inputHints = NodePath("InputOverview")
 
 [node name="PixelPerfectContainer" type="SubViewportContainer" parent="." unique_id=1062184323]
 layout_mode = 0
@@ -106,16 +108,200 @@ offset_top = -88.0
 offset_bottom = -8.0
 grow_vertical = 0
 
-[node name="PlaybackButtonOverlay" type="ColorRect" parent="." unique_id=14098149]
+[node name="InputOverview" type="Control" parent="." unique_id=69063929]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -120.0
+offset_bottom = -71.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="InputOverview" unique_id=469294771]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="DirectionalHints" type="HBoxContainer" parent="InputOverview/HBoxContainer" unique_id=335392827]
+layout_mode = 2
+
+[node name="ArrowKeys" type="Control" parent="InputOverview/HBoxContainer/DirectionalHints" unique_id=438927097]
+custom_minimum_size = Vector2(50, 36)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Up" parent="InputOverview/HBoxContainer/DirectionalHints/ArrowKeys" unique_id=1328256319 instance=ExtResource("12_k2i6c")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -16.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+ShownInput = 20
+
+[node name="Down" parent="InputOverview/HBoxContainer/DirectionalHints/ArrowKeys" unique_id=602721207 instance=ExtResource("12_k2i6c")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = 0.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+ShownInput = 21
+
+[node name="Left" parent="InputOverview/HBoxContainer/DirectionalHints/ArrowKeys" unique_id=497466330 instance=ExtResource("12_k2i6c")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.0
+offset_top = -0.5
+offset_right = -7.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+ShownInput = 18
+
+[node name="Right" parent="InputOverview/HBoxContainer/DirectionalHints/ArrowKeys" unique_id=663793569 instance=ExtResource("12_k2i6c")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 7.0
+offset_top = -0.5
+offset_right = 23.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+ShownInput = 19
+
+[node name="Label" type="Label" parent="InputOverview/HBoxContainer/DirectionalHints" unique_id=1923236457]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.6666667, 0.36862746, 1)
+theme_override_colors/font_shadow_color = Color(0.1254902, 0.23529412, 0.3372549, 1)
+theme_override_colors/font_outline_color = Color(0.1254902, 0.23529412, 0.3372549, 1)
+theme_override_fonts/font = ExtResource("12_y60b8")
+theme_override_font_sizes/font_size = 32
+text = "move"
+
+[node name="DashHint" type="HBoxContainer" parent="InputOverview/HBoxContainer" unique_id=304916879]
+layout_mode = 2
+
+[node name="KeyContainer" type="Control" parent="InputOverview/HBoxContainer/DashHint" unique_id=539616913]
+custom_minimum_size = Vector2(40, 20)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Shift" parent="InputOverview/HBoxContainer/DashHint/KeyContainer" unique_id=137600195 instance=ExtResource("12_k2i6c")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+ShownInput = 22
+
+[node name="Label" type="Label" parent="InputOverview/HBoxContainer/DashHint" unique_id=1528290458]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.6666667, 0.36862746, 1)
+theme_override_colors/font_shadow_color = Color(0.1254902, 0.23529412, 0.3372549, 1)
+theme_override_colors/font_outline_color = Color(0.1254902, 0.23529412, 0.3372549, 1)
+theme_override_fonts/font = ExtResource("12_y60b8")
+theme_override_font_sizes/font_size = 32
+text = "dash as rogue"
+
+[node name="SwitchHint" type="HBoxContainer" parent="InputOverview/HBoxContainer" unique_id=1411706420]
+layout_mode = 2
+
+[node name="KeyContainer" type="Control" parent="InputOverview/HBoxContainer/SwitchHint" unique_id=616565698]
+custom_minimum_size = Vector2(32, 20)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Tab" parent="InputOverview/HBoxContainer/SwitchHint/KeyContainer" unique_id=1441177593 instance=ExtResource("12_k2i6c")]
+custom_maximum_size = Vector2(8, -1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+ShownInput = 23
+
+[node name="Label" type="Label" parent="InputOverview/HBoxContainer/SwitchHint" unique_id=1841867201]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.6666667, 0.36862746, 1)
+theme_override_colors/font_shadow_color = Color(0.1254902, 0.23529412, 0.3372549, 1)
+theme_override_colors/font_outline_color = Color(0.1254902, 0.23529412, 0.3372549, 1)
+theme_override_fonts/font = ExtResource("12_y60b8")
+theme_override_font_sizes/font_size = 32
+text = "switch characters"
+
+[node name="RollbackHint" type="HBoxContainer" parent="InputOverview/HBoxContainer" unique_id=1075347810]
+layout_mode = 2
+
+[node name="KeyContainer" type="Control" parent="InputOverview/HBoxContainer/RollbackHint" unique_id=1157437062]
+custom_minimum_size = Vector2(40, 20)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Backspace" parent="InputOverview/HBoxContainer/RollbackHint/KeyContainer" unique_id=2005927281 instance=ExtResource("12_k2i6c")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+ShownInput = 24
+
+[node name="Label" type="Label" parent="InputOverview/HBoxContainer/RollbackHint" unique_id=229219803]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.6666667, 0.36862746, 1)
+theme_override_colors/font_shadow_color = Color(0.1254902, 0.23529412, 0.3372549, 1)
+theme_override_colors/font_outline_color = Color(0.1254902, 0.23529412, 0.3372549, 1)
+theme_override_fonts/font = ExtResource("12_y60b8")
+theme_override_font_sizes/font_size = 32
+text = "undo"
+
+[node name="PlaybackButtonOverlay" type="ColorRect" parent="." unique_id=14098149]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_right = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0)
 
 [node name="PlaybackButton" type="TextureButton" parent="." unique_id=1678226328]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
