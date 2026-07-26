@@ -1,15 +1,10 @@
 [gd_scene format=3 uid="uid://k08pmvg6ly8e"]
 
-[ext_resource type="Texture2D" uid="uid://b8builnlxpm41" path="res://assets/input/tilemap_packed.png" id="1_qxfre"]
 [ext_resource type="Script" uid="uid://ts84pxu5jo3s" path="res://src/Grid/LevelObjects/PushableBox.cs" id="1_yan5i"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gft63"]
-atlas = ExtResource("1_qxfre")
-region = Rect2(464, 95, 15, 17)
+[ext_resource type="Texture2D" uid="uid://bqylqjrng1d1c" path="res://assets/box.png" id="2_yan5i"]
 
 [node name="PushableBox" type="Node2D" unique_id=294382958]
 script = ExtResource("1_yan5i")
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=967143460]
-position = Vector2(-1, -1)
-texture = SubResource("AtlasTexture_gft63")
+texture = ExtResource("2_yan5i")

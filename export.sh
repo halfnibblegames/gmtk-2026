@@ -24,6 +24,7 @@ $ASEPRITE -b ./assets/ui/actions.aseprite --layer Action --frame-range 3,3 --sav
 $ASEPRITE -b ./assets/push_plate.aseprite --frame-range 0,0 --save-as ./assets/push_plate.png
 $ASEPRITE -b ./assets/push_plate.aseprite --frame-range 1,1 --save-as ./assets/push_plate_pressed.png
 $ASEPRITE -b ./assets/chest.aseprite --save-as ./assets/chest.png
+$ASEPRITE -b ./assets/box.aseprite --save-as ./assets/box.png
 
 # Buttons
 $ASEPRITE -b ./assets/ui/switch_button.aseprite --frame-range 0,0 --scale 4 --save-as ./assets/ui/switch_button.png
@@ -34,5 +35,6 @@ $ASEPRITE -b ./assets/ui/button.aseprite --frame-range 1,1 --scale 4 --save-as .
 # Other UI elements
 $ASEPRITE -b ./assets/ui/d20.aseprite --scale 6 --save-as ./assets/ui/d20.png
 $ASEPRITE -b ./assets/ui/action_border.aseprite --layer Wizard --scale 2 --save-as ./assets/ui/action_border.png
+$ASEPRITE -b ./cover.aseprite --save-as ./assets/intro.png
 
 echo "Assets exported successfully <3"
