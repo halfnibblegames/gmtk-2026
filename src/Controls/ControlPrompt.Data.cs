@@ -1,4 +1,5 @@
 using System;
+using Godot;
 
 namespace HalfNibbleGame.Scenes;
 
@@ -26,8 +27,21 @@ public partial class ControlPrompt {
     ControlInput.MouseButtonLeft => new ControlData(76, 77, true),
     ControlInput.MouseButtonRight => new ControlData(76, 78, true),
     ControlInput.MouseButtonMiddle => new ControlData(76, 79, true),
+
+    ControlInput.KeyboardKeyLeft => new ControlData(169, 441),
+    ControlInput.KeyboardKeyRight => new ControlData(167, 439),
+    ControlInput.KeyboardKeyUp => new ControlData(166, 438),
+    ControlInput.KeyboardKeyDown => new ControlData(168, 440),
+
+    ControlInput.KeyboardKeyShift => new ControlData(255, 527, new Vector2I(2, 1)),
+    ControlInput.KeyboardKeyTab => new ControlData(189, 461, new Vector2I(2, 1)),
+    ControlInput.KeyboardKeyBackspace => new ControlData(66, 338, new Vector2I(2, 1)),
+
     _ => throw new ArgumentOutOfRangeException(nameof(input), input, null)
   };
 
-  private readonly record struct ControlData(int FrameNo, int PressedFrameNo, bool Invert = false);
+  private readonly record struct ControlData(int FrameNo, int PressedFrameNo, Vector2I Size, bool Invert = false) {
+    public ControlData(int frameNo, int pressedFrameNo, bool invert = false)
+      : this(frameNo, pressedFrameNo, Vector2I.One, invert) {}
+  }
 }

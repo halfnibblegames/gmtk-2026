@@ -24,5 +24,14 @@ public partial class ControlPrompt {
     MouseButtonLeft,
     MouseButtonRight,
     MouseButtonMiddle,
+
+    KeyboardKeyLeft,
+    KeyboardKeyRight,
+    KeyboardKeyUp,
+    KeyboardKeyDown,
+
+    KeyboardKeyShift,
+    KeyboardKeyTab,
+    KeyboardKeyBackspace,
   }
 }

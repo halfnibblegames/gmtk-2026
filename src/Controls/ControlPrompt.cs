@@ -44,8 +44,8 @@ public partial class ControlPrompt : Control {
     var key = animationKey(input);
     var data = createData(input);
 
-    var normalFrame = atlas(data.FrameNo);
-    var pressedFrame = atlas(data.PressedFrameNo);
+    var normalFrame = atlas(data.FrameNo, data.Size);
+    var pressedFrame = atlas(data.PressedFrameNo, data.Size);
 
     spriteFrames.AddAnimation(key);
     spriteFrames.SetAnimationSpeed(key, animationSpeed);
@@ -61,12 +61,12 @@ public partial class ControlPrompt : Control {
     return texture;
   }
 
-  private AtlasTexture atlas(int frameNo) => new() { Atlas = imageTexture!, Region = regionForFrame(frameNo) };
+  private AtlasTexture atlas(int frameNo, Vector2I size) => new() { Atlas = imageTexture!, Region = regionForFrame(frameNo, size) };
 
-  private Rect2 regionForFrame(int frameNo) {
+  private Rect2 regionForFrame(int frameNo, Vector2I size) {
     var row = frameNo / iconsPerRow;
     var col = frameNo % iconsPerRow;
-    return new Rect2(col * tileSize, row * tileSize, tileSize, tileSize);
+    return new Rect2(col * tileSize, row * tileSize, tileSize * size.X, tileSize * size.Y);
   }
 
   private static string animationKey(ControlInput input) => input.ToString();
