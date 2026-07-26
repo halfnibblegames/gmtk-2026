@@ -91,7 +91,7 @@ Portrait = ExtResource("2_2e0q2")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1208374403]
 texture_filter = 1
-position = Vector2(2, 0)
+position = Vector2(0, -5)
 sprite_frames = SubResource("SpriteFrames_jee2r")
 autoplay = "default"
 metadata/_aseprite_wizard_interface_config_ = {
