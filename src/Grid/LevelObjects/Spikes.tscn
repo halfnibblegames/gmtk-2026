@@ -2,33 +2,33 @@
 
 [ext_resource type="Script" uid="uid://cndj85il0ebvq" path="res://src/Grid/LevelObjects/Spikes.cs" id="1_cmb1g"]
 
-[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_cmb1g"]
-_data = PackedByteArray("AAADAAUAAAABAAAAIAAAACAAAACgAAAAUklGRpgAAABXRUJQVlA4TIsAAAAvH8AHEB8gECBTFnRoIiQgUw5IThIIkCkLohSY/wBkTT84qm2rdc57pD1XTwISfjHSjLEyywxPoTqI6L/Ctm0bZ+/2Dbrk4pLEQ3zGZ37n92KlPrTUuIAHiE/Ib1iszB8Kh1bvTjLx7i4lCB2EVOB/AWCx3QAOvZWyQIFyNWn5lTi+jL57MYCxPwMAAA==")
+[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_rqm7c"]
+_data = PackedByteArray("AAADAAUAAAABAAAAIAAAACAAAACgAAAAUklGRpgAAABXRUJQVlA4TIwAAAAvH8AHEB8gECAs6DAsXUhAOCD5v80VIQGZcsEo0fwHIGv6wVFtW61z3iPtuXoSkPCLkWaMlVlmeArVQUT/FbZt2zh7t2/QJReXJB7iMz7zO78XK/WhpcYFPEB8Qn7DYmX+UDi0eneSiXd3KUHoIKQC/wsAi+0GcOitlAUKlKtJy6/E8WX03YsBjP0ZAA==")
 size_override = Vector2(32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_re76b"]
-atlas = SubResource("PortableCompressedTexture2D_cmb1g")
+[sub_resource type="AtlasTexture" id="AtlasTexture_qibre"]
+atlas = SubResource("PortableCompressedTexture2D_rqm7c")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_85syc"]
-atlas = SubResource("PortableCompressedTexture2D_cmb1g")
+[sub_resource type="AtlasTexture" id="AtlasTexture_8l1ww"]
+atlas = SubResource("PortableCompressedTexture2D_rqm7c")
 region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_eiy75"]
-atlas = SubResource("PortableCompressedTexture2D_cmb1g")
+[sub_resource type="AtlasTexture" id="AtlasTexture_18bb4"]
+atlas = SubResource("PortableCompressedTexture2D_rqm7c")
 region = Rect2(0, 16, 16, 16)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_ly8oc"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_fb2ku"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_re76b")
+"texture": SubResource("AtlasTexture_qibre")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_85syc")
+"texture": SubResource("AtlasTexture_8l1ww")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_eiy75")
+"texture": SubResource("AtlasTexture_18bb4")
 }],
 "loop": 0,
 "name": &"default",
@@ -40,7 +40,7 @@ script = ExtResource("1_cmb1g")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=730609687]
 texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_ly8oc")
+sprite_frames = SubResource("SpriteFrames_fb2ku")
 metadata/_aseprite_wizard_interface_config_ = {
 "animation_section": false,
 "layer_section": false,
@@ -61,4 +61,4 @@ metadata/_aseprite_wizard_config_ = {
 "source": "res://assets/spikes.aseprite",
 "source_uid": 8328361724662745991
 }
-metadata/_aseprite_wizard_source_file_hash_ = "c7d4315eb82899bd5a23ff28aa272030"
+metadata/_aseprite_wizard_source_file_hash_ = "deee58b32b36d1ab604d43993ae62d46"

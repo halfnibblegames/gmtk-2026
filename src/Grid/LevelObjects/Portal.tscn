@@ -2,30 +2,51 @@
 
 [ext_resource type="Script" uid="uid://lxbfm5l5qysx" path="res://src/Grid/LevelObjects/Portal.cs" id="1_5moso"]
 
-[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_4kmk4"]
-_data = PackedByteArray("AAADAAUAAAABAAAAIAAAABAAAABsAAAAUklGRmQAAABXRUJQVlA4TFcAAAAvH8ADEBcgEEhxCNOsIG0Dpv4NdcecQCDJf8Rl5j9A9g9sIttqdciUuadGBSIQhByMwg8KIvqvNm0DJpn6IfzP3WFWllxyiCEa+ADaQ9MQTpzirJxHjwQA")
-size_override = Vector2(32, 16)
+[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_xis44"]
+_data = PackedByteArray("AAADAAUAAAABAAAAMAAAACAAAACyAAAAUklGRqoAAABXRUJQVlA4TJ4AAAAvL8AHEB8gJCBTfogigQCZMiBIAYEAmdJgQYv5D8C+Y4Lb2Lba6Df5hghUhaUk2YiQURUaMhVALrfefFhbQET/1bZtw8hTejmj+h9dhojfJ2PtBfcfJFoN7p/gjJIwCsxvJwirJKxG2h8w9geg92KuuX+t440+FxHRbwnuY3jh6qf/iQbaA1z7JPiXCbBPPzMkeg30LCXhf4s2+uxeAg==")
+size_override = Vector2(48, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gw16j"]
-atlas = SubResource("PortableCompressedTexture2D_4kmk4")
+[sub_resource type="AtlasTexture" id="AtlasTexture_fh0x2"]
+atlas = SubResource("PortableCompressedTexture2D_xis44")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ruqd5"]
-atlas = SubResource("PortableCompressedTexture2D_4kmk4")
+[sub_resource type="AtlasTexture" id="AtlasTexture_uk6q7"]
+atlas = SubResource("PortableCompressedTexture2D_xis44")
 region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_v1y38"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ar7e4"]
+atlas = SubResource("PortableCompressedTexture2D_xis44")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b0e1w"]
+atlas = SubResource("PortableCompressedTexture2D_xis44")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8toik"]
+atlas = SubResource("PortableCompressedTexture2D_xis44")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s7aq2"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_gw16j")
+"texture": SubResource("AtlasTexture_fh0x2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ruqd5")
+"texture": SubResource("AtlasTexture_uk6q7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ar7e4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0e1w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8toik")
 }],
 "loop": 1,
 "name": &"default",
-"speed": 14.0
+"speed": 10.0
 }]
 
 [node name="Spawn" type="Node2D" unique_id=1793866855]
@@ -33,9 +54,15 @@ script = ExtResource("1_5moso")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=398037927]
 texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_v1y38")
+sprite_frames = SubResource("SpriteFrames_s7aq2")
+autoplay = "default"
+frame_progress = 0.47459835
 metadata/_aseprite_wizard_interface_config_ = {
-"pending_changes": {}
+"animation_section": false,
+"layer_section": false,
+"output_section": false,
+"pending_changes": {},
+"slice_section": false
 }
 metadata/_aseprite_wizard_config_ = {
 "embed_tex": true,
@@ -50,4 +77,4 @@ metadata/_aseprite_wizard_config_ = {
 "source": "res://assets/portal.aseprite",
 "source_uid": 1946382019970603258
 }
-metadata/_aseprite_wizard_source_file_hash_ = "9ea498ef91bf689f853c430c25a47bb1"
+metadata/_aseprite_wizard_source_file_hash_ = "04c3d30ec7d528102ca946acb34f63c9"

@@ -11,7 +11,8 @@ public partial class FloorSwitch : StaticGridObject, ISimulated {
   [Export] private Door? door;
 
   // Lazily initialized
-  private Sprite2D sprite = null!;
+  private Sprite2D upSprite = null!;
+  private Sprite2D downSprite = null!;
 
   private int pressedRound = int.MaxValue;
   private bool active;
@@ -19,7 +20,8 @@ public partial class FloorSwitch : StaticGridObject, ISimulated {
   public override void _Ready() {
     base._Ready();
     AddToGroup(Groups.Simulated);
-    sprite = GetNode<Sprite2D>("Sprite");
+    upSprite = GetNode<Sprite2D>("SpriteUp");
+    downSprite = GetNode<Sprite2D>("SpriteDown");
   }
 
   public void Advance(RoundContext context) {
@@ -45,10 +47,14 @@ public partial class FloorSwitch : StaticGridObject, ISimulated {
   private void activate(bool instant) {
     active = true;
     door?.Open(instant);
+    upSprite.Visible = false;
+    downSprite.Visible = true;
   }
 
   private void deactivate() {
     door?.Close();
     active = false;
+    upSprite.Visible = true;
+    downSprite.Visible = false;
   }
 }
