@@ -47,6 +47,10 @@ public abstract partial class MovingGridObject : GridObject {
         var willPush = isStrong && targetTile.CollidesWith is not null;
         var outcome = willPush ? MoveOutcome.Moved : MoveOutcome.Collided;
 
+        if (willPush && Level.GetTile(Coords + accumulatedMovement).Pit) {
+          outcome = MoveOutcome.FellDown;
+        }
+
         return new MoveResult(outcome, accumulatedMovement, tilesVisited, targetTile.CollidesWith);
       }
 

@@ -31,15 +31,6 @@ adventurerScene = ExtResource("5_ig20m")
 [node name="Treasure" parent="." unique_id=848941562 instance=ExtResource("6_ex44a")]
 position = Vector2(312, 120)
 
-[node name="PushableBox" parent="." unique_id=294382958 instance=ExtResource("8_4shm8")]
-position = Vector2(232, 168)
-
-[node name="PushableBox3" parent="." unique_id=1065820054 instance=ExtResource("8_4shm8")]
-position = Vector2(168, 184)
-
-[node name="PushableBox2" parent="." unique_id=1470382733 instance=ExtResource("8_4shm8")]
-position = Vector2(200, 104)
-
 [node name="Spikes" parent="." unique_id=1746732369 instance=ExtResource("8_o5bow")]
 position = Vector2(200, 136)
 
@@ -88,3 +79,12 @@ initiallyExtended = true
 
 [node name="Spikes10" parent="." unique_id=965980016 instance=ExtResource("8_o5bow")]
 position = Vector2(280, 88)
+
+[node name="PushableBox" parent="." unique_id=294382958 instance=ExtResource("8_4shm8")]
+position = Vector2(232, 168)
+
+[node name="PushableBox3" parent="." unique_id=1065820054 instance=ExtResource("8_4shm8")]
+position = Vector2(168, 184)
+
+[node name="PushableBox2" parent="." unique_id=1470382733 instance=ExtResource("8_4shm8")]
+position = Vector2(200, 104)
