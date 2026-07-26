@@ -9,10 +9,13 @@ public abstract class MoveAnimation(MovingGridObject target) {
 
   protected MovingGridObject Target => target;
 
+  public bool IsComplete { get; private set; }
+
   public void Update(double elapsedTime) {
     timeSinceStart += elapsedTime;
     if (timeSinceStart > TimeBetweenRounds) {
       Complete();
+      IsComplete = true;
     }
     else {
       var t = (float) Mathf.Clamp(timeSinceStart / TimeBetweenRounds, 0.0, 1.0);
@@ -22,6 +25,7 @@ public abstract class MoveAnimation(MovingGridObject target) {
 
   public void CompleteInstantly() {
     Complete();
+    IsComplete = true;
   }
 
   protected abstract void Animate(float t);

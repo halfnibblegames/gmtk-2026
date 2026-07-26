@@ -17,6 +17,10 @@ public abstract partial class MovingGridObject : GridObject {
   protected bool Flipped { get; set; }
 
   public override void _Process(double delta) {
+    if (moveAnimation?.IsComplete ?? false) {
+      moveAnimation = null;
+    }
+
     if (moveAnimation is not null) {
       moveAnimation.Update(delta);
       EmitSignalMoved(Coords);

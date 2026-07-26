@@ -26,6 +26,7 @@ public partial class ControlPrompt : Control {
   public override void _Ready() {
     animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite");
     animatedSprite.SpriteFrames = spriteFrames;
+    updateAnimation();
   }
 
   private void updateAnimation() {
