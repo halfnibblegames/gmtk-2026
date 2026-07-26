@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://bposnprnqpx6l" path="res://assets/ui/button_pressed.png" id="11_y60b8"]
 [ext_resource type="PackedScene" uid="uid://dnu2oyugc5pvh" path="res://src/Controls/ControlPrompt.tscn" id="12_k2i6c"]
 [ext_resource type="FontFile" uid="uid://bkp5vavjxsluc" path="res://assets/Uncial_WIP.ttf" id="12_y60b8"]
+[ext_resource type="PackedScene" uid="uid://d4avlxbfv5f45" path="res://src/Controls/CelebrationScreen.tscn" id="14_cj10r"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gft63"]
 shader = ExtResource("2_8ec3e")
@@ -22,7 +23,7 @@ shader_parameter/original_palette = ExtResource("3_fh42b")
 shader_parameter/target_palette = ExtResource("4_insap")
 shader_parameter/vignette_amount = 1.0
 
-[node name="Main" type="Control" unique_id=732094339 node_paths=PackedStringArray("gameControl", "currentAdventurer", "spindownDice", "timelineBar", "postProcessing", "planningMusic", "playingMusic", "playbackButton", "playbackButtonOverlay", "inputHints")]
+[node name="Main" type="Control" unique_id=732094339 node_paths=PackedStringArray("gameControl", "currentAdventurer", "spindownDice", "timelineBar", "postProcessing", "planningMusic", "playingMusic", "celebrationScreen", "playbackButton", "playbackButtonOverlay", "inputHints")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,6 +38,7 @@ timelineBar = NodePath("TimelineBar")
 postProcessing = NodePath("PixelPerfectContainer/PixelPerfectViewport/GamePostProcessLayer/ColorRect")
 planningMusic = NodePath("PlanningMusicPlayer")
 playingMusic = NodePath("PlayingMusicPlayer")
+celebrationScreen = NodePath("CelebrationScreen")
 playbackButton = NodePath("PlaybackButton")
 playbackButtonOverlay = NodePath("PlaybackButtonOverlay")
 inputHints = NodePath("InputOverview")
@@ -346,6 +348,11 @@ text = "Start Heist"
 horizontal_alignment = 1
 vertical_alignment = 1
 justification_flags = 171
+
+[node name="CelebrationScreen" parent="." unique_id=1742069866 instance=ExtResource("14_cj10r")]
+visible = false
+z_index = 50
+layout_mode = 1
 
 [node name="PlanningMusicPlayer" type="AudioStreamPlayer" parent="." unique_id=1096737015]
 stream = ExtResource("10_w32tk")

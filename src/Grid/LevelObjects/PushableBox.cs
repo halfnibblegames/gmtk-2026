@@ -11,12 +11,12 @@ public partial class PushableBox : MovingGridObject, ISimulated {
 
   public override void _Ready() {
     base._Ready();
-    onMoved(Coords);
+    onMoved(Coords, Position);
     Moved += onMoved;
     AddToGroup(Groups.Simulated);
   }
 
-  private void onMoved(Vector2I newCoords) {
+  private void onMoved(Vector2I newCoords, Vector2 _) {
     if (newCoords == lastKnownCoords) return;
 
     Level!.UnregisterTileModifier(lastKnownCoords, makeTileCollide);

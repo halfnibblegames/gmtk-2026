@@ -186,7 +186,7 @@ public partial class Orchestrator : Node {
   private void focusAdventurer(int index) {
     focusedAdventurerIndex = index;
     focusedAdventurer!.Moved += onAdventurerMoved;
-    onAdventurerMoved(focusedAdventurer.Coords);
+    onAdventurerMoved(focusedAdventurer.Coords, focusedAdventurer.Position);
 
     var plannedRoundCount = focusedAdventurer!.PlannedRoundCount;
     // We don't move forward in time (yet?), so instead we only check if we need to go back in time.
@@ -196,9 +196,9 @@ public partial class Orchestrator : Node {
     AdventurerChanged(focusedAdventurer!);
   }
 
-  private void onAdventurerMoved(Vector2I newCoords) {
+  private void onAdventurerMoved(Vector2I newCoords, Vector2 position) {
     if (CurrentLevel is not null) {
-      camera.Position = CurrentLevel.GetTile(newCoords).Position;
+      camera.Position = hasWon ? position : CurrentLevel.GetTile(newCoords).Position;
     }
   }
 

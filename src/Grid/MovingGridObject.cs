@@ -7,7 +7,7 @@ namespace HalfNibbleGame.Grid;
 public abstract partial class MovingGridObject : GridObject {
 
   [Signal]
-  public delegate void MovedEventHandler(Vector2I newCoords);
+  public delegate void MovedEventHandler(Vector2I newCoords, Vector2 actualPos);
 
   public delegate MoveAnimation.MoveAnimationFactory MoveAnimationFactoryFactory(Vector2 start, Vector2 end);
 
@@ -23,7 +23,7 @@ public abstract partial class MovingGridObject : GridObject {
 
     if (moveAnimation is not null) {
       moveAnimation.Update(delta);
-      EmitSignalMoved(Coords);
+      EmitSignalMoved(Coords, Position);
     }
 
     Scale = new Vector2(Flipped ? -1 : 1, 1);
@@ -109,7 +109,7 @@ public abstract partial class MovingGridObject : GridObject {
 
     moveAnimation = animationFactory(start, end)(this, duration);
 
-    EmitSignalMoved(Coords);
+    EmitSignalMoved(Coords, Position);
   }
 
   public void TeleportTo(Vector2I coords) {
@@ -117,7 +117,7 @@ public abstract partial class MovingGridObject : GridObject {
     moveAnimation = null;
     Coords = coords;
     SnapToTile();
-    EmitSignalMoved(Coords);
+    EmitSignalMoved(Coords, Position);
   }
 
   public readonly record struct MoveResult(
