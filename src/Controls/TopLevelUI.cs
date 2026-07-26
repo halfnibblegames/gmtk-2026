@@ -8,6 +8,7 @@ namespace HalfNibbleGame.Controls;
 public partial class TopLevelUI : Node {
 
   private const double transitionDuration = 0.5;
+  private const double transitionBackDuration = transitionDuration;
   private const double inputHintDelay = 5.0;
 
   private bool isPlaybackReady {
@@ -19,6 +20,7 @@ public partial class TopLevelUI : Node {
     }
   }
 
+  [Export] private Control gameControl = null!;
   [Export] private Control currentAdventurer = null!;
   [Export] private Control spindownDice = null!;
   [Export] private Control timelineBar = null!;
@@ -37,6 +39,7 @@ public partial class TopLevelUI : Node {
 
   public override void _Ready() {
     var orchestrator = Global.Services.Get<Orchestrator>();
+    orchestrator.LevelStarted += showGame;
     orchestrator.WinConditionChanged += isSonWinning => isPlaybackReady = isSonWinning;
     playbackButton.Pressed += startPlayback;
     resetTransforms();
@@ -80,6 +83,15 @@ public partial class TopLevelUI : Node {
     inputTween.Play();
 
     timeSinceLastInput = 0;
+  }
+
+  private void showGame() {
+    playbackTween?.Kill();
+    playbackTween = GetTree().CreateTween();
+
+    playbackTween
+      .Chain()
+      .TweenProperty(gameControl, "modulate", Colors.White, transitionBackDuration);
   }
 
   private void startPlayback() {
@@ -133,12 +145,16 @@ public partial class TopLevelUI : Node {
     playbackTween
       .Chain()
       .TweenAwait(new Signal(Global.Services.Get<TimelinePlayer>(), TimelinePlayer.SignalName.PlaybackCompleted));
+
     playbackTween
       .Chain()
-      .TweenProperty(planningMusic, "volume_linear", 1f, 0.5);
+      .TweenProperty(gameControl, "modulate", Colors.Transparent, transitionBackDuration);
     playbackTween
       .Parallel()
-      .TweenProperty(playingMusic, "volume_linear", 0f, 0.5);
+      .TweenProperty(planningMusic, "volume_linear", 1f, transitionBackDuration);
+    playbackTween
+      .Parallel()
+      .TweenProperty(playingMusic, "volume_linear", 0f, transitionBackDuration);
 
     playbackTween
       .Chain()
@@ -154,6 +170,7 @@ public partial class TopLevelUI : Node {
 
   private void resetTransforms() {
     inputHints.Visible = true;
+    gameControl.Modulate = Colors.Transparent;
     playbackButton.Visible = false;
     playbackButtonOverlay.Color = Colors.Transparent;
     currentAdventurer.OffsetTransformPosition = Vector2.Zero;
